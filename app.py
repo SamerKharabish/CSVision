@@ -7,6 +7,7 @@ def main():
     """
     Sets up the main window and event loop.
     """
+    ctk.set_appearance_mode("Dark")
     root = ctk.CTk()
     root.mainloop()
 
