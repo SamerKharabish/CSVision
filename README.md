@@ -21,6 +21,10 @@ CSVision/
 
 ## Features
 
+## Feedback
+
+If you have any feedback, please reach out to me.
+
 ## Author
 
 - [@Samer Kharabish](<kharabishsamer@outlook.com>)
