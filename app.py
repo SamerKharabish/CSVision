@@ -2,6 +2,7 @@
 
 import customtkinter as ctk
 from views.configurations_view import Config
+from controllers.main_controller import MainController
 
 
 def main():
@@ -16,6 +17,8 @@ def main():
         f"{Config.Dimensions.MAIN_WINDOW_WIDTH}x{Config.Dimensions.MAIN_WINDOW_HEIGHT}+{int(root.winfo_screenwidth() / 2 - Config.Dimensions.MAIN_WINDOW_WIDTH / 2)}+{int(root.winfo_screenheight() / 2 - Config.Dimensions.MAIN_WINDOW_HEIGHT / 2)}"
     )
     root.minsize(Config.Dimensions.MAIN_WINDOW_MIN_WIDTH, Config.Dimensions.MAIN_WINDOW_MIN_HEIGHT)
+
+    controller = MainController(root)
 
     root.mainloop()
 
