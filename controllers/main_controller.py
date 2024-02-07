@@ -1,4 +1,5 @@
 """ Defines the MainController class with the main functionality. """
+
 from views.main_view import MainView
 
 
