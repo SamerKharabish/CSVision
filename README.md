@@ -8,18 +8,20 @@ This module contains the GUI implementation for a CSV plotter application. It pr
 
 To enhance maintainability, scalability, and testability of the application a Model-View-Controller (MVC) architecture pattern is used, which decouples the business logic from the UI.
 
-CSVision/  
-├── controllers/                    # Contains classes that act as intermediaries between models and views. They handle user input, update models, and reflect changes in views.  
-│ └── main_controller.py            # Handles interactions in the main window  
-├── models/                         # Contains classes that represent the data and business logic of the application.  
-├── resources/                      # Images, test files, etc.  
-├── unittests/                      # Automated tests for the application.  
-├── views/                          # Contains classes that define the visual representation of the application.  
-├── app.py                          # Entry point of the application.  
-├── README.md                       # README  
-└── requirements.txt                # Project dependencies.  
+CSVision/
+├── controllers/                    # Contains classes that act as intermediaries between models and views. They handle user input, update models, and reflect changes in views.
+│ └── main_controller.py            # Handles interactions in the main window
+├── models/                         # Contains classes that represent the data and business logic of the application.
+├── resources/                      # Images, test files, etc.
+├── unittests/                      # Automated tests for the application.
+├── views/                          # Contains classes that define the visual representation of the application.
+├── app.py                          # Entry point of the application.
+├── README.md                       # README
+└── requirements.txt                # Project dependencies.
 
 ## Features
+
+- Accessibility: Application is closable by pressing the "exit/close" button or the ESC-key
 
 ## Feedback
 
