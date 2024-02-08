@@ -1,0 +1,13 @@
+""" Defines the PlotFrameView class with the plot frame layout. """
+
+import customtkinter as ctk
+from views.configurations_view import Config
+
+
+class PlotFrameView(ctk.CTkFrame):
+    """
+    Layout of the plot frame.
+    """
+
+    def __init__(self, master=None):
+        super().__init__(master, corner_radius=Config.Radii.INNER_RADIUS)

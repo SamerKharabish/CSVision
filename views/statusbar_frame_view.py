@@ -1,0 +1,17 @@
+""" Defines the StatusbarFrameView class with the statusbar frame layout. """
+
+import customtkinter as ctk
+from views.configurations_view import Config
+
+
+class StatusbarFrameView(ctk.CTkFrame):
+    """
+    Layout of the statusbar frame.
+    """
+
+    def __init__(self, master=None):
+        super().__init__(
+            master,
+            corner_radius=Config.Radii.INNER_RADIUS,
+            height=Config.Dimensions.STATUSBAR_FRAME_HEIGHT,
+        )
