@@ -16,3 +16,6 @@ class SignalFrameView(ctk.CTkFrame):
             width=Config.Dimensions.SIGNAL_FRAME_WIDTH,
             border_width=Config.General.BORDER_WIDTH,
         )
+
+        self.min_width = Config.Dimensions.SIGNAL_FRAME_MIN_WIDTH
+        self.previous_size = self.winfo_width()

@@ -34,7 +34,7 @@ class AppController:
         self.view = view
 
         # accessibility events
-        self.view.bind("<Escape>", self.close_application)
+        self.view.bind(Config.KeyBindings.CLOSE_APPLICATION, self.close_application)
         self.view.protocol("WM_DELETE_WINDOW", self.close_application)
 
     def close_application(self, _=None):

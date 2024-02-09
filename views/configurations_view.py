@@ -32,6 +32,7 @@ class Config:
         APP_WINDOW_MIN_HEIGHT = APP_WINDOW_HEIGHT - 200
 
         SIGNAL_FRAME_WIDTH = APP_WINDOW_WIDTH * 0.25
+        SIGNAL_FRAME_MIN_WIDTH = 50
 
         STATUSBAR_FRAME_HEIGHT = 30
 
@@ -62,3 +63,11 @@ class Config:
         PLOT_FRAME_SIDE = "right"
         PLOT_FRAME_FILL = "both"
         PLOT_FRAME_EXPAND = True
+
+    class KeyBindings:
+        """
+        Key bindings
+        """
+
+        CLOSE_APPLICATION = "<Escape>"
+        RESIZE_SIGNAL_FRAME = "<Control-b>"
