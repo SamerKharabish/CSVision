@@ -13,7 +13,7 @@ class MainView(ctk.CTkFrame):
     """
 
     def __init__(self, master=None):
-        super().__init__(master, corner_radius=Config.Cornerradii.RADIUS)
+        super().__init__(master, corner_radius=Config.General.CORNER_RADIUS)
         self.master = master
         self.pack(
             side=Config.Layout.MAIN_VIEW_SIDE,
