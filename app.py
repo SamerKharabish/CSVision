@@ -34,6 +34,7 @@ class AppController:
         self.view = view
 
         # accessibility events
+
         self.view.bind(Config.KeyBindings.CLOSE_APPLICATION, self.close_application)
         self.view.protocol("WM_DELETE_WINDOW", self.close_application)
 
