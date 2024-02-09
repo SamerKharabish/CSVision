@@ -6,20 +6,20 @@ class Config:
     Contains classes that define the configurations of the visual representation of the application.
     """
 
+    class General:
+        """
+        General configurations.
+        """
+
+        CORNER_RADIUS = 0
+        BORDER_WIDTH = 1
+
     class Titles:
         """
         Titles
         """
 
         APP_WINDOW_TITLE = "CSVision"
-
-    class Radii:
-        """
-        Radii
-        """
-
-        OUTER_RADIUS = 8
-        INNER_RADIUS = 6
 
     class Dimensions:
         """
@@ -41,18 +41,6 @@ class Config:
         """
 
         MAIN_WINDOW_ICON = "resources/Images/CSVision.ico"
-
-    class Padding:
-        """
-        Padding
-        """
-
-        PADX = (8, 8)
-        PADY = (8, 8)
-        PADX_RIGHT_SHORT = (PADX[0], PADX[1] / 2)
-        PADX_LEFT_SHORT = (PADX[0] / 2, PADX[1])
-        PADY_TOP_SHORT = (PADY[0] / 2, PADY[1])
-        PADY_BOTTOM_SHORT = (PADY[0], PADY[1] / 2)
 
     class Layout:
         """

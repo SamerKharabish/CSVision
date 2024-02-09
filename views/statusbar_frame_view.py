@@ -12,6 +12,7 @@ class StatusbarFrameView(ctk.CTkFrame):
     def __init__(self, master=None):
         super().__init__(
             master,
-            corner_radius=Config.Radii.INNER_RADIUS,
+            corner_radius=Config.General.CORNER_RADIUS,
             height=Config.Dimensions.STATUSBAR_FRAME_HEIGHT,
+            border_width=Config.General.BORDER_WIDTH,
         )

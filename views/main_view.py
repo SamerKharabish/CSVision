@@ -13,14 +13,12 @@ class MainView(ctk.CTkFrame):
     """
 
     def __init__(self, master=None):
-        super().__init__(master, corner_radius=Config.Radii.OUTER_RADIUS)
+        super().__init__(master, corner_radius=Config.Cornerradii.RADIUS)
         self.master = master
         self.pack(
             side=Config.Layout.MAIN_VIEW_SIDE,
             fill=Config.Layout.MAIN_VIEW_FILL,
             expand=Config.Layout.MAIN_VIEW_EXPAND,
-            padx=Config.Padding.PADX,
-            pady=Config.Padding.PADY,
         )
 
         self.initialize_widgets()
@@ -42,20 +40,14 @@ class MainView(ctk.CTkFrame):
             side=Config.Layout.STATUSBAR_FRAME_SIDE,
             fill=Config.Layout.STATUSBAR_FRAME_FILL,
             expand=Config.Layout.STATUSBAR_FRAME_EXPAND,
-            padx=Config.Padding.PADX,
-            pady=Config.Padding.PADY_TOP_SHORT,
         )
         self.signal_frame_view.pack(
             side=Config.Layout.SIGNAL_FRAME_SIDE,
             fill=Config.Layout.SIGNAL_FRAME_FILL,
             expand=Config.Layout.SIGNAL_FRAME_EXPAND,
-            padx=Config.Padding.PADX_RIGHT_SHORT,
-            pady=Config.Padding.PADY_BOTTOM_SHORT,
         )
         self.plot_frame_view.pack(
             side=Config.Layout.PLOT_FRAME_SIDE,
             fill=Config.Layout.PLOT_FRAME_FILL,
             expand=Config.Layout.PLOT_FRAME_EXPAND,
-            padx=Config.Padding.PADX_LEFT_SHORT,
-            pady=Config.Padding.PADY_BOTTOM_SHORT,
         )

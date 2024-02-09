@@ -12,6 +12,7 @@ class SignalFrameView(ctk.CTkFrame):
     def __init__(self, master=None):
         super().__init__(
             master,
-            corner_radius=Config.Radii.INNER_RADIUS,
+            corner_radius=Config.General.CORNER_RADIUS,
             width=Config.Dimensions.SIGNAL_FRAME_WIDTH,
+            border_width=Config.General.BORDER_WIDTH,
         )
