@@ -11,63 +11,63 @@ class Config:
         General configurations.
         """
 
-        CORNER_RADIUS = 0
-        BORDER_WIDTH = 1
+        CORNER_RADIUS: int = 0
+        BORDER_WIDTH: int = 1
 
     class Titles:
         """
         Titles
         """
 
-        APP_WINDOW_TITLE = "CSVision"
+        APP_WINDOW_TITLE: str = "CSVision"
 
     class Dimensions:
         """
         Dimensions
         """
 
-        APP_WINDOW_WIDTH = 1150
-        APP_WINDOW_MIN_WIDTH = APP_WINDOW_WIDTH
-        APP_WINDOW_HEIGHT = 666
-        APP_WINDOW_MIN_HEIGHT = APP_WINDOW_HEIGHT - 200
+        APP_WINDOW_WIDTH: int = 1150
+        APP_WINDOW_MIN_WIDTH: int = APP_WINDOW_WIDTH
+        APP_WINDOW_HEIGHT: int = 666
+        APP_WINDOW_MIN_HEIGHT: int = APP_WINDOW_HEIGHT - 200
 
-        SIGNAL_FRAME_WIDTH = APP_WINDOW_WIDTH * 0.25
-        SIGNAL_FRAME_MIN_WIDTH = 50
+        SIGNAL_FRAME_WIDTH: int = int(APP_WINDOW_WIDTH * 0.25)
+        SIGNAL_FRAME_MIN_WIDTH: int = 50
 
-        STATUSBAR_FRAME_HEIGHT = 30
+        STATUSBAR_FRAME_HEIGHT: int = 30
 
     class Images:
         """
         Images
         """
 
-        MAIN_WINDOW_ICON = "resources/Images/CSVision.ico"
+        MAIN_WINDOW_ICON: str = "resources/Images/CSVision.ico"
 
     class Layout:
         """
         Layout
         """
 
-        MAIN_VIEW_SIDE = "top"
-        MAIN_VIEW_FILL = "both"
-        MAIN_VIEW_EXPAND = True
+        MAIN_VIEW_SIDE: str = "top"
+        MAIN_VIEW_FILL: str = "both"
+        MAIN_VIEW_EXPAND: bool = True
 
-        STATUSBAR_FRAME_SIDE = "bottom"
-        STATUSBAR_FRAME_FILL = "x"
-        STATUSBAR_FRAME_EXPAND = False
+        STATUSBAR_FRAME_SIDE: str = "bottom"
+        STATUSBAR_FRAME_FILL: str = "x"
+        STATUSBAR_FRAME_EXPAND: bool = False
 
-        SIGNAL_FRAME_SIDE = "left"
-        SIGNAL_FRAME_FILL = "y"
-        SIGNAL_FRAME_EXPAND = False
+        SIGNAL_FRAME_SIDE: str = "left"
+        SIGNAL_FRAME_FILL: str = "y"
+        SIGNAL_FRAME_EXPAND: bool = False
 
-        PLOT_FRAME_SIDE = "right"
-        PLOT_FRAME_FILL = "both"
-        PLOT_FRAME_EXPAND = True
+        PLOT_FRAME_SIDE: str = "right"
+        PLOT_FRAME_FILL: str = "both"
+        PLOT_FRAME_EXPAND: bool = True
 
     class KeyBindings:
         """
         Key bindings
         """
 
-        CLOSE_APPLICATION = "<Escape>"
-        RESIZE_SIGNAL_FRAME = "<Control-b>"
+        CLOSE_APPLICATION: str = "<Escape>"
+        RESIZE_SIGNAL_FRAME: str = "<Control-b>"

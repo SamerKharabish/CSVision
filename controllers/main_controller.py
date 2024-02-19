@@ -1,5 +1,7 @@
 """ Defines the MainController class with the main functionality. """
 
+from typing import Any
+import customtkinter as ctk
 from views.main_view import MainView
 from views.configurations_view import Config
 from controllers.statusbar_frame_controller import StatusbarFrameController
@@ -12,26 +14,26 @@ class MainController:
     Functionality of the main application.
     """
 
-    def __init__(self, master=None) -> None:
-        self.master = master
-        self.view = MainView(master)
+    def __init__(self, master: ctk.CTk = None) -> None:
+        self.master: ctk.CTk = master
+        self.view: ctk.CTkFrame = MainView(master)
 
         self.initialize_widgets()
         self.setup_bindings()
 
-    def initialize_widgets(self):
+    def initialize_widgets(self) -> None:
         """
         Initialize widgets.
         """
-        self.statusbar_frame_controller = StatusbarFrameController(
+        self.statusbar_frame_controller: Any = StatusbarFrameController(
             self.view.statusbar_frame_view
         )
-        self.signal_frame_controller = SignalFrameController(
+        self.signal_frame_controller: Any = SignalFrameController(
             self.view.signal_frame_view
         )
-        self.plot_frame_controller = PlotFrameController(self.view.plot_frame_view)
+        self.plot_frame_controller: Any = PlotFrameController(self.view.plot_frame_view)
 
-    def setup_bindings(self):
+    def setup_bindings(self) -> None:
         """
         Binding the MainView widgets to callback functions.
         """

@@ -9,7 +9,7 @@ class PlotFrameView(ctk.CTkFrame):
     Layout of the plot frame.
     """
 
-    def __init__(self, master=None):
+    def __init__(self, master: ctk.CTkFrame = None):
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
