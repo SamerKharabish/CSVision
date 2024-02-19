@@ -11,8 +11,8 @@ class AppView(ctk.CTk):
     Layout of the main application.
     """
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self) -> None:
+        super().__init__()
 
         self.title(Config.Titles.APP_WINDOW_TITLE)
         self.iconbitmap(Config.Images.MAIN_WINDOW_ICON)
@@ -30,15 +30,19 @@ class AppController:
     Functionality of the main application.
     """
 
-    def __init__(self, view=None) -> None:
-        self.view = view
+    def __init__(self, view: ctk.CTk = None) -> None:
+        self.view: ctk.CTk = view
 
-        # accessibility events
+        self.setup_bindings()
 
+    def setup_bindings(self) -> None:
+        """
+        Binding the AppController widgets to accessibility callback functions.
+        """
         self.view.bind(Config.KeyBindings.CLOSE_APPLICATION, self.close_application)
         self.view.protocol("WM_DELETE_WINDOW", self.close_application)
 
-    def close_application(self, _=None):
+    def close_application(self, _: None = None) -> None:
         """
         Close the application.
         """
@@ -46,7 +50,7 @@ class AppController:
         sys.exit(0)
 
 
-def main():
+def main() -> None:
     """
     Sets up the main window and event loop.
     """
