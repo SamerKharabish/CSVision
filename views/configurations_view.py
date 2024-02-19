@@ -41,6 +41,7 @@ class Config:
         FILEHANDLING_FRAME_HEIGHT: int = 80
         SEARCHBAR_FRAME_HEIGHT: int = FILEHANDLING_FRAME_HEIGHT
 
+
     class Images:
         """
         Images
@@ -115,3 +116,4 @@ class Config:
         """
 
         LABEL_TEXTS: Tuple[str, int] = ("Calibri", 14)
+
