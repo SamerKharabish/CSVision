@@ -115,3 +115,4 @@ class Config:
         """
 
         LABEL_TEXTS: Tuple[str, int] = ("Calibri", 14)
+        
