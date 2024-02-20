@@ -14,5 +14,5 @@ class StatusbarFrameView(ctk.CTkFrame):
             master,
             corner_radius=Config.General.CORNER_RADIUS,
             height=Config.Dimensions.STATUSBAR_FRAME_HEIGHT,
-            border_width=Config.General.BORDER_WIDTH,
+            border_width=Config.General.FRAME_BORDER_WIDTH,
         )
