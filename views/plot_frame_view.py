@@ -13,5 +13,5 @@ class PlotFrameView(ctk.CTkFrame):
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
-            border_width=Config.General.BORDER_WIDTH,
+            border_width=Config.General.FRAME_BORDER_WIDTH,
         )
