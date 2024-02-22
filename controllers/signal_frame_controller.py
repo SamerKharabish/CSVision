@@ -1,6 +1,7 @@
 """ Defines the SignalFrameController class with the signal frame functionality. """
 
 import customtkinter as ctk
+from utils.helper_functions import find_root
 
 
 class SignalFrameController:
@@ -10,6 +11,7 @@ class SignalFrameController:
 
     def __init__(self, view: ctk.CTkFrame = None) -> None:
         self.view: ctk.CTkFrame = view
+        self.view.root = find_root(self.view)
 
     def on_resize_signal_frame(self, _: None = None) -> None:
         """
