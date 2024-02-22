@@ -3,6 +3,7 @@
 from PIL import Image
 import customtkinter as ctk
 from views.configurations_view import Config
+from utils.custom_optionmenu import CustomOptionMenu
 
 
 class SignalFrameView(ctk.CTkFrame):
@@ -17,7 +18,7 @@ class SignalFrameView(ctk.CTkFrame):
             width=Config.Dimensions.SIGNAL_FRAME_WIDTH,
             border_width=Config.General.FRAME_BORDER_WIDTH,
         )
-        self.root: ctk.CTk = master.master
+        self.root: ctk.CTk = None
 
         self.min_width: int = Config.Dimensions.SIGNAL_FRAME_MIN_WIDTH
         self.previous_size: int = self.winfo_width()
@@ -93,6 +94,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
         """
         Initialize widgets.
         """
+
         self.title_label = ctk.CTkLabel(
             self,
             text=Config.LabelTexts.FILEHANDLING_TEXT,
@@ -102,19 +104,66 @@ class FileHandlingFrameView(ctk.CTkFrame):
             anchor=Config.Layout.SIGNAL_FRAME_LABELS_ANCHOR,
         )
 
+        self.file_optionmenu = CustomOptionMenu(
+            self,
+            width=316,
+            border_width=1,
+            border_color="#6C6C6C",
+            hover_color="#3D3E40",
+            fg_color="#343638",
+            font=ctk.CTkFont(
+                family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
+            ),
+            values=Config.Values.FILE_OPTIONMENU,
+            option_button_enable=False,
+        )
+
+        self.file_action_optionmenu = CustomOptionMenu(
+            self,
+            font=ctk.CTkFont(
+                family=Config.Fonts.LABEL_TEXTS[0],
+                size=Config.Fonts.LABEL_TEXTS[1],
+                weight="bold",
+            ),
+            values=Config.Values.FILE_ACTION_OPTIONMENU,
+        )
+
     def create_layout(self) -> None:
         """
         Create layout.
         """
 
-        self.pack_propagate(False)
-        self.title_label.pack(
-            side=Config.Layout.SIGNAL_FRAME_LABELS_SIDE,
-            fill=Config.Layout.SIGNAL_FRAME_LABELS_FILL,
-            expand=Config.Layout.SIGNAL_FRAME_LABELS_EXPAND,
-            padx=Config.Layout.SIGNAL_FRAME_LABELS_PADX,
-            pady=Config.Layout.SIGNAL_FRAME_LABELS_PADY,
+        self.rowconfigure(
+            (
+                Config.Layout.FILEHANDLING_TITLE_FARME_ROW,
+                Config.Layout.FILEHANDLING_ENTRY_ROW,
+                Config.Layout.FILEHANDLING_FILTER_FARME_ROW,
+            ),
+            weight=1,
         )
+
+        self.title_label.grid(
+            row=Config.Layout.FILEHANDLING_TITLE_FARME_ROW,
+            column=0,
+            sticky=Config.Layout.GENERAL_FRAME_STICKY,
+            padx=Config.Layout.LABELS_SOLO_PADX,
+            pady=Config.Layout.STANDART_PAD,
+        )
+
+        self.file_optionmenu.grid(
+            row=Config.Layout.FILEHANDLING_ENTRY_ROW,
+            column=0,
+            sticky=Config.Layout.GENERAL_FRAME_STICKY,
+            padx=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.ZERO_PAD,
+        )
+
+        self.file_action_optionmenu.grid(
+            row=Config.Layout.FILEHANDLING_FILTER_FARME_ROW,
+            column=0,
+            sticky=Config.Layout.GENERAL_FRAME_STICKY,
+            padx=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDART_PAD,
 
 
 class SearchBarFrameView(ctk.CTkFrame):
@@ -217,9 +266,9 @@ class SearchBarFrameView(ctk.CTkFrame):
         self.title_frame.grid(
             row=Config.Layout.SEARCHBAR_FRAME_TITLE_FARME_ROW,
             column=0,
-            sticky=Config.Layout.SEARCHBAR_FRAME_TITLE_FARMEL_STICKY,
-            padx=(7, 7),
-            pady=(5, 5),
+            sticky=Config.Layout.GENERAL_FRAME_STICKY,
+            padx=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDART_PAD,
         )
         self.title_frame.columnconfigure(0, weight=1)
         self.title_frame.columnconfigure(1, weight=1)
@@ -227,31 +276,31 @@ class SearchBarFrameView(ctk.CTkFrame):
             row=0,
             column=0,
             sticky="w",
-            padx=(14, 0),
-            pady=(0, 0),
+            padx=Config.Layout.LABELS_IN_FRAME_PADX,
+            pady=Config.Layout.ZERO_PAD,
         )
         self.clear_search_result_button.grid(
             row=0,
             column=1,
             sticky="e",
-            padx=(0, 0),
-            pady=(0, 0),
+            padx=Config.Layout.ZERO_PAD,
+            pady=Config.Layout.ZERO_PAD,
         )
 
         self.search_entry.grid(
             row=Config.Layout.SEARCHBAR_FRAME_ENTRY_ROW,
             column=0,
-            sticky=Config.Layout.SEARCHBAR_FRAME_ENTRY_STICKY,
-            padx=(7, 7),
-            pady=(0, 3),
+            sticky=Config.Layout.GENERAL_FRAME_STICKY,
+            padx=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.ZERO_PAD,
         )
 
         self.filter_frame.grid(
             row=Config.Layout.SEARCHBAR_FRAME_FILTER_FARME_ROW,
             column=0,
-            sticky=Config.Layout.SEARCHBAR_FRAME_FILTER_FARME_STICKY,
-            padx=(7, 7),
-            pady=(4, 7),
+            sticky=Config.Layout.GENERAL_FRAME_STICKY,
+            padx=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDART_PAD,
         )
         self.filter_frame.columnconfigure(0, weight=1)
         self.filter_frame.columnconfigure(1, weight=2)
@@ -259,15 +308,15 @@ class SearchBarFrameView(ctk.CTkFrame):
             row=0,
             column=0,
             sticky="w",
-            padx=(0, 3),
-            pady=(0, 0),
+            padx=Config.Layout.RIGHT_PADX,
+            pady=Config.Layout.ZERO_PAD,
         )
         self.filter_signals_segmented_btn.grid(
             row=0,
             column=1,
             sticky="e",
-            padx=(3, 0),
-            pady=(0, 0),
+            padx=Config.Layout.LEFT_PADX,
+            pady=Config.Layout.ZERO_PAD,
         )
 
 
