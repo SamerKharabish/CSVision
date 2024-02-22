@@ -164,6 +164,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
             padx=Config.Layout.STANDART_PAD,
             pady=Config.Layout.STANDART_PAD,
+        )
 
 
 class SearchBarFrameView(ctk.CTkFrame):
