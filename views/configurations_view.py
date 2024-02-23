@@ -1,6 +1,6 @@
 """Centralized configuration file for the visual representation of the application."""
 
-from typing import Tuple
+from typing import Tuple, List
 
 
 class Config:
@@ -15,7 +15,8 @@ class Config:
 
         CORNER_RADIUS: int = 0
         FRAME_BORDER_WIDTH: int = 1
-        ENTRY_BORDER_WIDTH: int = 0
+        INPUT_ENTRY_BORDER_WIDTH: int = 0
+        OUTPUT_ENTRY_BORDER_WIDTH: int = 1
 
     class WindowTitles:
         """
@@ -34,13 +35,9 @@ class Config:
         APP_WINDOW_HEIGHT: int = 666
         APP_WINDOW_MIN_HEIGHT: int = APP_WINDOW_HEIGHT - 200
 
-        SIGNAL_FRAME_WIDTH: int = int(APP_WINDOW_WIDTH * 0.25)
         SIGNAL_FRAME_MIN_WIDTH: int = 40
 
         STATUSBAR_FRAME_HEIGHT: int = 20
-
-        FILEHANDLING_FRAME_HEIGHT: int = 80
-        SEARCHBAR_FRAME_HEIGHT: int = FILEHANDLING_FRAME_HEIGHT
 
         ACTION_BUTTON_WIDTH_HEIGHT: int = 10
         ACTION_IMAGE_WIDTH_HEIGHT: int = 17
@@ -50,9 +47,12 @@ class Config:
         Image formats
         """
 
-        MAIN_WINDOW_ICON: str = "resources/Images/CSVision.ico"
-        CLEAR_SEARCH_RESULT_ICON = "resources/Images/clear-search-results.png"
-        DOWN_ARROW = "resources/Images/down-arrow.png"
+        MAIN_WINDOW_ICO: str = "resources/Images/CSVision.ico"
+        CLEAR_SEARCH_RESULT_PNG: str = "resources/Images/clear-search-results.png"
+        DOWN_ARROW_PNG: str = "resources/Images/down-arrow.png"
+        EXCEL_PNG: str = "resources/Images/excel.png"
+        OPEN_FILE_PNG: str = "resources/Images/open-file.png"
+        REFRESH_PNG: str = "resources/Images/refresh.png"
 
     class Layout:
         """
@@ -76,30 +76,26 @@ class Config:
         PLOT_FRAME_EXPAND: bool = True
 
         FILEHANDLING_FRAME_ROW: int = 0
-        FILEHANDLING_FRAME_STICKY: str = "ew"
         SEARCHBAR_FRAME_ROW: int = 1
-        SEARCHBAR_FRAME_STICKY: str = "ew"
         SIGNALLIST_FRAME_ROW: int = 2
-        SIGNALLIST_FRAME_STICKY: str = "nesw"
         CONFIG_SIGNALLIST_FRAME_ROW: int = 3
-        CONFIG_SIGNALLIST_FRAME_STICKY: str = "nesw"
+        GENERAL_FRAME_STICKY: str = "nesw"
 
-        SEARCHBAR_FRAME_TITLE_FARME_ROW: int = 0
-        SEARCHBAR_FRAME_ENTRY_ROW: int = 1
-        SEARCHBAR_FRAME_FILTER_FARME_ROW: int = 2
+        SEARCHBAR_TITLE_FARME_ROW: int = 0
+        SEARCHBAR_ENTRY_ROW: int = 1
+        SEARCHBAR_FILTER_FARME_ROW: int = 2
         FILEHANDLING_TITLE_FARME_ROW: int = 0
         FILEHANDLING_ENTRY_ROW: int = 1
         FILEHANDLING_FILTER_FARME_ROW: int = 2
-        GENERAL_FRAME_STICKY: str = "ew"
+        CONFIG_SIGNALLIST_SCROLLABLE_FRAME_ROW: int = 0
+        CONFIG_SIGNALLIST_PRESET_FRAME_ROW: int = 1
+        GENERAL_INNER_FRAME_STICKY: str = "ew"
 
         SIGNAL_FRAME_LABELS_ANCHOR: str = "w"
         ACTION_BUTTON_TEXT_ANCHOR: str = "center"
         STANDART_PAD: Tuple[int, int] = (7, 7)
         ZERO_PAD: Tuple[int, int] = (0, 0)
         LABELS_IN_FRAME_PADX: Tuple[int, int] = (14, 0)
-        LABELS_SOLO_PADX: Tuple[int, int] = (20, 7)
-        RIGHT_PADX: Tuple[int, int] = (0, 3)
-        LEFT_PADX: Tuple[int, int] = (3, 0)
 
         SIGNAL_FRAME_SCROLLABLEFRAME_SIDE: str = "top"
         SIGNAL_FRAME_SCROLLABLEFRAME_FILL: str = "both"
@@ -131,21 +127,33 @@ class Config:
         """
 
         LABEL_TEXTS: Tuple[str, int] = ("Calibri", 14)
+        BUTTON_TEXTS: Tuple[str, int, str] = ("Calibri", 14, "bold")
 
     class Colors:
         """
         Colors
         """
 
-        TRANSPARENT = "transparent"
-        BUTTON_HOVER = "#3E3E3E"
+        TRANSPARENT: str = "transparent"
+        ONYX: str = "#343638"
+        TRANSPARENT_BUTTON_HOVER: str = "#3E3E3E"
+        BORDER_COLOR: str = "#6C6C6C"
+        COLORED_BUTTON_HOVER: str = "#3D3E40"
 
     class Values:
         """
         Values of different widgets.
         """
 
-        SEARCH_SELECTION_SEGMENTED_BUTTON = ["Signals", "Groups"]
-        FILTER_SIGNALS_SEGMENTED_BUTTON = ["All", "Non const. zero", "Non const."]
-        FILE_OPTIONMENU = [" "]
-        FILE_ACTION_OPTIONMENU = ["OPEN FILE...", "EXPORT to EXCEL"]
+        SEARCH_SELECTION_SEGMENTED_BUTTON: List[str] = ["Signals", "Groups"]
+        FILTER_SIGNALS_SEGMENTED_BUTTON: List[str] = [
+            "All",
+            "Non const. zero",
+            "Non const.",
+        ]
+        FILE_OPTIONMENU: List[str] = [" "]
+        FILE_ACTION_OPTIONMENU: List[str] = [
+            "OPEN FILE",
+            "LOAD FILE",
+            "EXPORT to EXCEL",
+        ]

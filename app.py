@@ -15,7 +15,7 @@ class AppView(ctk.CTk):
         super().__init__()
 
         self.title(Config.WindowTitles.APP_WINDOW_TITLE)
-        self.iconbitmap(Config.ImageFormats.MAIN_WINDOW_ICON)
+        self.iconbitmap(Config.ImageFormats.MAIN_WINDOW_ICO)
         self.geometry(
             f"{Config.Dimensions.APP_WINDOW_WIDTH}x{Config.Dimensions.APP_WINDOW_HEIGHT}+{int(self.winfo_screenwidth() / 2 - Config.Dimensions.APP_WINDOW_WIDTH / 2)}+{int(self.winfo_screenheight() / 2 - Config.Dimensions.APP_WINDOW_HEIGHT / 2)}"
         )
