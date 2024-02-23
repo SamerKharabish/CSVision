@@ -3,7 +3,6 @@
 from PIL import Image
 import customtkinter as ctk
 from views.configurations_view import Config
-from utils.custom_optionmenu import CustomOptionMenu
 
 
 class SignalFrameView(ctk.CTkFrame):
@@ -15,7 +14,6 @@ class SignalFrameView(ctk.CTkFrame):
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
-            width=Config.Dimensions.SIGNAL_FRAME_WIDTH,
             border_width=Config.General.FRAME_BORDER_WIDTH,
         )
         self.root: ctk.CTk = None
@@ -36,6 +34,7 @@ class SignalFrameView(ctk.CTkFrame):
         self.config_signallist_frame_view: ctk.CTkFrame = ConfigSignalListFrameView(
             self
         )
+        self.preset_frame_view: ctk.CTkFrame = PresetFrameView(self)
 
     def create_layout(self) -> None:
         """
@@ -52,25 +51,31 @@ class SignalFrameView(ctk.CTkFrame):
         self.filehandling_frame_view.grid(
             row=Config.Layout.FILEHANDLING_FRAME_ROW,
             column=0,
-            sticky=Config.Layout.FILEHANDLING_FRAME_STICKY,
+            sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
 
         self.searchbar_frame_view.grid(
             row=Config.Layout.SEARCHBAR_FRAME_ROW,
             column=0,
-            sticky=Config.Layout.SEARCHBAR_FRAME_STICKY,
+            sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
 
         self.signallist_frame_view.grid(
             row=Config.Layout.SIGNALLIST_FRAME_ROW,
             column=0,
-            sticky=Config.Layout.SIGNALLIST_FRAME_STICKY,
+            sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
 
         self.config_signallist_frame_view.grid(
             row=Config.Layout.CONFIG_SIGNALLIST_FRAME_ROW,
             column=0,
-            sticky=Config.Layout.CONFIG_SIGNALLIST_FRAME_STICKY,
+            sticky=Config.Layout.GENERAL_FRAME_STICKY,
+        )
+
+        self.preset_frame_view.grid(
+            row=4,
+            column=0,
+            sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
 
 
@@ -83,7 +88,6 @@ class FileHandlingFrameView(ctk.CTkFrame):
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
-            height=Config.Dimensions.FILEHANDLING_FRAME_HEIGHT,
             border_width=Config.General.FRAME_BORDER_WIDTH,
         )
 
@@ -94,9 +98,14 @@ class FileHandlingFrameView(ctk.CTkFrame):
         """
         Initialize widgets.
         """
+        self.title_frame = ctk.CTkFrame(
+            self,
+            corner_radius=Config.General.CORNER_RADIUS,
+            fg_color=Config.Colors.TRANSPARENT,
+        )
 
         self.title_label = ctk.CTkLabel(
-            self,
+            self.title_frame,
             text=Config.LabelTexts.FILEHANDLING_TEXT,
             font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
@@ -104,35 +113,72 @@ class FileHandlingFrameView(ctk.CTkFrame):
             anchor=Config.Layout.SIGNAL_FRAME_LABELS_ANCHOR,
         )
 
-        self.file_optionmenu = CustomOptionMenu(
+        self.open_file_button = ctk.CTkButton(
+            self.title_frame,
+            width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            fg_color=Config.Colors.TRANSPARENT,
+            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            text="",
+            image=ctk.CTkImage(
+                light_image=Image.open(Config.ImageFormats.OPEN_FILE_PNG),
+                size=(
+                    Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
+                    Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
+                ),
+            ),
+            anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
+        )
+
+        self.load_file_button = ctk.CTkButton(
+            self.title_frame,
+            width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            fg_color=Config.Colors.TRANSPARENT,
+            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            text="",
+            image=ctk.CTkImage(
+                light_image=Image.open(Config.ImageFormats.REFRESH_PNG),
+                size=(
+                    Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
+                    Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
+                ),
+            ),
+            anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
+        )
+
+        self.export_to_excel = ctk.CTkButton(
+            self.title_frame,
+            width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            fg_color=Config.Colors.TRANSPARENT,
+            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            text="",
+            image=ctk.CTkImage(
+                light_image=Image.open(Config.ImageFormats.EXCEL_PNG),
+                size=(
+                    Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
+                    Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
+                ),
+            ),
+            anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
+        )
+
+        self.file_entry = ctk.CTkEntry(
             self,
             width=316,
-            border_width=1,
-            border_color="#6C6C6C",
-            hover_color="#3D3E40",
-            fg_color="#343638",
+            border_width=Config.General.OUTPUT_ENTRY_BORDER_WIDTH,
+            border_color=Config.Colors.BORDER_COLOR,
+            fg_color=Config.Colors.ONYX,
             font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
-            values=Config.Values.FILE_OPTIONMENU,
-            option_button_enable=False,
-        )
-
-        self.file_action_optionmenu = CustomOptionMenu(
-            self,
-            font=ctk.CTkFont(
-                family=Config.Fonts.LABEL_TEXTS[0],
-                size=Config.Fonts.LABEL_TEXTS[1],
-                weight="bold",
-            ),
-            values=Config.Values.FILE_ACTION_OPTIONMENU,
         )
 
     def create_layout(self) -> None:
         """
         Create layout.
         """
-
         self.rowconfigure(
             (
                 Config.Layout.FILEHANDLING_TITLE_FARME_ROW,
@@ -142,28 +188,50 @@ class FileHandlingFrameView(ctk.CTkFrame):
             weight=1,
         )
 
-        self.title_label.grid(
+        self.title_frame.grid(
             row=Config.Layout.FILEHANDLING_TITLE_FARME_ROW,
             column=0,
-            sticky=Config.Layout.GENERAL_FRAME_STICKY,
-            padx=Config.Layout.LABELS_SOLO_PADX,
-            pady=Config.Layout.STANDART_PAD,
-        )
-
-        self.file_optionmenu.grid(
-            row=Config.Layout.FILEHANDLING_ENTRY_ROW,
-            column=0,
-            sticky=Config.Layout.GENERAL_FRAME_STICKY,
+            sticky=Config.Layout.GENERAL_INNER_FRAME_STICKY,
             padx=Config.Layout.STANDART_PAD,
+            pady=(3, 0),
+        )
+        self.title_frame.columnconfigure(0, weight=50)
+        self.title_frame.columnconfigure((1, 2, 3), weight=1)
+        self.title_label.grid(
+            row=0,
+            column=0,
+            sticky="w",
+            padx=Config.Layout.LABELS_IN_FRAME_PADX,
+            pady=Config.Layout.ZERO_PAD,
+        )
+        self.open_file_button.grid(
+            row=0,
+            column=1,
+            sticky="e",
+            padx=Config.Layout.ZERO_PAD,
+            pady=Config.Layout.ZERO_PAD,
+        )
+        self.load_file_button.grid(
+            row=0,
+            column=2,
+            sticky="e",
+            padx=Config.Layout.ZERO_PAD,
+            pady=Config.Layout.ZERO_PAD,
+        )
+        self.export_to_excel.grid(
+            row=0,
+            column=3,
+            sticky="e",
+            padx=Config.Layout.ZERO_PAD,
             pady=Config.Layout.ZERO_PAD,
         )
 
-        self.file_action_optionmenu.grid(
-            row=Config.Layout.FILEHANDLING_FILTER_FARME_ROW,
+        self.file_entry.grid(
+            row=Config.Layout.FILEHANDLING_ENTRY_ROW,
             column=0,
-            sticky=Config.Layout.GENERAL_FRAME_STICKY,
+            sticky=Config.Layout.GENERAL_INNER_FRAME_STICKY,
             padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
+            pady=(0, 7),
         )
 
 
@@ -176,7 +244,6 @@ class SearchBarFrameView(ctk.CTkFrame):
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
-            height=Config.Dimensions.SEARCHBAR_FRAME_HEIGHT,
             border_width=Config.General.FRAME_BORDER_WIDTH,
         )
 
@@ -187,7 +254,6 @@ class SearchBarFrameView(ctk.CTkFrame):
         """
         Initialize widgets.
         """
-
         self.title_frame = ctk.CTkFrame(
             self,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -208,10 +274,10 @@ class SearchBarFrameView(ctk.CTkFrame):
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             fg_color=Config.Colors.TRANSPARENT,
-            hover_color=Config.Colors.BUTTON_HOVER,
+            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
             image=ctk.CTkImage(
-                light_image=Image.open(Config.ImageFormats.CLEAR_SEARCH_RESULT_ICON),
+                light_image=Image.open(Config.ImageFormats.CLEAR_SEARCH_RESULT_PNG),
                 size=(
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
@@ -222,7 +288,7 @@ class SearchBarFrameView(ctk.CTkFrame):
 
         self.search_entry = ctk.CTkEntry(
             self,
-            border_width=Config.General.ENTRY_BORDER_WIDTH,
+            border_width=Config.General.INPUT_ENTRY_BORDER_WIDTH,
             font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
@@ -234,45 +300,51 @@ class SearchBarFrameView(ctk.CTkFrame):
             fg_color=Config.Colors.TRANSPARENT,
         )
 
-        self.search_selection_segmented_btn = ctk.CTkSegmentedButton(
+        self.search_selection_segmented_button_var = ctk.StringVar(
+            value=Config.Values.SEARCH_SELECTION_SEGMENTED_BUTTON[0]
+        )
+        self.search_selection_segmented_button = ctk.CTkSegmentedButton(
             self.filter_frame,
             font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
             values=Config.Values.SEARCH_SELECTION_SEGMENTED_BUTTON,
+            variable=self.search_selection_segmented_button_var,
         )
 
-        self.filter_signals_segmented_btn = ctk.CTkSegmentedButton(
+        self.filter_signals_segmented_button_var = ctk.StringVar(
+            value=Config.Values.FILTER_SIGNALS_SEGMENTED_BUTTON[0]
+        )
+        self.filter_signals_segmented_button = ctk.CTkSegmentedButton(
             self.filter_frame,
             font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
             values=Config.Values.FILTER_SIGNALS_SEGMENTED_BUTTON,
+            variable=self.filter_signals_segmented_button_var,
         )
 
     def create_layout(self) -> None:
         """
         Create layout.
         """
-
         self.rowconfigure(
             (
-                Config.Layout.SEARCHBAR_FRAME_TITLE_FARME_ROW,
-                Config.Layout.SEARCHBAR_FRAME_ENTRY_ROW,
-                Config.Layout.SEARCHBAR_FRAME_FILTER_FARME_ROW,
+                Config.Layout.SEARCHBAR_TITLE_FARME_ROW,
+                Config.Layout.SEARCHBAR_ENTRY_ROW,
+                Config.Layout.SEARCHBAR_FILTER_FARME_ROW,
             ),
             weight=1,
         )
 
         self.title_frame.grid(
-            row=Config.Layout.SEARCHBAR_FRAME_TITLE_FARME_ROW,
+            row=Config.Layout.SEARCHBAR_TITLE_FARME_ROW,
             column=0,
-            sticky=Config.Layout.GENERAL_FRAME_STICKY,
+            sticky=Config.Layout.GENERAL_INNER_FRAME_STICKY,
             padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
+            pady=(3, 0),
         )
-        self.title_frame.columnconfigure(0, weight=1)
-        self.title_frame.columnconfigure(1, weight=1)
+        self.title_frame.columnconfigure((0, 1), weight=1)
         self.title_label.grid(
             row=0,
             column=0,
@@ -289,34 +361,34 @@ class SearchBarFrameView(ctk.CTkFrame):
         )
 
         self.search_entry.grid(
-            row=Config.Layout.SEARCHBAR_FRAME_ENTRY_ROW,
+            row=Config.Layout.SEARCHBAR_ENTRY_ROW,
             column=0,
-            sticky=Config.Layout.GENERAL_FRAME_STICKY,
+            sticky=Config.Layout.GENERAL_INNER_FRAME_STICKY,
             padx=Config.Layout.STANDART_PAD,
             pady=Config.Layout.ZERO_PAD,
         )
 
         self.filter_frame.grid(
-            row=Config.Layout.SEARCHBAR_FRAME_FILTER_FARME_ROW,
+            row=Config.Layout.SEARCHBAR_FILTER_FARME_ROW,
             column=0,
-            sticky=Config.Layout.GENERAL_FRAME_STICKY,
+            sticky=Config.Layout.GENERAL_INNER_FRAME_STICKY,
             padx=Config.Layout.STANDART_PAD,
             pady=Config.Layout.STANDART_PAD,
         )
         self.filter_frame.columnconfigure(0, weight=1)
         self.filter_frame.columnconfigure(1, weight=2)
-        self.search_selection_segmented_btn.grid(
+        self.search_selection_segmented_button.grid(
             row=0,
             column=0,
             sticky="w",
-            padx=Config.Layout.RIGHT_PADX,
+            padx=(0, 3),
             pady=Config.Layout.ZERO_PAD,
         )
-        self.filter_signals_segmented_btn.grid(
+        self.filter_signals_segmented_button.grid(
             row=0,
             column=1,
             sticky="e",
-            padx=Config.Layout.LEFT_PADX,
+            padx=(3, 0),
             pady=Config.Layout.ZERO_PAD,
         )
 
@@ -342,7 +414,7 @@ class SignalListFrameView(ctk.CTkFrame):
         """
         self.signal_scrollableframe = ctk.CTkScrollableFrame(
             self,
-            fg_color="transparent",
+            fg_color=Config.Colors.TRANSPARENT,
             label_text=Config.LabelTexts.SIGNALLIST_TEXT,
             label_font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
@@ -354,7 +426,6 @@ class SignalListFrameView(ctk.CTkFrame):
         """
         Create layout.
         """
-
         self.pack_propagate(False)
         self.signal_scrollableframe.pack(
             side=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_SIDE,
@@ -386,7 +457,7 @@ class ConfigSignalListFrameView(ctk.CTkFrame):
         """
         self.signal_scrollableframe = ctk.CTkScrollableFrame(
             self,
-            fg_color="transparent",
+            fg_color=Config.Colors.TRANSPARENT,
             label_text=Config.LabelTexts.CONFIG_SIGNALLIST_TEXT,
             label_font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
@@ -398,7 +469,6 @@ class ConfigSignalListFrameView(ctk.CTkFrame):
         """
         Create layout.
         """
-
         self.pack_propagate(False)
         self.signal_scrollableframe.pack(
             side=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_SIDE,
@@ -406,4 +476,96 @@ class ConfigSignalListFrameView(ctk.CTkFrame):
             expand=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_EXPAND,
             padx=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PADX,
             pady=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PADY,
+        )
+
+
+class PresetFrameView(ctk.CTkFrame):
+    """
+    Layout of the signal configuration list.
+    """
+
+    def __init__(self, master: ctk.CTkFrame = None):
+        super().__init__(
+            master,
+            height=40,
+            corner_radius=Config.General.CORNER_RADIUS,
+            border_width=Config.General.FRAME_BORDER_WIDTH,
+        )
+
+        self.initialize_widgets()
+        self.create_layout()
+
+    def initialize_widgets(self) -> None:
+        """
+        Initialize widgets.
+        """
+        self.preset_entry = ctk.CTkEntry(
+            self,
+            border_width=Config.General.OUTPUT_ENTRY_BORDER_WIDTH,
+            border_color=Config.Colors.BORDER_COLOR,
+            fg_color=Config.Colors.ONYX,
+            font=ctk.CTkFont(
+                family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
+            ),
+        )
+
+        self.save_preset_button = ctk.CTkButton(
+            self,
+            width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            fg_color=Config.Colors.TRANSPARENT,
+            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            text="",
+            image=ctk.CTkImage(
+                light_image=Image.open(Config.ImageFormats.OPEN_FILE_PNG),
+                size=(
+                    Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
+                    Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
+                ),
+            ),
+            anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
+        )
+
+        self.load_preset_button = ctk.CTkButton(
+            self,
+            width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            fg_color=Config.Colors.TRANSPARENT,
+            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            text="",
+            image=ctk.CTkImage(
+                light_image=Image.open(Config.ImageFormats.REFRESH_PNG),
+                size=(
+                    Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
+                    Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
+                ),
+            ),
+            anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
+        )
+
+    def create_layout(self) -> None:
+        """
+        Create layout.
+        """
+        self.pack_propagate(False)
+        self.preset_entry.pack(
+            side="left",
+            fill="x",
+            expand=True,
+            padx=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDART_PAD,
+        )
+        self.load_preset_button.pack(
+            side="left",
+            fill="y",
+            expand=False,
+            padx=Config.Layout.ZERO_PAD,
+            pady=Config.Layout.STANDART_PAD,
+        )
+        self.save_preset_button.pack(
+            side="left",
+            fill="y",
+            expand=False,
+            padx=(0, 7),
+            pady=Config.Layout.STANDART_PAD,
         )
