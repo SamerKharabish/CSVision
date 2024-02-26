@@ -14,12 +14,9 @@ class SignalFrameView(ctk.CTkFrame):
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
-            border_width=Config.General.FRAME_BORDER_WIDTH,
+            fg_color=Config.Colors.TRANSPARENT,
         )
         self.root: ctk.CTk = None
-
-        self.min_width: int = Config.Dimensions.SIGNAL_FRAME_MIN_WIDTH
-        self.previous_size: int = self.winfo_width()
 
         self.initialize_widgets()
         self.create_layout()
@@ -28,50 +25,100 @@ class SignalFrameView(ctk.CTkFrame):
         """
         Initialize widgets.
         """
-        self.filehandling_frame_view: ctk.CTkFrame = FileHandlingFrameView(self)
-        self.searchbar_frame_view: ctk.CTkFrame = SearchBarFrameView(self)
-        self.signallist_frame_view: ctk.CTkFrame = SignalListFrameView(self)
-        self.config_signallist_frame_view: ctk.CTkFrame = ConfigSignalListFrameView(
-            self
+        self.side_bar_frame: ctk.CTkFrame = ctk.CTkFrame(
+            self,
+            corner_radius=Config.General.CORNER_RADIUS,
+            border_width=Config.General.FRAME_BORDER_WIDTH,
+            fg_color=Config.Colors.TRANSPARENT,
         )
-        self.preset_frame_view: ctk.CTkFrame = PresetFrameView(self)
+
+        self.signal_frame: ctk.CTkFrame = ctk.CTkFrame(
+            self,
+            corner_radius=Config.General.CORNER_RADIUS,
+            fg_color=Config.Colors.TRANSPARENT,
+        )
+        self.filehandling_frame_view: ctk.CTkFrame = FileHandlingFrameView(
+            self.signal_frame
+        )
+        self.searchbar_frame_view: ctk.CTkFrame = SearchBarFrameView(
+            self.signal_frame
+        )
+        self.signallist_frame_view: ctk.CTkFrame = SignalListFrameView(
+            self.signal_frame
+        )
+        self.config_signallist_frame_view: ctk.CTkFrame = ConfigSignalListFrameView(
+            self.signal_frame
+        )
+        self.preset_frame_view: ctk.CTkFrame = PresetFrameView(self.signal_frame)
+
+        self.toggle_side_bar_button = ctk.CTkButton(
+            self.side_bar_frame,
+            width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            fg_color=Config.Colors.TRANSPARENT,
+            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            text="",
+            image=ctk.CTkImage(
+                light_image=Image.open(Config.ImageFormats.HIDE_SIDEPANEL_BUTTON_PNG),
+                size=(
+                    Config.Dimensions.TOGGLE_SIDEPANEL_BUTTON_WIDTH_HEIGHT,
+                    Config.Dimensions.TOGGLE_SIDEPANEL_BUTTON_WIDTH_HEIGHT,
+                ),
+            ),
+            anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
+        )
+
+    def forget_layout(self) -> None:
+        """
+        Forget layout.
+        """
+        self.filehandling_frame_view.grid_forget()
+        self.searchbar_frame_view.grid_forget()
+        self.signallist_frame_view.grid_forget()
+        self.config_signallist_frame_view.grid_forget()
+        self.preset_frame_view.grid_forget()
 
     def create_layout(self) -> None:
         """
         Create layout.
         """
-        self.grid_rowconfigure(
+        self.side_bar_frame.pack(side="left", fill="y", expand=False)
+        self.toggle_side_bar_button.pack(
+            side="top",
+            fill="x",
+            expand=False,
+            padx=(3, 3),
+            pady=Config.Layout.STANDART_PAD,
+        )
+
+        self.signal_frame.pack(side="right", fill="y", expand=True)
+        self.signal_frame.grid_rowconfigure(
             (
                 Config.Layout.SIGNALLIST_FRAME_ROW,
                 Config.Layout.CONFIG_SIGNALLIST_FRAME_ROW,
             ),
             weight=1,
         )
-
         self.filehandling_frame_view.grid(
             row=Config.Layout.FILEHANDLING_FRAME_ROW,
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
-
         self.searchbar_frame_view.grid(
             row=Config.Layout.SEARCHBAR_FRAME_ROW,
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
-
         self.signallist_frame_view.grid(
             row=Config.Layout.SIGNALLIST_FRAME_ROW,
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
-
         self.config_signallist_frame_view.grid(
             row=Config.Layout.CONFIG_SIGNALLIST_FRAME_ROW,
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
-
         self.preset_frame_view.grid(
             row=4,
             column=0,
@@ -286,25 +333,26 @@ class SearchBarFrameView(ctk.CTkFrame):
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
 
-        self.search_entry = ctk.CTkEntry(
+        self.entry_frame = ctk.CTkFrame(
             self,
+            corner_radius=Config.General.CORNER_RADIUS,
+            fg_color=Config.Colors.TRANSPARENT,
+        )
+
+        self.search_entry = ctk.CTkEntry(
+            self.entry_frame,
+            width=204,
             border_width=Config.General.INPUT_ENTRY_BORDER_WIDTH,
             font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
         )
 
-        self.filter_frame = ctk.CTkFrame(
-            self,
-            corner_radius=Config.General.CORNER_RADIUS,
-            fg_color=Config.Colors.TRANSPARENT,
-        )
-
         self.search_selection_segmented_button_var = ctk.StringVar(
             value=Config.Values.SEARCH_SELECTION_SEGMENTED_BUTTON[0]
         )
         self.search_selection_segmented_button = ctk.CTkSegmentedButton(
-            self.filter_frame,
+            self.entry_frame,
             font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
@@ -316,7 +364,7 @@ class SearchBarFrameView(ctk.CTkFrame):
             value=Config.Values.FILTER_SIGNALS_SEGMENTED_BUTTON[0]
         )
         self.filter_signals_segmented_button = ctk.CTkSegmentedButton(
-            self.filter_frame,
+            self,
             font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
@@ -360,36 +408,37 @@ class SearchBarFrameView(ctk.CTkFrame):
             pady=Config.Layout.ZERO_PAD,
         )
 
-        self.search_entry.grid(
+        self.entry_frame.grid(
             row=Config.Layout.SEARCHBAR_ENTRY_ROW,
             column=0,
             sticky=Config.Layout.GENERAL_INNER_FRAME_STICKY,
             padx=Config.Layout.STANDART_PAD,
             pady=Config.Layout.ZERO_PAD,
         )
-
-        self.filter_frame.grid(
-            row=Config.Layout.SEARCHBAR_FILTER_FARME_ROW,
-            column=0,
-            sticky=Config.Layout.GENERAL_INNER_FRAME_STICKY,
-            padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
-        )
-        self.filter_frame.columnconfigure(0, weight=1)
-        self.filter_frame.columnconfigure(1, weight=2)
-        self.search_selection_segmented_button.grid(
+        self.entry_frame.columnconfigure(0, weight=2)
+        self.entry_frame.columnconfigure(1, weight=1)
+        self.search_entry.grid(
             row=0,
             column=0,
             sticky="w",
             padx=(0, 3),
             pady=Config.Layout.ZERO_PAD,
         )
-        self.filter_signals_segmented_button.grid(
+
+        self.search_selection_segmented_button.grid(
             row=0,
             column=1,
             sticky="e",
             padx=(3, 0),
             pady=Config.Layout.ZERO_PAD,
+        )
+
+        self.filter_signals_segmented_button.grid(
+            row=Config.Layout.SEARCHBAR_FILTER_FARME_ROW,
+            column=0,
+            sticky=Config.Layout.GENERAL_INNER_FRAME_STICKY,
+            padx=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDART_PAD,
         )
 
 
@@ -431,8 +480,8 @@ class SignalListFrameView(ctk.CTkFrame):
             side=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_SIDE,
             fill=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_FILL,
             expand=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_EXPAND,
-            padx=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PADX,
-            pady=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PADY,
+            padx=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PAD,
+            pady=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PAD,
         )
 
 
@@ -474,8 +523,8 @@ class ConfigSignalListFrameView(ctk.CTkFrame):
             side=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_SIDE,
             fill=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_FILL,
             expand=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_EXPAND,
-            padx=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PADX,
-            pady=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PADY,
+            padx=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PAD,
+            pady=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PAD,
         )
 
 

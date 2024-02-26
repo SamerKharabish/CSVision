@@ -17,6 +17,7 @@ class Config:
         FRAME_BORDER_WIDTH: int = 1
         INPUT_ENTRY_BORDER_WIDTH: int = 0
         OUTPUT_ENTRY_BORDER_WIDTH: int = 1
+        SIGNAL_FRAME_MINIMIZED: bool = False
 
     class WindowTitles:
         """
@@ -35,12 +36,11 @@ class Config:
         APP_WINDOW_HEIGHT: int = 666
         APP_WINDOW_MIN_HEIGHT: int = APP_WINDOW_HEIGHT - 200
 
-        SIGNAL_FRAME_MIN_WIDTH: int = 40
-
         STATUSBAR_FRAME_HEIGHT: int = 20
 
         ACTION_BUTTON_WIDTH_HEIGHT: int = 10
         ACTION_IMAGE_WIDTH_HEIGHT: int = 17
+        TOGGLE_SIDEPANEL_BUTTON_WIDTH_HEIGHT: int = 20
 
     class ImageFormats:
         """
@@ -53,6 +53,8 @@ class Config:
         EXCEL_PNG: str = "resources/Images/excel.png"
         OPEN_FILE_PNG: str = "resources/Images/open-file.png"
         REFRESH_PNG: str = "resources/Images/refresh.png"
+        HIDE_SIDEPANEL_BUTTON_PNG: str = "resources/Images/hide-sidepanel.png"
+        SHOW_SIDEPANEL_BUTTON_PNG: str = "resources/Images/show-sidepanel.png"
 
     class Layout:
         """
@@ -100,8 +102,7 @@ class Config:
         SIGNAL_FRAME_SCROLLABLEFRAME_SIDE: str = "top"
         SIGNAL_FRAME_SCROLLABLEFRAME_FILL: str = "both"
         SIGNAL_FRAME_SCROLLABLEFRAME_EXPAND: bool = True
-        SIGNAL_FRAME_SCROLLABLEFRAME_PADX: Tuple[int, int] = (1, 1)
-        SIGNAL_FRAME_SCROLLABLEFRAME_PADY: Tuple[int, int] = (1, 1)
+        SIGNAL_FRAME_SCROLLABLEFRAME_PAD: Tuple[int, int] = (1, 1)
 
     class KeyBindings:
         """

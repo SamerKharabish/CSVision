@@ -15,3 +15,16 @@ class PlotFrameView(ctk.CTkFrame):
             corner_radius=Config.General.CORNER_RADIUS,
             border_width=Config.General.FRAME_BORDER_WIDTH,
         )
+
+        self.initialize_widgets()
+        self.create_layout()
+
+    def initialize_widgets(self) -> None:
+        """
+        Initialize widgets.
+        """
+
+    def create_layout(self) -> None:
+        """
+        Create layout.
+        """

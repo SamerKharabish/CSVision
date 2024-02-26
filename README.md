@@ -39,7 +39,7 @@ CSVision/
 ## Features
 
 - ```Accessibility```: Application is closable by pressing the "exit/close" button or the ESC-key
-- ```Accessibility```: The signal frame is minimizable or maximazable by pressing Ctrl + B.
+- ```Accessibility```: The signal frame can be toggled by pressing 'Ctrl + B' or the button in the sidebar.
 
 ## Feedback
 

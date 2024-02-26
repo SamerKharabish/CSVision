@@ -39,5 +39,5 @@ class MainController:
         """
         self.master.bind(
             Config.KeyBindings.RESIZE_SIGNAL_FRAME,
-            self.signal_frame_controller.on_resize_signal_frame,
+            self.signal_frame_controller.on_toggle_side_bar,
         )
