@@ -42,8 +42,13 @@ class PlotFrameView(ctk.CTkFrame):
         )
         self.plot_types_segemented_button.set(Config.Values.PLOT_TYPES[0])
 
-        self.nav_toolbar_shell_frame = ctk.CTkFrame(self)
-        self.nav_toolbar_frame = ctk.CTkFrame(self.nav_toolbar_shell_frame, fg_color="transparent")
+        self.nav_toolbar_shell_frame = ctk.CTkFrame(
+            self,
+            border_width=Config.General.FRAME_BORDER_WIDTH,
+        )
+        self.nav_toolbar_frame = ctk.CTkFrame(
+            self.nav_toolbar_shell_frame, fg_color="transparent"
+        )
         self.reset_button = ctk.CTkButton(
             self.nav_toolbar_frame,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
@@ -160,44 +165,40 @@ class PlotFrameView(ctk.CTkFrame):
         )
 
         self.nav_toolbar_frame.pack(
-            side="top", fill="y", expand=False
+            side="top", fill="y", expand=False,
+            padx=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDART_PAD,
         )
 
         self.reset_button.pack(
             side="left",
             expand=False,
             padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
         )
         self.back_button.pack(
             side="left",
             expand=False,
             padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
         )
         self.forward_button.pack(
             side="left",
             expand=False,
             padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
         )
         self.pan_button.pack(
             side="left",
             expand=False,
             padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
         )
         self.zoom_button.pack(
             side="left",
             expand=False,
             padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
         )
         self.save_button.pack(
             side="left",
             expand=False,
             padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
         )
 
     def initialize_figure(self) -> None:
