@@ -41,7 +41,7 @@ class SignalFrameController:
         Hide the signal frame and update the toggle button image to indicate it can be shown.
         """
         self.view.root.after(
-            0, self.view.signal_frame.pack(side="right", fill="y", expand=True)
+            0, self.view.signal_panel.pack(side="right", fill="y", expand=True)
         )
         self.view.root.after(
             0,
@@ -63,7 +63,7 @@ class SignalFrameController:
         """
         Show the signal frame and update the toggle button image to indicate it can be hidden.
         """
-        self.view.root.after(0, self.view.signal_frame.pack_forget())
+        self.view.root.after(0, self.view.signal_panel.pack_forget())
         self.view.root.after(
             0,
             self.view.toggle_side_bar_button.configure(
