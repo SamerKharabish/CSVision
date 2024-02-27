@@ -10,7 +10,7 @@ class SignalFrameView(ctk.CTkFrame):
     Layout of the signal frame.
     """
 
-    def __init__(self, master: ctk.CTkFrame = None):
+    def __init__(self, master: ctk.CTkFrame = None) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -32,24 +32,22 @@ class SignalFrameView(ctk.CTkFrame):
             fg_color=Config.Colors.TRANSPARENT,
         )
 
-        self.signal_frame: ctk.CTkFrame = ctk.CTkFrame(
+        self.signal_panel: ctk.CTkFrame = ctk.CTkFrame(
             self,
             corner_radius=Config.General.CORNER_RADIUS,
             fg_color=Config.Colors.TRANSPARENT,
         )
         self.filehandling_frame_view: ctk.CTkFrame = FileHandlingFrameView(
-            self.signal_frame
+            self.signal_panel
         )
-        self.searchbar_frame_view: ctk.CTkFrame = SearchBarFrameView(
-            self.signal_frame
-        )
+        self.searchbar_frame_view: ctk.CTkFrame = SearchBarFrameView(self.signal_panel)
         self.signallist_frame_view: ctk.CTkFrame = SignalListFrameView(
-            self.signal_frame
+            self.signal_panel
         )
         self.config_signallist_frame_view: ctk.CTkFrame = ConfigSignalListFrameView(
-            self.signal_frame
+            self.signal_panel
         )
-        self.preset_frame_view: ctk.CTkFrame = PresetFrameView(self.signal_frame)
+        self.preset_frame_view: ctk.CTkFrame = PresetFrameView(self.signal_panel)
 
         self.toggle_side_bar_button = ctk.CTkButton(
             self.side_bar_frame,
@@ -68,31 +66,29 @@ class SignalFrameView(ctk.CTkFrame):
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
 
-    def forget_layout(self) -> None:
-        """
-        Forget layout.
-        """
-        self.filehandling_frame_view.grid_forget()
-        self.searchbar_frame_view.grid_forget()
-        self.signallist_frame_view.grid_forget()
-        self.config_signallist_frame_view.grid_forget()
-        self.preset_frame_view.grid_forget()
-
     def create_layout(self) -> None:
         """
         Create layout.
         """
-        self.side_bar_frame.pack(side="left", fill="y", expand=False)
+        self.side_bar_frame.pack(
+            side=Config.Layout.SIDE_BAR_FRAME_SIDE,
+            fill=Config.Layout.SIDE_BAR_FRAME_FILL,
+            expand=Config.Layout.SIDE_BAR_FRAME_EXPAND,
+        )
         self.toggle_side_bar_button.pack(
-            side="top",
-            fill="x",
-            expand=False,
-            padx=(3, 3),
+            side=Config.Layout.TOGGLE_SIDE_BAR_BUTTON_SIDE,
+            fill=Config.Layout.TOGGLE_SIDE_BAR_BUTTON_FILL,
+            expand=Config.Layout.TOGGLE_SIDE_BAR_BUTTON_EXPAND,
+            padx=Config.Layout.TOGGLE_SIDE_BAR_BUTTON_PAD,
             pady=Config.Layout.STANDART_PAD,
         )
 
-        self.signal_frame.pack(side="right", fill="y", expand=True)
-        self.signal_frame.grid_rowconfigure(
+        self.signal_panel.pack(
+            side=Config.Layout.SIGNAL_PANEL_SIDE,
+            fill=Config.Layout.SIGNAL_PANEL_FILL,
+            expand=Config.Layout.SIGNAL_PANEL_EXPAND,
+        )
+        self.signal_panel.grid_rowconfigure(
             (
                 Config.Layout.SIGNALLIST_FRAME_ROW,
                 Config.Layout.CONFIG_SIGNALLIST_FRAME_ROW,
@@ -131,7 +127,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
     Layout of the file handling frame.
     """
 
-    def __init__(self, master: ctk.CTkFrame = None):
+    def __init__(self, master: ctk.CTkFrame = None) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -287,7 +283,7 @@ class SearchBarFrameView(ctk.CTkFrame):
     Layout of the search bar.
     """
 
-    def __init__(self, master: ctk.CTkFrame = None):
+    def __init__(self, master: ctk.CTkFrame = None) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -447,7 +443,7 @@ class SignalListFrameView(ctk.CTkFrame):
     Layout of the signal list.
     """
 
-    def __init__(self, master: ctk.CTkFrame = None):
+    def __init__(self, master: ctk.CTkFrame = None) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -490,7 +486,7 @@ class ConfigSignalListFrameView(ctk.CTkFrame):
     Layout of the signal configuration list.
     """
 
-    def __init__(self, master: ctk.CTkFrame = None):
+    def __init__(self, master: ctk.CTkFrame = None) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -533,7 +529,7 @@ class PresetFrameView(ctk.CTkFrame):
     Layout of the signal configuration list.
     """
 
-    def __init__(self, master: ctk.CTkFrame = None):
+    def __init__(self, master: ctk.CTkFrame = None) -> None:
         super().__init__(
             master,
             height=40,

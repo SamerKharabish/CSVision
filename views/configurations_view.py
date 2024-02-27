@@ -55,6 +55,12 @@ class Config:
         REFRESH_PNG: str = "resources/Images/refresh.png"
         HIDE_SIDEPANEL_BUTTON_PNG: str = "resources/Images/hide-sidepanel.png"
         SHOW_SIDEPANEL_BUTTON_PNG: str = "resources/Images/show-sidepanel.png"
+        RESET_BUTTON_PNG: str = "resources/Images/reset.png"
+        BACK_BUTTON_PNG: str = "resources/Images/back.png"
+        PAN_BUTTON_PNG: str = "resources/Images/pan.png"
+        SAVE_BUTTON_PNG: str = "resources/Images/save.png"
+        FORWARD_BUTTON_PNG: str = "resources/Images/forward.png"
+        ZOOM_BUTTON_PNG: str = "resources/Images/zoom.png"
 
     class Layout:
         """
@@ -76,6 +82,19 @@ class Config:
         PLOT_FRAME_SIDE: str = "right"
         PLOT_FRAME_FILL: str = "both"
         PLOT_FRAME_EXPAND: bool = True
+
+        SIDE_BAR_FRAME_SIDE: str = "left"
+        SIDE_BAR_FRAME_FILL: str = "y"
+        SIDE_BAR_FRAME_EXPAND: bool = False
+
+        SIGNAL_PANEL_SIDE: str = "right"
+        SIGNAL_PANEL_FILL: str = "y"
+        SIGNAL_PANEL_EXPAND: bool = True
+
+        TOGGLE_SIDE_BAR_BUTTON_SIDE: str = "top"
+        TOGGLE_SIDE_BAR_BUTTON_FILL: str = "x"
+        TOGGLE_SIDE_BAR_BUTTON_EXPAND: bool = False
+        TOGGLE_SIDE_BAR_BUTTON_PAD: Tuple[int, int] = (3, 3)
 
         FILEHANDLING_FRAME_ROW: int = 0
         SEARCHBAR_FRAME_ROW: int = 1
@@ -117,7 +136,7 @@ class Config:
         Label texts
         """
 
-        FILEHANDLING_TEXT: str = "EXPLORER"
+        FILEHANDLING_TEXT: str = "FILE EXPLORER"
         SEARCHBAR_TEXT: str = "SEARCH"
         SIGNALLIST_TEXT: str = f"{'SIGNALS':>9}"
         CONFIG_SIGNALLIST_TEXT: str = f"{'CONFIGURATIONS':>16}"
@@ -140,6 +159,7 @@ class Config:
         TRANSPARENT_BUTTON_HOVER: str = "#3E3E3E"
         BORDER_COLOR: str = "#6C6C6C"
         COLORED_BUTTON_HOVER: str = "#3D3E40"
+        PLOT_FRAME_COLOR: str = "#F8F8FF"
 
     class Values:
         """
@@ -152,9 +172,9 @@ class Config:
             "Non const. zero",
             "Non const.",
         ]
-        FILE_OPTIONMENU: List[str] = [" "]
-        FILE_ACTION_OPTIONMENU: List[str] = [
-            "OPEN FILE",
-            "LOAD FILE",
-            "EXPORT to EXCEL",
+        PLOT_TYPES: List[str] = [
+            "plot",
+            "scatter",
+            "bar",
+            "stem",
         ]
