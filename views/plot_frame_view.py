@@ -45,6 +45,7 @@ class PlotFrameView(ctk.CTkFrame):
         self.nav_toolbar_frame = ctk.CTkFrame(
             self, border_width=Config.General.FRAME_BORDER_WIDTH
         )
+
         self.reset_button = ctk.CTkButton(
             self.nav_toolbar_frame,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
