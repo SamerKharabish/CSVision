@@ -28,7 +28,9 @@ class PlotFrameView(ctk.CTkFrame):
         """
         Initialize widgets.
         """
-        self.plot_frame = ctk.CTkFrame(self, fg_color=Config.Colors.PLOT_FRAME_COLOR)
+        self.plot_area_frame = ctk.CTkFrame(
+            self, fg_color=Config.Colors.PLOT_FRAME_COLOR
+        )
         self.plot_types_segemented_button = ctk.CTkSegmentedButton(
             self,
             background_corner_colors=(
@@ -43,7 +45,15 @@ class PlotFrameView(ctk.CTkFrame):
         self.plot_types_segemented_button.set(Config.Values.PLOT_TYPES[0])
 
         self.nav_toolbar_frame = ctk.CTkFrame(
-            self, border_width=Config.General.FRAME_BORDER_WIDTH
+            self,
+            corner_radius=Config.General.NAV_TOOLBAR_CORNER_RADIUS,
+            background_corner_colors=(
+                Config.Colors.PLOT_FRAME_COLOR,
+                Config.Colors.PLOT_FRAME_COLOR,
+                self._fg_color,
+                self._fg_color,
+            ),
+            border_width=Config.General.FRAME_BORDER_WIDTH,
         )
 
         self.reset_button = ctk.CTkButton(
@@ -170,62 +180,68 @@ class PlotFrameView(ctk.CTkFrame):
         """
         Create layout.
         """
-        self.plot_types_segemented_button.place(
-            anchor="nw",
-            x=40,
-            y=7,
+        self.plot_area_frame.pack(
+            side=Config.Layout.PLOT_FRAME_PLOT_AREA_FRAME_SIDE,
+            fill=Config.Layout.PLOT_FRAME_PLOT_AREA_FRAME_FILL,
+            expand=Config.Layout.PLOT_FRAME_PLOT_AREA_FRAME_EXPAND,
+            padx=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.PLOT_FRAME_PLOT_AREA_FRAME_PADY,
         )
 
-        self.plot_frame.pack(fill="both", expand=True, padx=(10, 10), pady=(20, 52))
+        self.plot_types_segemented_button.place(
+            x=Config.Layout.PLOT_FRAME_SEGMENTED_BUTTON_X,
+            y=Config.Layout.PLOT_FRAME_SEGMENTED_BUTTON_Y,
+            anchor=Config.Layout.PLOT_FRAME_SEGMENTED_BUTTON_ANCHOR,
+        )
 
         self.nav_toolbar_frame.place(
-            rely=1,
-            relx=0.5,
-            x=10,
-            y=-7,
-            anchor="s",
+            relx=Config.Layout.PLOT_FRAME_NAV_TOOLBAR_FRAME_RELX,
+            rely=Config.Layout.PLOT_FRAME_NAV_TOOLBAR_FRAME_RELY,
+            x=Config.Layout.PLOT_FRAME_NAV_TOOLBAR_FRAME_X,
+            y=Config.Layout.PLOT_FRAME_NAV_TOOLBAR_FRAME_Y,
+            anchor=Config.Layout.PLOT_FRAME_NAV_TOOLBAR_FRAME_ANCHOR,
         )
 
         self.reset_button.pack(
-            side="left",
-            expand=False,
-            padx=(30, 7),
+            side=Config.Layout.NAV_TOOLBAR_BUTTONS_SIDE,
+            expand=Config.Layout.NAV_TOOLBAR_BUTTONS_EXPAND,
+            padx=Config.Layout.NAV_TOOLBAR_LEFT_BUTTONS_PADX,
             pady=Config.Layout.STANDART_PAD,
         )
         self.back_button.pack(
-            side="left",
-            expand=False,
+            side=Config.Layout.NAV_TOOLBAR_BUTTONS_SIDE,
+            expand=Config.Layout.NAV_TOOLBAR_BUTTONS_EXPAND,
             padx=Config.Layout.STANDART_PAD,
             pady=Config.Layout.STANDART_PAD,
         )
         self.forward_button.pack(
-            side="left",
-            expand=False,
+            side=Config.Layout.NAV_TOOLBAR_BUTTONS_SIDE,
+            expand=Config.Layout.NAV_TOOLBAR_BUTTONS_EXPAND,
             padx=Config.Layout.STANDART_PAD,
             pady=Config.Layout.STANDART_PAD,
         )
         self.pan_button.pack(
-            side="left",
-            expand=False,
+            side=Config.Layout.NAV_TOOLBAR_BUTTONS_SIDE,
+            expand=Config.Layout.NAV_TOOLBAR_BUTTONS_EXPAND,
             padx=Config.Layout.STANDART_PAD,
             pady=Config.Layout.STANDART_PAD,
         )
         self.zoom_button.pack(
-            side="left",
-            expand=False,
+            side=Config.Layout.NAV_TOOLBAR_BUTTONS_SIDE,
+            expand=Config.Layout.NAV_TOOLBAR_BUTTONS_EXPAND,
             padx=Config.Layout.STANDART_PAD,
             pady=Config.Layout.STANDART_PAD,
         )
         self.save_button.pack(
-            side="left",
-            expand=False,
+            side=Config.Layout.NAV_TOOLBAR_BUTTONS_SIDE,
+            expand=Config.Layout.NAV_TOOLBAR_BUTTONS_EXPAND,
             padx=Config.Layout.STANDART_PAD,
             pady=Config.Layout.STANDART_PAD,
         )
         self.legend_button.pack(
-            side="left",
-            expand=False,
-            padx=(7, 30),
+            side=Config.Layout.NAV_TOOLBAR_BUTTONS_SIDE,
+            expand=Config.Layout.NAV_TOOLBAR_BUTTONS_EXPAND,
+            padx=Config.Layout.NAV_TOOLBAR_RIGHT_BUTTONS_PADX,
             pady=Config.Layout.STANDART_PAD,
         )
 
@@ -238,7 +254,7 @@ class PlotFrameView(ctk.CTkFrame):
         self.figure.set_tight_layout(True)
 
         # Embed the Matplotlib figure in the custom frame
-        self.canvas = FigureCanvasTkAgg(self.figure, self.plot_frame)
+        self.canvas = FigureCanvasTkAgg(self.figure, self.plot_area_frame)
         self.canvas_widget = self.canvas.get_tk_widget()
 
         self.nav_toolbar = NavigationToolbar2Tk(self.canvas, self, pack_toolbar=False)
@@ -248,5 +264,9 @@ class PlotFrameView(ctk.CTkFrame):
         Create figure layout.
         """
         self.canvas_widget.pack(
-            fill=ctk.BOTH, expand=True, padx=(20, 20), pady=(20, 20)
+            side=Config.Layout.CANVAS_SIDE,
+            fill=Config.Layout.CANVAS_FILL,
+            expand=Config.Layout.CANVAS_EXPAND,
+            padx=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PAD,
+            pady=Config.Layout.STANDART_PAD,
         )
