@@ -42,17 +42,14 @@ class PlotFrameView(ctk.CTkFrame):
         )
         self.plot_types_segemented_button.set(Config.Values.PLOT_TYPES[0])
 
-        self.nav_toolbar_shell_frame = ctk.CTkFrame(
-            self,
-            border_width=Config.General.FRAME_BORDER_WIDTH,
-        )
         self.nav_toolbar_frame = ctk.CTkFrame(
-            self.nav_toolbar_shell_frame, fg_color="transparent"
+            self, border_width=Config.General.FRAME_BORDER_WIDTH
         )
         self.reset_button = ctk.CTkButton(
             self.nav_toolbar_frame,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            border_width=Config.General.FRAME_BORDER_WIDTH,
             fg_color=Config.Colors.TRANSPARENT,
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
@@ -69,6 +66,7 @@ class PlotFrameView(ctk.CTkFrame):
             self.nav_toolbar_frame,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            border_width=Config.General.FRAME_BORDER_WIDTH,
             fg_color=Config.Colors.TRANSPARENT,
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
@@ -85,6 +83,7 @@ class PlotFrameView(ctk.CTkFrame):
             self.nav_toolbar_frame,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            border_width=Config.General.FRAME_BORDER_WIDTH,
             fg_color=Config.Colors.TRANSPARENT,
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
@@ -101,6 +100,7 @@ class PlotFrameView(ctk.CTkFrame):
             self.nav_toolbar_frame,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            border_width=Config.General.FRAME_BORDER_WIDTH,
             fg_color=Config.Colors.TRANSPARENT,
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
@@ -117,6 +117,7 @@ class PlotFrameView(ctk.CTkFrame):
             self.nav_toolbar_frame,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            border_width=Config.General.FRAME_BORDER_WIDTH,
             fg_color=Config.Colors.TRANSPARENT,
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
@@ -133,6 +134,7 @@ class PlotFrameView(ctk.CTkFrame):
             self.nav_toolbar_frame,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            border_width=Config.General.FRAME_BORDER_WIDTH,
             fg_color=Config.Colors.TRANSPARENT,
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
@@ -145,60 +147,85 @@ class PlotFrameView(ctk.CTkFrame):
             ),
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
+        self.legend_button = ctk.CTkButton(
+            self.nav_toolbar_frame,
+            width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            border_width=Config.General.FRAME_BORDER_WIDTH,
+            fg_color=Config.Colors.TRANSPARENT,
+            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            text="",
+            image=ctk.CTkImage(
+                light_image=Image.open(Config.ImageFormats.LEGEND_BUTTON_PNG),
+                size=(
+                    Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
+                    Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
+                ),
+            ),
+            anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
+        )
 
     def create_layout(self) -> None:
         """
         Create layout.
         """
-        self.plot_frame.pack(
-            side="top", fill="both", expand=True, padx=(10, 10), pady=(20, 5)
-        )
-
         self.plot_types_segemented_button.place(
             anchor="nw",
             x=40,
             y=7,
         )
 
-        self.nav_toolbar_shell_frame.pack(
-            side="bottom", fill="x", expand=False, padx=(10, 10), pady=(5, 10)
-        )
+        self.plot_frame.pack(fill="both", expand=True, padx=(10, 10), pady=(20, 52))
 
-        self.nav_toolbar_frame.pack(
-            side="top", fill="y", expand=False,
-            padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
+        self.nav_toolbar_frame.place(
+            rely=1,
+            relx=0.5,
+            x=10,
+            y=-7,
+            anchor="s",
         )
 
         self.reset_button.pack(
             side="left",
             expand=False,
-            padx=Config.Layout.STANDART_PAD,
+            padx=(30, 7),
+            pady=Config.Layout.STANDART_PAD,
         )
         self.back_button.pack(
             side="left",
             expand=False,
             padx=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDART_PAD,
         )
         self.forward_button.pack(
             side="left",
             expand=False,
             padx=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDART_PAD,
         )
         self.pan_button.pack(
             side="left",
             expand=False,
             padx=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDART_PAD,
         )
         self.zoom_button.pack(
             side="left",
             expand=False,
             padx=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDART_PAD,
         )
         self.save_button.pack(
             side="left",
             expand=False,
             padx=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDART_PAD,
+        )
+        self.legend_button.pack(
+            side="left",
+            expand=False,
+            padx=(7, 30),
+            pady=Config.Layout.STANDART_PAD,
         )
 
     def initialize_figure(self) -> None:

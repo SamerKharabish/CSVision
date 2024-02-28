@@ -32,7 +32,7 @@ class Config:
         """
 
         APP_WINDOW_WIDTH: int = 1150
-        APP_WINDOW_MIN_WIDTH: int = APP_WINDOW_WIDTH
+        APP_WINDOW_MIN_WIDTH: int = APP_WINDOW_WIDTH - 200
         APP_WINDOW_HEIGHT: int = 666
         APP_WINDOW_MIN_HEIGHT: int = APP_WINDOW_HEIGHT - 200
 
@@ -61,6 +61,7 @@ class Config:
         SAVE_BUTTON_PNG: str = "resources/Images/save.png"
         FORWARD_BUTTON_PNG: str = "resources/Images/forward.png"
         ZOOM_BUTTON_PNG: str = "resources/Images/zoom.png"
+        LEGEND_BUTTON_PNG: str = "resources/Images/legend.png"
 
     class Layout:
         """
@@ -173,8 +174,8 @@ class Config:
             "Non const.",
         ]
         PLOT_TYPES: List[str] = [
-            "plot",
-            "scatter",
-            "bar",
-            "stem",
+            "Plot",
+            "Scatter",
+            "Bar",
+            "Stem",
         ]
