@@ -14,6 +14,7 @@ class Config:
         """
 
         CORNER_RADIUS: int = 0
+        NAV_TOOLBAR_CORNER_RADIUS: int = 10
         FRAME_BORDER_WIDTH: int = 1
         INPUT_ENTRY_BORDER_WIDTH: int = 0
         OUTPUT_ENTRY_BORDER_WIDTH: int = 1
@@ -109,8 +110,6 @@ class Config:
         FILEHANDLING_TITLE_FARME_ROW: int = 0
         FILEHANDLING_ENTRY_ROW: int = 1
         FILEHANDLING_FILTER_FARME_ROW: int = 2
-        CONFIG_SIGNALLIST_SCROLLABLE_FRAME_ROW: int = 0
-        CONFIG_SIGNALLIST_PRESET_FRAME_ROW: int = 1
         GENERAL_INNER_FRAME_STICKY: str = "ew"
 
         SIGNAL_FRAME_LABELS_ANCHOR: str = "w"
@@ -123,6 +122,30 @@ class Config:
         SIGNAL_FRAME_SCROLLABLEFRAME_FILL: str = "both"
         SIGNAL_FRAME_SCROLLABLEFRAME_EXPAND: bool = True
         SIGNAL_FRAME_SCROLLABLEFRAME_PAD: Tuple[int, int] = (1, 1)
+
+        PLOT_FRAME_PLOT_AREA_FRAME_SIDE: str = "top"
+        PLOT_FRAME_PLOT_AREA_FRAME_FILL: str = "both"
+        PLOT_FRAME_PLOT_AREA_FRAME_EXPAND: bool = True
+        PLOT_FRAME_PLOT_AREA_FRAME_PADY: Tuple[int, int] = (20, 30)
+
+        PLOT_FRAME_SEGMENTED_BUTTON_X: int = 40
+        PLOT_FRAME_SEGMENTED_BUTTON_Y: int = 7
+        PLOT_FRAME_SEGMENTED_BUTTON_ANCHOR: str = "nw"
+
+        PLOT_FRAME_NAV_TOOLBAR_FRAME_RELX: float = 0.5
+        PLOT_FRAME_NAV_TOOLBAR_FRAME_RELY: float = 1.0
+        PLOT_FRAME_NAV_TOOLBAR_FRAME_X: int = 10
+        PLOT_FRAME_NAV_TOOLBAR_FRAME_Y: int = -7
+        PLOT_FRAME_NAV_TOOLBAR_FRAME_ANCHOR: str = "s"
+
+        NAV_TOOLBAR_BUTTONS_SIDE: str = "left"
+        NAV_TOOLBAR_BUTTONS_EXPAND: bool = True
+        NAV_TOOLBAR_LEFT_BUTTONS_PADX: Tuple[int, int] = (30, 7)
+        NAV_TOOLBAR_RIGHT_BUTTONS_PADX: Tuple[int, int] = (7, 30)
+
+        CANVAS_SIDE: str = "top"
+        CANVAS_FILL: str = "both"
+        CANVAS_EXPAND: bool = True
 
     class KeyBindings:
         """
