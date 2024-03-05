@@ -170,8 +170,8 @@ class Config:
         Fonts
         """
 
-        LABEL_TEXTS: Tuple[str, int] = ("Calibri", 14)
-        BUTTON_TEXTS: Tuple[str, int, str] = ("Calibri", 14, "bold")
+        LABEL_TEXTS: Tuple[str, int] = ("Kento", 12)
+        BUTTON_TEXTS: Tuple[str, int, str] = ("Kento", 12, "bold")
 
     class Colors:
         """
