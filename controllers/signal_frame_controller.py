@@ -4,8 +4,9 @@ import os
 from tkinter import filedialog
 from PIL import Image
 import customtkinter as ctk
-from utils.helper_functions import find_root
+from utils.helper_functions import find_root, calculate_absolute_position
 from views.configurations_view import Config
+from models.yaml_manager import YAMLManager
 
 
 class SignalFrameController:
@@ -23,6 +24,37 @@ class SignalFrameController:
         self.view.toggle_side_bar_button.configure(command=self.toggle_side_bar)
         self.view.filehandling_frame_view.open_file_button.configure(
             command=self.open_file
+        )
+
+        self.file_manager = YAMLManager("models/file_paths.yaml")
+
+        self.setup_bindings()
+
+    def setup_bindings(self) -> None:
+        """
+        Binding the AppController widgets to accessibility callback functions.
+        """
+        self.view.filehandling_frame_view.file_entry.bind(
+            "<Button-1>", self.on_file_entry
+        )
+
+    def on_file_entry(self, _: None = None) -> None:
+        """
+        Creates and positions an file menu window relative to the file entry.
+        """
+        file_options_dict = self.file_manager.open_yaml_file()
+
+        # Calculate the file entry's absolute position
+        file_entry_x, file_entry_y = calculate_absolute_position(
+            self.view.filehandling_frame_view.file_entry
+        )
+
+        # Calculate the new window's position
+        new_window_x = self.view.root.winfo_rootx() + file_entry_x
+        new_window_y = (
+            self.view.root.winfo_rooty()
+            + file_entry_y
+            + self.view.filehandling_frame_view.file_entry.winfo_height()
         )
 
     def on_toggle_side_bar(self, _: None = None) -> None:
@@ -90,10 +122,14 @@ class SignalFrameController:
         filepath = filedialog.askopenfilename(initialdir="/", filetypes=filetype)
 
         if filepath:
+            self.file_manager.dump_yaml_file(filepath)
             filesize_kb = round(os.path.getsize(filepath) / 1024, 3)
+            # TODO: show filesize in statusbar
             formatted_filesize = f"{filesize_kb:,.3f} KB".replace(",", ".")
+            self.view.filehandling_frame_view.file_entry.configure(state="normal")
             self.view.filehandling_frame_view.file_entry.delete(0, ctk.END)
             self.view.filehandling_frame_view.file_entry.insert(
                 0, filepath.rsplit("/", 1)[1]
             )
+            self.view.filehandling_frame_view.file_entry.configure(state="readonly")
             print(f"File selected: {filepath}; size: {formatted_filesize}")
