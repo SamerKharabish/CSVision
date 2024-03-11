@@ -1,9 +1,9 @@
 """ Defines the SignalFrameView class with the signal frame layout. """
 
-from typing import Tuple
 from PIL import Image
 import customtkinter as ctk
 from views.configurations_view import Config
+from utils.custom_input_entry import CustomInputEntry
 
 
 class SignalFrameView(ctk.CTkFrame):
@@ -208,7 +208,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
 
-        self.file_entry = ctk.CTkEntry(
+        self.file_entry = CustomInputEntry(
             self,
             width=320,
             border_width=Config.General.OUTPUT_ENTRY_BORDER_WIDTH,
@@ -615,33 +615,4 @@ class PresetFrameView(ctk.CTkFrame):
             expand=False,
             padx=(0, 7),
             pady=Config.Layout.STANDART_PAD,
-        )
-
-
-class OptionWindow(ctk.CTkToplevel):
-    """
-    Functionality and layout of the file option window.
-    """
-    def __init__(
-        self,
-        *args,
-        fg_color: str | Tuple[str, str] | None = None,
-        corner_radius: int = 4,
-        **kwargs
-    ):
-        super().__init__(*args, fg_color=fg_color, **kwargs)
-
-        self.fg_color: str | Tuple[str, str] | None = fg_color
-        self.corner_radius: int = corner_radius
-
-        self._initialize_widgets()
-
-    def _initialize_widgets(self) -> None:
-        """
-        Initialize widgets.
-        """
-        self.file_option_frame = ctk.CTkFrame(
-            self,
-            corner_radius=self.corner_radius,
-            fg_color=self.fg_color,
         )
