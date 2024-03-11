@@ -27,6 +27,7 @@ class CustomInputEntry(ctk.CTkEntry):
         placeholder_text: str | None = None,
         font: tuple | ctk.CTkFont | None = None,
         state: str = ctk.NORMAL,
+        max_elements: int = 5,
         **kwargs,
     ):
         super().__init__(
@@ -52,6 +53,7 @@ class CustomInputEntry(ctk.CTkEntry):
         self.border_color: str | Tuple[str, str] | None = border_color
         self.font: tuple | ctk.CTkFont | None = font
         self.fg_color: str | Tuple[str, str] | None = fg_color
+        self.max_elements: int = max_elements
 
         self.root = find_root(self)
         self.file_option_window: ctk.CTkToplevel = None
@@ -83,10 +85,10 @@ class CustomInputEntry(ctk.CTkEntry):
             border_width=self.border_width,
             border_color=self.border_color,
             width=self.winfo_width(),
-            height=2 * self.winfo_height(),
+            height=self.max_elements * self.winfo_height(),
             x=new_window_x,
             y=new_window_y,
-            file_list=["test", "test2"],
+            file_list=["test", "test2", "test", "test2", "test"],
             font=self.font,
         )
 
@@ -123,7 +125,7 @@ class FileOptionWindow(ctk.CTkToplevel):
         self.buttons: List[ctk.CTkButton] = []
         self.pad: int = 2
 
-        self.geometry(f"{width}x{height+(2 * self.pad * 2)}+{x}+{y}")
+        self.geometry(f"{width}x{height}+{x}+{y}")
         self.overrideredirect(True)
         self.after(10, self.focus_force)
 
@@ -157,9 +159,7 @@ class FileOptionWindow(ctk.CTkToplevel):
             button.bind("<Enter>", partial(self.on_enter, button))
             button.bind("<Leave>", partial(self.on_leave, button))
 
-            self.buttons.append(
-                button
-            )
+            self.buttons.append(button)
 
     def _create_layout(self) -> None:
         """
