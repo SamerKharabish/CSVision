@@ -37,21 +37,21 @@ class YAMLManager:
         return self._file_path
 
     @file_path.setter
-    def file_path(self, value: str) -> None:
+    def file_path(self, file_path: str) -> None:
         """
         Set the file path.
 
         Args:
-            value (str): The file path to the YAML file.
+            file_path (str): The file path to the YAML file.
         """
-        if not isinstance(value, str):
+        if not isinstance(file_path, str):
             raise TypeError("Invalid file type")
-        elif value == "":
+        elif file_path == "":
             raise ValueError("Missing 1 required positional argument: 'file_path'")
-        elif not value.endswith(".yaml") and not value.endswith(".yml"):
-            raise ValueError(f"Invalid file type: {Path(value).suffix}")
+        elif not file_path.endswith(".yaml") and not file_path.endswith(".yml"):
+            raise ValueError(f"Invalid file type: {Path(file_path).suffix}")
         else:
-            self._file_path = value
+            self._file_path = file_path
 
     def open_yaml_file(self) -> Dict:
         """
