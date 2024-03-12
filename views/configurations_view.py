@@ -170,6 +170,7 @@ class Config:
         Fonts
         """
 
+        STATUS_BAR_TEXTS: Tuple[str, int] = ("Kento", 12)
         LABEL_TEXTS: Tuple[str, int] = ("Kento", 12)
         BUTTON_TEXTS: Tuple[str, int, str] = ("Kento", 12, "bold")
 
@@ -202,3 +203,5 @@ class Config:
             "Bar",
             "Stem",
         ]
+        COLLECTION_FILEPATH_YAML: str = "models/file_paths.yaml"
+        FILE_TYPE_TO_READ: List[Tuple[str, str]] = [("CSV", "*.csv*")]

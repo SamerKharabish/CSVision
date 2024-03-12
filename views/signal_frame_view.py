@@ -208,16 +208,19 @@ class FileHandlingFrameView(ctk.CTkFrame):
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
 
+        self.selected_file_path = ctk.StringVar()
         self.file_entry = CustomInputEntry(
             self,
             width=320,
             border_width=Config.General.OUTPUT_ENTRY_BORDER_WIDTH,
-            border_color=Config.Colors.BORDER_COLOR,
             fg_color=Config.Colors.ONYX,
+            border_color=Config.Colors.BORDER_COLOR,
+            selected_file_path=self.selected_file_path,
             font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
             state="readonly",
+            collection_filepath_yaml=Config.Values.COLLECTION_FILEPATH_YAML
         )
 
     def create_layout(self) -> None:

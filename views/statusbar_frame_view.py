@@ -24,12 +24,22 @@ class StatusbarFrameView(ctk.CTkFrame):
         """
         Initialize widgets.
         """
+        self.filesize_label = ctk.CTkLabel(
+            self,
+            text="4.6 kB",
+            font=ctk.CTkFont(
+                family=Config.Fonts.STATUS_BAR_TEXTS[0],
+                size=Config.Fonts.STATUS_BAR_TEXTS[1],
+            ),
+        )
         self.progressbar = ctk.CTkProgressBar(self, width=310)
 
     def create_layout(self) -> None:
         """
         Create layout.
         """
+        self.filesize_label.pack(side="left", padx=(50, 10))
+
         self.progressbar.pack(
-            side="left", padx=(50, 10), pady=Config.Layout.STANDART_PAD
+            side="left", padx=(10, 10), pady=Config.Layout.STANDART_PAD
         )
