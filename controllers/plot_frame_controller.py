@@ -8,5 +8,5 @@ class PlotFrameController:
     Functionality of the plot frame.
     """
 
-    def __init__(self, view: ctk.CTkFrame = None) -> None:
+    def __init__(self, view: ctk.CTkFrame) -> None:
         self.view: ctk.CTkFrame = view

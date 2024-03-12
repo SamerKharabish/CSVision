@@ -3,6 +3,7 @@
 from PIL import Image
 import customtkinter as ctk
 from views.configurations_view import Config
+from utils.custom_input_entry import CustomInputEntry
 
 
 class SignalFrameView(ctk.CTkFrame):
@@ -10,13 +11,13 @@ class SignalFrameView(ctk.CTkFrame):
     Layout of the signal frame.
     """
 
-    def __init__(self, master: ctk.CTkFrame = None) -> None:
+    def __init__(self, master: ctk.CTkFrame | None = None) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
             fg_color=Config.Colors.TRANSPARENT,
         )
-        self.root: ctk.CTk = None
+        self.root: ctk.CTk | None = None
 
         self.initialize_widgets()
         self.create_layout()
@@ -127,7 +128,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
     Layout of the file handling frame.
     """
 
-    def __init__(self, master: ctk.CTkFrame = None) -> None:
+    def __init__(self, master: ctk.CTkFrame | None = None) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -207,15 +208,19 @@ class FileHandlingFrameView(ctk.CTkFrame):
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
 
-        self.file_entry = ctk.CTkEntry(
+        self.selected_file_path = ctk.StringVar()
+        self.file_entry = CustomInputEntry(
             self,
-            width=316,
+            width=320,
             border_width=Config.General.OUTPUT_ENTRY_BORDER_WIDTH,
-            border_color=Config.Colors.BORDER_COLOR,
             fg_color=Config.Colors.ONYX,
+            border_color=Config.Colors.BORDER_COLOR,
+            selected_file_path=self.selected_file_path,
             font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
+            state="readonly",
+            collection_filepath_yaml=Config.Values.COLLECTION_FILEPATH_YAML
         )
 
     def create_layout(self) -> None:
@@ -283,7 +288,7 @@ class SearchBarFrameView(ctk.CTkFrame):
     Layout of the search bar.
     """
 
-    def __init__(self, master: ctk.CTkFrame = None) -> None:
+    def __init__(self, master: ctk.CTkFrame | None = None) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -443,7 +448,7 @@ class SignalListFrameView(ctk.CTkFrame):
     Layout of the signal list.
     """
 
-    def __init__(self, master: ctk.CTkFrame = None) -> None:
+    def __init__(self, master: ctk.CTkFrame | None = None) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -486,7 +491,7 @@ class ConfigSignalListFrameView(ctk.CTkFrame):
     Layout of the signal configuration list.
     """
 
-    def __init__(self, master: ctk.CTkFrame = None) -> None:
+    def __init__(self, master: ctk.CTkFrame | None = None) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -529,7 +534,7 @@ class PresetFrameView(ctk.CTkFrame):
     Layout of the signal configuration list.
     """
 
-    def __init__(self, master: ctk.CTkFrame = None) -> None:
+    def __init__(self, master: ctk.CTkFrame | None = None) -> None:
         super().__init__(
             master,
             height=40,
