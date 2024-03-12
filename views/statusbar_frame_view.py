@@ -38,7 +38,7 @@ class StatusbarFrameView(ctk.CTkFrame):
         """
         Create layout.
         """
-        self.filesize_label.pack(side="left", padx=(50, 10))
+        self.filesize_label.pack(side="left", padx=(50, 10), pady=(1, 1))
 
         self.progressbar.pack(
             side="left", padx=(10, 10), pady=Config.Layout.STANDART_PAD
