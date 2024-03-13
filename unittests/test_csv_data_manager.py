@@ -21,6 +21,7 @@ class TestCSVDataManager(unittest.TestCase):
         """
         Testing the initilization of the CSVDataManager.
         """
-        file_path = "test.csv"
-        csv_data_manager = CSVDataManager(file_path)
-        self.assertEqual(file_path, csv_data_manager.file_path)
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -3,35 +3,13 @@ to reading and parsing CSV files. This includes loading data from a file, managi
 access to the data for visualization purposes. """
 
 
-class CSVDataManager:
+from models.file_manager import FileManager
+
+
+class CSVDataManager(FileManager):
     """
     Class for CSV file operations.
     """
 
     def __init__(self, file_path: str) -> None:
-        self.file_path: str = file_path
-
-    @property
-    def file_path(self) -> str:
-        """
-        Get the file path.
-
-        Returns:
-            str: File path of the CSV file.
-        """
-        return self._file_path
-
-    @file_path.setter
-    def file_path(self, file_path: str) -> None:
-        """
-        Set the file path.
-
-        Args:
-            file_path (str): The file path to the CSV file.
-        """
-        if not isinstance(file_path, str):
-            raise TypeError("Invalid file type")
-        elif file_path == "":
-            raise ValueError("Missing 1 required positional argument: 'file_path'")
-        else:
-            self._file_path = file_path
+        super().__init__(file_path, (".csv", ".CSV"))

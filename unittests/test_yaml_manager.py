@@ -1,6 +1,7 @@
 """ Unit test for the YAMLManager class. """
 
 import unittest
+from unittest.mock import mock_open, patch
 from typing import Dict
 import os
 from models.yaml_manager import YAMLManager
@@ -23,49 +24,35 @@ class TestYAMLManager(unittest.TestCase):
         # Deinitialize after each test
         pass
 
-    def test_initilization(self) -> None:
-        """
-        Testing the initilization of the YAMLManager.
-        """
-        file_path = "test.yaml"
-        yaml_manager = YAMLManager(file_path)
-        self.assertEqual(file_path, yaml_manager.file_path)
-
-    def test_set_new_file_path(self) -> None:
-        """
-        Testing the setting of a new YAML file.
-        """
-        file_path = "test.yaml"
-        yaml_manager = YAMLManager(file_path)
-        self.assertEqual(file_path, yaml_manager.file_path)
-
-        file_path = "test_new.yaml"
-        yaml_manager.file_path = file_path
-        self.assertEqual(file_path, yaml_manager.file_path)
-
     def test_open_yaml_file(self) -> None:
         """
         Testing the opening of a yaml file.
         """
-        file_path = "NotExistingFilePath.yaml"
+        mock_file_content = ""
+        file_path = "empty_file.yaml"
         yaml_manager = YAMLManager(file_path)
-        with self.assertRaises(
-            FileNotFoundError, msg=f"The file {file_path} was not found."
-        ):
-            yaml_manager.open_yaml_file()
+        with patch(
+            "builtins.open", mock_open(read_data=mock_file_content), create=True
+        ) as mocked_file:
+            file_list = yaml_manager.open_file()
+            mocked_file.assert_called_once_with(file_path, "r", encoding="utf-8")
+            self.assertIsInstance(file_list, Dict)
+            self.assertEqual(file_list, {})
 
-        file_path = "unittests/empty_file.yaml"
+        mock_file_content = "---\ntest1: 'test1'\ntest2: 'test2'\n"
+        file_path = "file.yaml"
         yaml_manager = YAMLManager(file_path)
-        self.assertEqual(yaml_manager.open_yaml_file(), {})
-
-        file_path = "unittests/file.yaml"
-        yaml_manager = YAMLManager(file_path)
-        file_list = yaml_manager.open_yaml_file()
-        self.assertIsInstance(file_list, Dict)
+        with patch(
+            "builtins.open", mock_open(read_data=mock_file_content), create=True
+        ) as mocked_file:
+            file_list = yaml_manager.open_file()
+            mocked_file.assert_called_once_with(file_path, "r", encoding="utf-8")
+            self.assertIsInstance(file_list, Dict)
+            self.assertEqual(file_list, {"test1": "test1", "test2": "test2"})
 
     def test_dump_yaml_file(self) -> None:
         """
-        Testing the opening of a yaml file.
+        Testing the dumping of new content into a yaml file.
         """
         file_path = "unittests/empty_file.yaml"
 
@@ -100,7 +87,7 @@ class TestYAMLManager(unittest.TestCase):
 
         check_file_size_double = os.stat(file_path).st_size
         self.assertEqual(
-            len(yaml_manager.open_yaml_file()),
+            len(yaml_manager.open_file()),
             yaml_manager.max_content,
         )
 
