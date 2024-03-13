@@ -76,7 +76,7 @@ class CustomInputEntry(ctk.CTkEntry):
         """
         Creates and positions a file option window relative to this CustomInputEntry.
         """
-        file_dict = self.file_manager.open_yaml_file()
+        file_dict = self.file_manager.open_file()
         newest_files = list(file_dict.values())[-self.max_elements :]
 
         nr_files = (

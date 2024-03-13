@@ -1,19 +1,19 @@
 """ Defines the YAMLManager class with functionalities to read, write, append,
     and update data in YAML files. """
 
-from pathlib import Path
 from typing import Dict
 from datetime import datetime
 import yaml
+from models.file_manager import FileManager
 
 
-class YAMLManager:
+class YAMLManager(FileManager):
     """
     Class for managing YAML files.
     """
 
     def __init__(self, file_path: str) -> None:
-        self.file_path: str = file_path
+        super().__init__(file_path, (".yaml", ".yml"))
         self._max_content: int = 10
 
     @property
@@ -22,38 +22,11 @@ class YAMLManager:
         Get the maximum item length of the dictionary.
 
         Returns:
-            str: Maximum item length of the dictionary.
+            str: Maximum item length of the dictionary in the YAML file.
         """
         return self._max_content
 
-    @property
-    def file_path(self) -> str:
-        """
-        Get the file path.
-
-        Returns:
-            str: File path of the YAML file.
-        """
-        return self._file_path
-
-    @file_path.setter
-    def file_path(self, file_path: str) -> None:
-        """
-        Set the file path.
-
-        Args:
-            file_path (str): The file path to the YAML file.
-        """
-        if not isinstance(file_path, str):
-            raise TypeError("Invalid file type")
-        elif file_path == "":
-            raise ValueError("Missing 1 required positional argument: 'file_path'")
-        elif not file_path.endswith(".yaml") and not file_path.endswith(".yml"):
-            raise ValueError(f"Invalid file type: {Path(file_path).suffix}")
-        else:
-            self._file_path = file_path
-
-    def open_yaml_file(self) -> Dict:
+    def open_file(self) -> Dict:
         """
         Open the YAML file.
 
@@ -78,16 +51,15 @@ class YAMLManager:
         if not isinstance(new_content, str):
             raise ValueError("New content must be a string.")
 
-        file_found = False
-
         try:
-            old_content_dict = self.open_yaml_file()
+            old_content_dict = self.open_file()
 
             new_content_dict = {
                 datetime.now().strftime("%d-%m-%Y %H:%M:%S,%f"): new_content
             }
 
             if old_content_dict:
+                file_found = False
                 for date_time, file in old_content_dict.items():
                     if new_content == file:
                         file_found = True
