@@ -31,15 +31,10 @@ class YAMLManager(FileManager):
         Open the YAML file.
 
         Returns:
-            List[dict]: Returns the content of the YAML file or None.
+            Dict: Returns the content of the YAML file or en epty dictionary.
         """
-        try:
-            with open(self.file_path, "r", encoding="utf-8") as file_open:
-                return yaml.safe_load(file_open) or {}
-        except FileNotFoundError as exc:
-            raise FileNotFoundError(
-                f"The file {self.file_path} was not found."
-            ) from exc
+        with open(self.file_path, "r", encoding="utf-8") as file_open:
+            return yaml.safe_load(file_open) or {}
 
     def dump_yaml_file(self, new_content: str) -> None:
         """
