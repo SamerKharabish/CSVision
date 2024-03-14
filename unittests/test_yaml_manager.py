@@ -14,11 +14,7 @@ class TestYAMLManager(unittest.TestCase):
 
     def setUp(self) -> None:
         # Initialize before each test
-        file_path = "unittests/empty_file.yaml"
-        check_file = os.stat(file_path).st_size
-
-        if check_file != 0:
-            open(file_path, "w", encoding="utf-8").close()
+        pass
 
     def tearDown(self) -> None:
         # Deinitialize after each test
@@ -54,7 +50,12 @@ class TestYAMLManager(unittest.TestCase):
         """
         Testing the dumping of new content into a yaml file.
         """
+
         file_path = "unittests/empty_file.yaml"
+        check_file = os.stat(file_path).st_size
+
+        if check_file != 0:
+            open(file_path, "w", encoding="utf-8").close()
 
         yaml_manager = YAMLManager(file_path)
         yaml_manager.dump_yaml_file("test0.csv")

@@ -1,7 +1,6 @@
 """ Unit test for the FileManager class. """
 
 import unittest
-from unittest.mock import mock_open, patch
 from typing import Any, Tuple
 from pathlib import Path
 from models.file_manager import FileManager
