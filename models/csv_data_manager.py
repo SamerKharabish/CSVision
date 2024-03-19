@@ -2,28 +2,74 @@
 to reading and parsing CSV files. This includes loading data from a file, managing data frames, and providing
 access to the data for visualization purposes. """
 
-
+from pathlib import Path
+from typing import Tuple
 import pandas as pd
-from models.file_manager import FileManager
 
 
-class CSVDataManager(FileManager):
+class CSVDataManager:
     """
     Class for CSV file operations.
     """
 
-    def __init__(self, file_path: str) -> None:
-        super().__init__(file_path, (".csv", ".CSV"))
+    def __init__(self) -> None:
+        self.__suffixes: Tuple[str, ...] = (".csv", ".CSV")
 
-    def open_file(self) -> pd.DataFrame:
+        self._file_path: str = None
+        self._raw_data_frame: pd.DataFrame = None
+
+    @property
+    def file_path(self) -> str:
         """
-        Open the CSV file.
+        Get the CSV file path.
 
         Returns:
-            pd.DataFrame: Returns the content of the CSV file.
+            str: The set CSV file path.
         """
+        return self._file_path
+
+    @file_path.setter
+    def file_path(self, file_path: str) -> None:
+        """
+        Set the CSV file path.
+
+        Args:
+            file_path (str): The CSV file path to set.
+        """
+        if not isinstance(file_path, str):
+            raise TypeError("Invalid file type!")
+        elif file_path == "":
+            raise ValueError("Missing 1 required positional argument: 'file_path'!")
+        elif not file_path.endswith(self.__suffixes):
+            raise ValueError(f"Invalid file type: {Path(file_path).suffix}!")
+        else:
+            self._file_path = file_path
+            self._raw_data_frame = None
+
+    @property
+    def raw_data(self) -> pd.DataFrame:
+        """
+        Get the raw CSV data.
+
+        Returns:
+            pd.DataFrame: The read raw CSV data.
+        """
+        return self._raw_data_frame
+
+    def open_file(self, file_path: str) -> None:
+        """
+        Open a CSV file and read the data.
+        """
+        self.file_path = file_path
+
         try:
-            return pd.read_csv(self.file_path, delimiter=";", quotechar="|")
+            self._raw_data_frame = pd.read_csv(
+                self.file_path, delimiter=";", quotechar="|"
+            )
+        except FileNotFoundError as exc:
+            raise FileNotFoundError(
+                f"The file {self.file_path} was not found!"
+            ) from exc
         except pd.errors.EmptyDataError as exc:
             raise pd.errors.EmptyDataError(
                 f"No columns to parse from file: {self.file_path}"

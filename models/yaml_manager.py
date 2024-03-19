@@ -1,50 +1,100 @@
 """ Defines the YAMLManager class with functionalities to read, write, append,
     and update data in YAML files. """
 
-from typing import Dict
+from pathlib import Path
+from typing import Dict, Tuple
 from datetime import datetime
 import yaml
-from models.file_manager import FileManager
 
 
-class YAMLManager(FileManager):
+class YAMLManager:
     """
     Class for managing YAML files.
     """
 
-    def __init__(self, file_path: str) -> None:
-        super().__init__(file_path, (".yaml", ".yml"))
-        self._max_content: int = 10
+    def __init__(self, file_path: str, content_limit: int) -> None:
+        self.__suffixes: Tuple[str, ...] = (".yaml", ".yml")
+
+        self._file_path: str = None
+        self.file_path = file_path
+
+        self._content_limit: int = content_limit
+        self.content_limit = content_limit
 
     @property
-    def max_content(self) -> int:
+    def file_path(self) -> str:
         """
-        Get the maximum item length of the dictionary.
+        Get the YAML file path.
 
         Returns:
-            str: Maximum item length of the dictionary in the YAML file.
+            str: The set YAML file path.
         """
-        return self._max_content
+        return self._file_path
+
+    @file_path.setter
+    def file_path(self, file_path: str) -> None:
+        """
+        Set the YAML file path.
+
+        Args:
+            file_path (str): The YAML file path to set.
+        """
+        if not isinstance(file_path, str):
+            raise TypeError("Invalid file type!")
+        elif file_path == "":
+            raise ValueError("Missing 1 required positional argument: 'file_path'!")
+        elif not file_path.endswith(self.__suffixes):
+            raise ValueError(f"Invalid file type: {Path(file_path).suffix}!")
+        else:
+            self._file_path = file_path
+
+    @property
+    def content_limit(self) -> int:
+        """
+        Get the maximum length of the content.
+
+        Returns:
+            int: Maximum content length of the YAML file.
+        """
+        return self._content_limit
+
+    @content_limit.setter
+    def content_limit(self, content_limit: int) -> None:
+        """
+        Set the file content limit.
+
+        Args:
+            content_limit (int): The content limit to set.
+        """
+        if not isinstance(content_limit, int):
+            raise TypeError("Invalid content limit type!")
+        else:
+            self._content_limit = content_limit
 
     def open_file(self) -> Dict:
         """
-        Open the YAML file.
+        Open a YAML file.
 
         Returns:
-            Dict: Returns the content of the YAML file or en epty dictionary.
+            Dict: Returns the content of the YAML file or an empty dictionary.
         """
-        with open(self.file_path, "r", encoding="utf-8") as file_open:
-            return yaml.safe_load(file_open) or {}
+        try:
+            with open(self.file_path, "r", encoding="utf-8") as file_open:
+                return yaml.safe_load(file_open) or {}
+        except FileNotFoundError as exc:
+            raise FileNotFoundError(
+                f"The file {self.file_path} was not found!"
+            ) from exc
 
     def dump_yaml_file(self, new_content: str) -> None:
         """
-        Updates the YAML file with new content.
+        Updates a YAML file with new content.
 
         Args:
             new_content (str): Content to be added to the YAML file.
         """
         if not isinstance(new_content, str):
-            raise ValueError("New content must be a string.")
+            raise ValueError("New content must be a string!")
 
         try:
             old_content_dict = self.open_file()
@@ -68,7 +118,7 @@ class YAMLManager(FileManager):
                         break
 
                 if not file_found:
-                    if len(old_content_dict) >= self._max_content:
+                    if len(old_content_dict) >= self.content_limit:
                         old_content_dict.pop(next(iter(old_content_dict)))
                     old_content_dict.update(new_content_dict)
             else:
