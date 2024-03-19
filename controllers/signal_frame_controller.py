@@ -99,7 +99,7 @@ class FileHandlingFrameController:
 
         self.view.open_file_button.configure(command=self.enter_file)
 
-        self.file_manager: YAMLManager = YAMLManager("models/file_paths.yaml")
+        self.file_manager: YAMLManager = YAMLManager("models/file_paths.yaml", 10)
 
         self.setup_tracings()
 

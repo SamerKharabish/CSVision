@@ -60,7 +60,7 @@ class CustomInputEntry(ctk.CTkEntry):
         self.root = find_root(self)
         self.file_option_window: ctk.CTkToplevel = None
 
-        self.file_manager = YAMLManager(collection_filepath_yaml)
+        self.file_manager = YAMLManager(collection_filepath_yaml, 10)
 
         self.setup_bindings()
 
