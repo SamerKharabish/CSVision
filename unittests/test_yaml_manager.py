@@ -118,7 +118,6 @@ class TestYAMLManager(unittest.TestCase):
         """
         Testing the dumping of new content into a yaml file.
         """
-
         file_path = "unittests/empty_file.yaml"
         content_limit: int = 10
         check_file = os.stat(file_path).st_size
