@@ -7,7 +7,7 @@ from utils.helper_functions import find_root, calculate_absolute_position
 from models.yaml_manager import YAMLManager
 
 
-class CustomInputEntry(ctk.CTkEntry):
+class InputEntryList(ctk.CTkEntry):
     """
     Functionality and layout of the CustomInputEntry.
     """
