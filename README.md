@@ -20,8 +20,16 @@ CSVision/
 │ └── statusbar_frame_controller.py # Handles interactions in the status bar frame.
 ├── models/                         # Contains classes that represent the data
                                     # and business logic of the application.
+│ ├── csv_data_manager.py
+│ └── yaml_manager.py
 ├── resources/                      # Images, test files, etc.
 ├── unittests/                      # Automated tests for the application.
+│ ├── test_csv_data_manager.py
+│ └── test_yaml_manager.py
+├── utils/
+│ ├── custom_input_entry.py
+│ ├── custom_option_button.py
+│ └── helper_functions.py
 ├── views/                          # Contains classes that define the visual
                                     # representation of the application.
 │ ├── configurations_view.py        # The visual configuration of all views.
@@ -48,3 +56,7 @@ If you have any feedback, please reach out to me.
 ## Author
 
 - [@Samer Kharabish](<kharabishsamer@outlook.com>)
+
+![](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=files)
+![](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=code)
+![](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=lines)

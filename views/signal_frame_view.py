@@ -3,7 +3,7 @@
 from PIL import Image
 import customtkinter as ctk
 from views.configurations_view import Config
-from utils.custom_input_entry import CustomInputEntry
+from utils.input_entry_list import InputEntryList
 
 
 class SignalFrameView(ctk.CTkFrame):
@@ -209,7 +209,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
         )
 
         self.selected_file_path = ctk.StringVar()
-        self.file_entry = CustomInputEntry(
+        self.file_entry = InputEntryList(
             self,
             width=320,
             border_width=Config.General.OUTPUT_ENTRY_BORDER_WIDTH,
@@ -220,7 +220,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
             state="readonly",
-            collection_filepath_yaml=Config.Values.COLLECTION_FILEPATH_YAML
+            collection_filepath_yaml=Config.Values.COLLECTION_FILEPATH_YAML,
         )
 
     def create_layout(self) -> None:
