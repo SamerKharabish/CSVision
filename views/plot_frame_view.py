@@ -39,7 +39,9 @@ class PlotFrameView(ctk.CTkFrame):
                 Config.Colors.PLOT_FRAME_COLOR,
                 Config.Colors.PLOT_FRAME_COLOR,
             ),
-            font=Config.Fonts.LABEL_TEXTS,
+            font=ctk.CTkFont(
+                family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
+            ),
             values=Config.Values.PLOT_TYPES,
         )
         self.plot_types_segemented_button.set(Config.Values.PLOT_TYPES[0])
