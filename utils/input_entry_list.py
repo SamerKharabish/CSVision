@@ -1,6 +1,6 @@
 """ Defines a CustomInputEntry class with a custom layout and functionalities. """
 
-from typing import Any, Tuple, List, Callable
+from typing import Any, Callable
 from functools import partial
 import customtkinter as ctk
 from utils.helper_functions import find_root, calculate_absolute_position
@@ -15,22 +15,22 @@ class InputEntryList(ctk.CTkEntry):
     def __init__(
         self,
         master: Any,
+        selected_file_path: ctk.StringVar,
+        collection_filepath_yaml: str,
         width: int = 140,
         height: int = 28,
         corner_radius: int | None = None,
         border_width: int | None = None,
-        bg_color: str | Tuple[str, str] = "transparent",
-        fg_color: str | Tuple[str, str] | None = None,
-        border_color: str | Tuple[str, str] | None = None,
-        text_color: str | Tuple[str, str] | None = None,
-        placeholder_text_color: str | Tuple[str, str] | None = None,
+        bg_color: str | tuple[str, str] = "transparent",
+        fg_color: str | tuple[str, str] | None = None,
+        border_color: str | tuple[str, str] | None = None,
+        text_color: str | tuple[str, str] | None = None,
+        placeholder_text_color: str | tuple[str, str] | None = None,
         textvariable: ctk.Variable | None = None,
-        selected_file_path: ctk.Variable | None = None,
         placeholder_text: str | None = None,
         font: tuple | ctk.CTkFont | None = None,
         state: str = ctk.NORMAL,
         max_elements: int = 4,
-        collection_filepath_yaml: str | None = None,
     ):
         super().__init__(
             master=master,
@@ -49,16 +49,16 @@ class InputEntryList(ctk.CTkEntry):
             state=state,
         )
 
-        self.corner_radius: int = corner_radius
+        self.corner_radius: int | None = corner_radius
         self.border_width: int | None = border_width
-        self.fg_color: str | Tuple[str, str] | None = fg_color
-        self.border_color: str | Tuple[str, str] | None = border_color
+        self.fg_color: str | tuple[str, str] | None = fg_color
+        self.border_color: str | tuple[str, str] | None = border_color
         self.font: tuple | ctk.CTkFont | None = font
         self.max_elements: int = max_elements
-        self.selected_file_path: ctk.Variable | None = selected_file_path
+        self.selected_file_path: ctk.StringVar = selected_file_path
 
         self.root = find_root(self)
-        self.file_option_window: ctk.CTkToplevel = None
+        self.file_option_window: ctk.CTkToplevel
 
         self.file_manager = YAMLManager(collection_filepath_yaml, 10)
 
@@ -130,30 +130,30 @@ class FileOptionWindow(ctk.CTkToplevel):
 
     def __init__(
         self,
+        file_list: list[str],
+        callback: Callable[[str], None],
         width: int = 140,
         height: int = 28,
         x: int = 0,
         y: int = 0,
         corner_radius: int | None = None,
         border_width: int | None = None,
-        fg_color: str | Tuple[str, str] | None = None,
-        border_color: str | Tuple[str, str] | None = None,
+        fg_color: str | tuple[str, str] | None = None,
+        border_color: str | tuple[str, str] | None = None,
         font: tuple | ctk.CTkFont | None = None,
-        file_list: List[str] = None,
-        callback: Callable[[str], None] = None,
     ):
         super().__init__(fg_color=fg_color)
 
-        self.corner_radius: int = corner_radius
+        self.corner_radius: int | None = corner_radius
         self.border_width: int | None = border_width
-        self.fg_color: str | Tuple[str, str] | None = fg_color
-        self.border_color: str | Tuple[str, str] | None = border_color
+        self.fg_color: str | tuple[str, str] | None = fg_color
+        self.border_color: str | tuple[str, str] | None = border_color
         self.font: tuple | ctk.CTkFont | None = font
-        self.file_list: List[str] = file_list
+        self.file_list: list[str] = file_list
         self.callback = callback
 
-        self.buttons: List[ctk.CTkButton] = []
-        self.button_color: str = None
+        self.buttons: list[ctk.CTkButton] = []
+        self.button_color: str | None = None
 
         self.geometry(
             f"{width}x{height+(len(file_list * self.BUTTON_PAD * 2))}+{x}+{y}"
@@ -218,13 +218,13 @@ class FileOptionWindow(ctk.CTkToplevel):
         """
         self.bind("<FocusOut>", self._on_focus_out)
 
-    def _on_focus_out(self, _: None = None) -> None:
+    def _on_focus_out(self, _ = None) -> None:
         """
         Destroy the window.
         """
         self.destroy()
 
-    def on_enter(self, button: ctk.CTkButton, _: None = None) -> None:
+    def on_enter(self, button: ctk.CTkButton, _ = None) -> None:
         """
         Changes the button text color to indicate hovering over it.
 
@@ -235,7 +235,7 @@ class FileOptionWindow(ctk.CTkToplevel):
         self.button_color = button.cget("text_color")
         button.configure(text_color=self.BUTTON_HOVER_COLOR)
 
-    def on_leave(self, button: ctk.CTkButton, _: None = None) -> None:
+    def on_leave(self, button: ctk.CTkButton, _ = None) -> None:
         """
         Changes the button text color to to turn back after it got hovered over.
 

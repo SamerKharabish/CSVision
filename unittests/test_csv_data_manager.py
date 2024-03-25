@@ -33,7 +33,7 @@ class TestCSVDataManager(unittest.TestCase):
                 with self.subTest(attr=attr):
                     self.assertIsNone(value, f"{attr} is not None")
 
-        self.assertTrue(csv_data_manager._raw_data_frame.empty)
+        self.assertTrue(csv_data_manager.raw_data.empty)
 
     def test_set_new_file_path(self) -> None:
         """

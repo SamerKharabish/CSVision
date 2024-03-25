@@ -4,6 +4,10 @@ Data visualization tool designed to render data from CSV files into interactive 
 
 This module contains the GUI implementation for a CSV plotter application. It provides a graphical user interface built with customtkinter that allows users to load data from CSV files, visualize the data in a plot, and interact with the data using various controls.
 
+![Files](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=files)
+![Code](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=code)
+![Lines](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=lines)
+
 ## Structure overview
 
 To enhance maintainability, scalability, and testability of the application a Model-View-Controller (MVC) architecture pattern is used, which decouples the business logic from the UI.
@@ -56,7 +60,3 @@ If you have any feedback, please reach out to me.
 ## Author
 
 - [@Samer Kharabish](<kharabishsamer@outlook.com>)
-
-![](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=files)
-![](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=code)
-![](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=lines)

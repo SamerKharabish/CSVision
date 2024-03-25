@@ -15,7 +15,7 @@ class YAMLManager:
     def __init__(self, file_path: str, content_limit: int) -> None:
         self.__suffixes: Tuple[str, ...] = (".yaml", ".yml")
 
-        self._file_path: str = None
+        self._file_path: str
         self.file_path = file_path
 
         self._content_limit: int = content_limit

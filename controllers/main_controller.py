@@ -1,6 +1,5 @@
 """ Defines the MainController class with the main functionality. """
 
-from typing import Any
 import customtkinter as ctk
 from views.main_view import MainView
 from views.configurations_view import Config
@@ -14,30 +13,32 @@ class MainController:
     Functionality of the main application.
     """
 
-    def __init__(self, master: ctk.CTk = None) -> None:
-        self.master: ctk.CTk = master
-        self.view: ctk.CTkFrame = MainView(master)
+    def __init__(self, master: ctk.CTk) -> None:
+        self.__master: ctk.CTk = master
+        self.__view: ctk.CTkFrame = MainView(master)
 
-        self.initialize_widgets()
-        self.setup_bindings()
+        self.__initialize_controller()
+        self.__setup_bindings()
 
-    def initialize_widgets(self) -> None:
+    def __initialize_controller(self) -> None:
         """
-        Initialize widgets.
+        Initialize controller.
         """
-        self.statusbar_frame_controller: Any = StatusbarFrameController(
-            self.view.statusbar_frame_view
+        self.statusbar_frame_controller: StatusbarFrameController = (
+            StatusbarFrameController(self.__view.statusbar_frame_view)
         )
-        self.signal_frame_controller: Any = SignalFrameController(
-            self.view.signal_frame_view
+        self.signal_frame_controller: SignalFrameController = SignalFrameController(
+            self.__view.signal_frame_view
         )
-        self.plot_frame_controller: Any = PlotFrameController(self.view.plot_frame_view)
+        self.plot_frame_controller: PlotFrameController = PlotFrameController(
+            self.__view.plot_frame_view
+        )
 
-    def setup_bindings(self) -> None:
+    def __setup_bindings(self) -> None:
         """
         Binding the MainView widgets to callback functions.
         """
-        self.master.bind(
+        self.__master.bind(
             Config.KeyBindings.RESIZE_SIGNAL_FRAME,
             self.signal_frame_controller.on_toggle_side_bar,
         )
