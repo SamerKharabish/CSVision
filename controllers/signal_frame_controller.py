@@ -17,18 +17,24 @@ class SignalFrameController:
 
     def __init__(self, view: ctk.CTkFrame) -> None:
         self.view: ctk.CTkFrame = view
-
-        self.file_handling_frame_controller = FileHandlingFrameController(
-            self.view.filehandling_frame_view
-        )
-        self.view.root = find_root(self.view)
         self.signal_frame_minimized: bool = (
             Config.General.SIGNAL_FRAME_MINIMIZED
         )  # Tracks the state of the signal frame
 
         self.view.toggle_side_bar_button.configure(command=self.toggle_side_bar)
 
-    def on_toggle_side_bar(self, _: None = None) -> None:
+        self.view.root = find_root(self.view)
+        self.initialize_controller()
+
+    def initialize_controller(self) -> None:
+        """
+        Initialize controller.
+        """
+        self.file_handling_frame_controller = FileHandlingFrameController(
+            self.view.filehandling_frame_view
+        )
+
+    def on_toggle_side_bar(self, _ = None) -> None:
         """
         Bound to the Ctrl + B press event.
         """
@@ -117,20 +123,18 @@ class FileHandlingFrameController:
         filepath = filedialog.askopenfilename(initialdir="/", filetypes=filetype)
 
         if filepath:
-            self.view.selected_file_path.set(filepath)
-            self.file_manager.dump_yaml_file(filepath)
             self.view.file_entry.configure(state="normal")
             self.view.file_entry.delete(0, ctk.END)
             self.view.file_entry.insert(0, filepath.rsplit("/", 1)[1])
             self.view.file_entry.configure(state="readonly")
 
+            self.view.selected_file_path.set(filepath)
+
     def open_file(self, *_: Any) -> None:
+        filepath = self.view.selected_file_path.get()
+
+        self.file_manager.dump_yaml_file(filepath)
         # TODO: show filesize in statusbar
-        filesize_kb = round(
-            os.path.getsize(self.view.selected_file_path.get()) / 1024,
-            3,
-        )
+        filesize_kb = round(os.path.getsize(filepath) / 1024, 3)
         formatted_filesize = f"{filesize_kb:,.3f} KB".replace(",", ".")
-        print(
-            f"File selected: {self.view.selected_file_path.get()}; size: {formatted_filesize}"
-        )
+        print(f"File selected: {filepath}; size: {formatted_filesize}")

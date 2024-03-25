@@ -30,7 +30,7 @@ class AppController:
     Functionality of the main application.
     """
 
-    def __init__(self, view: ctk.CTk = None) -> None:
+    def __init__(self, view: ctk.CTk) -> None:
         self.view: ctk.CTk = view
 
         self.setup_bindings()
@@ -42,7 +42,7 @@ class AppController:
         self.view.bind(Config.KeyBindings.CLOSE_APPLICATION, self.close_application)
         self.view.protocol("WM_DELETE_WINDOW", self.close_application)
 
-    def close_application(self, _: None = None) -> None:
+    def close_application(self, _ = None) -> None:
         """
         Close the application.
         """
