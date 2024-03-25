@@ -47,7 +47,7 @@ class CSVDataManager:
             self._raw_data_frame = pd.DataFrame()
 
     @property
-    def raw_data(self) -> pd.DataFrame:
+    def raw_data(self) -> pd.DataFrame | None:
         """
         Get the raw CSV data.
 
