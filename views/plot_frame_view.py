@@ -3,7 +3,8 @@
 from PIL import Image
 import customtkinter as ctk
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.backends._backend_tk import NavigationToolbar2Tk
 from views.configurations_view import Config
 
 
@@ -12,7 +13,7 @@ class PlotFrameView(ctk.CTkFrame):
     Layout of the plot frame.
     """
 
-    def __init__(self, master: ctk.CTkFrame = None) -> None:
+    def __init__(self, master: ctk.CTkFrame) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -253,7 +254,8 @@ class PlotFrameView(ctk.CTkFrame):
         """
         self.figure = Figure()  # Create a matplotlib figure
         self.figure.set_facecolor(Config.Colors.PLOT_FRAME_COLOR)
-        self.figure.set_tight_layout(True)
+        # self.figure.set_tight_layout(True)
+        self.figure.tight_layout()
 
         # Embed the Matplotlib figure in the custom frame
         self.canvas = FigureCanvasTkAgg(self.figure, self.plot_area_frame)

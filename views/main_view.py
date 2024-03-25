@@ -12,7 +12,7 @@ class MainView(ctk.CTkFrame):
     Layout of the main application.
     """
 
-    def __init__(self, master: ctk.CTk = None) -> None:
+    def __init__(self, master: ctk.CTk) -> None:
         super().__init__(master, corner_radius=Config.General.CORNER_RADIUS)
         self.master: ctk.CTk = master
 

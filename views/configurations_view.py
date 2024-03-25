@@ -1,6 +1,6 @@
 """Centralized configuration file for the visual representation of the application."""
 
-from typing import Tuple, List
+from typing import Tuple, List, Literal
 
 
 class Config:
@@ -143,8 +143,8 @@ class Config:
         NAV_TOOLBAR_LEFT_BUTTONS_PADX: Tuple[int, int] = (30, 7)
         NAV_TOOLBAR_RIGHT_BUTTONS_PADX: Tuple[int, int] = (7, 30)
 
-        CANVAS_SIDE: str = "top"
-        CANVAS_FILL: str = "both"
+        CANVAS_SIDE: Literal["left", "right", "top", "bottom"] = "top"
+        CANVAS_FILL: Literal["none", "x", "y", "both"] = "both"
         CANVAS_EXPAND: bool = True
 
     class KeyBindings:
