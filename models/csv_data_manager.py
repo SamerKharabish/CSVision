@@ -15,8 +15,8 @@ class CSVDataManager:
     def __init__(self) -> None:
         self.__suffixes: Tuple[str, ...] = (".csv", ".CSV")
 
-        self._file_path: str = None
-        self._raw_data_frame: pd.DataFrame = None
+        self._file_path: str
+        self._raw_data_frame: pd.DataFrame = pd.DataFrame()
 
     @property
     def file_path(self) -> str:
@@ -44,10 +44,10 @@ class CSVDataManager:
             raise ValueError(f"Invalid file type: {Path(file_path).suffix}!")
         else:
             self._file_path = file_path
-            self._raw_data_frame = None
+            self._raw_data_frame = pd.DataFrame()
 
     @property
-    def raw_data(self) -> pd.DataFrame:
+    def raw_data(self) -> pd.DataFrame | None:
         """
         Get the raw CSV data.
 

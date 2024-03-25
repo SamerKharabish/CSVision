@@ -27,9 +27,13 @@ class TestCSVDataManager(unittest.TestCase):
         csv_data_manager = CSVDataManager()
 
         for attr, value in vars(csv_data_manager).items():
-            if not attr.startswith("_CSVDataManager__"):
+            if not attr.startswith("_CSVDataManager__") and not attr.startswith(
+                "_raw_data_frame"
+            ):
                 with self.subTest(attr=attr):
                     self.assertIsNone(value, f"{attr} is not None")
+
+        self.assertTrue(csv_data_manager._raw_data_frame.empty)
 
     def test_set_new_file_path(self) -> None:
         """
