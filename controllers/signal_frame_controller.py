@@ -2,13 +2,16 @@
 
 import os
 from typing import Any
-from tkinter import filedialog
+from threading import Thread
+from tkinter import filedialog, messagebox
+import pandas as pd
 from PIL import Image
 import customtkinter as ctk
 from utils.helper_functions import find_root
 from utils.observer_publisher import SimplePublisher
 from views.configurations_view import Config
 from models.yaml_manager import YAMLManager
+from models.csv_data_manager import csv_data_manager
 
 
 class SignalFrameController:
@@ -103,10 +106,11 @@ class FileHandlingFrameController:
 
     def __init__(self, view: ctk.CTkFrame) -> None:
         self.view: ctk.CTkFrame = view
+        self.loading_thread: Thread = None
+
+        self.view.root = find_root(self.view)
 
         self.view.open_file_button.configure(command=self.enter_file)
-
-        self.file_manager: YAMLManager = YAMLManager("models/file_paths.yaml", 10)
 
         self.setup_tracings()
 
@@ -137,7 +141,8 @@ class FileHandlingFrameController:
         """
         filepath = self.view.selected_file_path.get()
 
-        self.file_manager.dump_yaml_file(filepath)
+        self.loading_thread = DataLoadingThread(filepath)
+        self.loading_thread.start()
 
         file_size_publisher.file_size = round(os.path.getsize(filepath) / 1024)
 
@@ -175,3 +180,63 @@ class FileSizePublisher(SimplePublisher):
 
 
 file_size_publisher = FileSizePublisher()
+
+
+class DataLoadingThread(Thread):
+    """
+    Handle the data loading thread.
+    """
+
+    def __init__(self, filename: str) -> None:
+        super().__init__()
+
+        self.daemon = True
+
+        self.filename: str = filename
+        self.file_manager: YAMLManager = YAMLManager("models/file_paths.yaml", 10)
+
+    def run(self) -> None:
+        progress_publisher.progress = "indeterminate"
+        try:
+            csv_data_manager.open_file(self.filename)
+            self.file_manager.dump_yaml_file(self.filename)
+        except FileNotFoundError as exc:
+            messagebox.showerror("Error", exc)
+        except pd.errors.EmptyDataError as exc:
+            messagebox.showerror("Error", exc)
+        progress_publisher.progress = "stop"
+
+
+class ProgressPublisher(SimplePublisher):
+    """
+    Monitor the progress of the data loading thread.
+    """
+
+    def __init__(self):
+        SimplePublisher.__init__(self)
+        super(ProgressPublisher, self).__init__()
+        self._progress: str
+
+    @property
+    def progress(self) -> str:
+        """
+        Get the progress.
+
+        Returns:
+            str: The set progress.
+        """
+        return self._progress
+
+    @progress.setter
+    def progress(self, progress: str) -> None:
+        """
+        Set the progress.
+
+        Args:
+            file_size (str): The progress to set.
+        """
+        self._progress = progress
+        self.notify()
+
+
+progress_publisher = ProgressPublisher()

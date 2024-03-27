@@ -134,6 +134,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
             corner_radius=Config.General.CORNER_RADIUS,
             border_width=Config.General.FRAME_BORDER_WIDTH,
         )
+        self.root: ctk.CTk
 
         self.initialize_widgets()
         self.create_layout()
@@ -166,23 +167,6 @@ class FileHandlingFrameView(ctk.CTkFrame):
             text="",
             image=ctk.CTkImage(
                 light_image=Image.open(Config.ImageFormats.OPEN_FILE_PNG),
-                size=(
-                    Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
-                    Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
-                ),
-            ),
-            anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
-        )
-
-        self.load_file_button = ctk.CTkButton(
-            self.title_frame,
-            width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
-            height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
-            fg_color=Config.Colors.TRANSPARENT,
-            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
-            text="",
-            image=ctk.CTkImage(
-                light_image=Image.open(Config.ImageFormats.REFRESH_PNG),
                 size=(
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
@@ -244,7 +228,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
             pady=(3, 0),
         )
         self.title_frame.columnconfigure(0, weight=50)
-        self.title_frame.columnconfigure((1, 2, 3), weight=1)
+        self.title_frame.columnconfigure((1, 2), weight=1)
         self.title_label.grid(
             row=0,
             column=0,
@@ -259,16 +243,9 @@ class FileHandlingFrameView(ctk.CTkFrame):
             padx=Config.Layout.ZERO_PAD,
             pady=Config.Layout.ZERO_PAD,
         )
-        self.load_file_button.grid(
-            row=0,
-            column=2,
-            sticky="e",
-            padx=Config.Layout.ZERO_PAD,
-            pady=Config.Layout.ZERO_PAD,
-        )
         self.export_to_excel.grid(
             row=0,
-            column=3,
+            column=2,
             sticky="e",
             padx=Config.Layout.ZERO_PAD,
             pady=Config.Layout.ZERO_PAD,
