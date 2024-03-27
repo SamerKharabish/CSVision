@@ -6,6 +6,7 @@ from tkinter import filedialog
 from PIL import Image
 import customtkinter as ctk
 from utils.helper_functions import find_root
+from utils.observer_publisher import SimplePublisher
 from views.configurations_view import Config
 from models.yaml_manager import YAMLManager
 
@@ -34,7 +35,7 @@ class SignalFrameController:
             self.view.filehandling_frame_view
         )
 
-    def on_toggle_side_bar(self, _ = None) -> None:
+    def on_toggle_side_bar(self, _=None) -> None:
         """
         Bound to the Ctrl + B press event.
         """
@@ -131,10 +132,46 @@ class FileHandlingFrameController:
             self.view.selected_file_path.set(filepath)
 
     def open_file(self, *_: Any) -> None:
+        """
+        Safe file path in yaml file and publish the file size.
+        """
         filepath = self.view.selected_file_path.get()
 
         self.file_manager.dump_yaml_file(filepath)
-        # TODO: show filesize in statusbar
-        filesize_kb = round(os.path.getsize(filepath) / 1024, 3)
-        formatted_filesize = f"{filesize_kb:,.3f} KB".replace(",", ".")
-        print(f"File selected: {filepath}; size: {formatted_filesize}")
+
+        file_size_publisher.file_size = round(os.path.getsize(filepath) / 1024)
+
+
+class FileSizePublisher(SimplePublisher):
+    """
+    Monitor the file size.
+    """
+
+    def __init__(self):
+        SimplePublisher.__init__(self)
+        super(FileSizePublisher, self).__init__()
+        self._file_size: str
+
+    @property
+    def file_size(self) -> str:
+        """
+        Get the file size.
+
+        Returns:
+            str: The set file size.
+        """
+        return self._file_size
+
+    @file_size.setter
+    def file_size(self, file_size: str) -> None:
+        """
+        Set the file size.
+
+        Args:
+            file_size (str): The file size to set.
+        """
+        self._file_size = f"{file_size:,.0f} kB".replace(",", ".")
+        self.notify()
+
+
+file_size_publisher = FileSizePublisher()
