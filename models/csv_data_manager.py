@@ -3,7 +3,6 @@ to reading and parsing CSV files. This includes loading data from a file, managi
 access to the data for visualization purposes. """
 
 from pathlib import Path
-from typing import Tuple
 import pandas as pd
 
 
@@ -13,7 +12,7 @@ class CSVDataManager:
     """
 
     def __init__(self) -> None:
-        self.__suffixes: Tuple[str, ...] = (".csv", ".CSV")
+        self.__suffixes: tuple[str, ...] = (".csv", ".CSV")
 
         self._file_path: str
         self._raw_data_frame: pd.DataFrame = pd.DataFrame()
