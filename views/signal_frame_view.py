@@ -11,13 +11,13 @@ class SignalFrameView(ctk.CTkFrame):
     Layout of the signal frame.
     """
 
-    def __init__(self, master: ctk.CTkFrame | None = None) -> None:
+    def __init__(self, master: ctk.CTkFrame) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
             fg_color=Config.Colors.TRANSPARENT,
         )
-        self.root: ctk.CTk | None = None
+        self.root: ctk.CTk
 
         self.initialize_widgets()
         self.create_layout()
@@ -128,7 +128,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
     Layout of the file handling frame.
     """
 
-    def __init__(self, master: ctk.CTkFrame | None = None) -> None:
+    def __init__(self, master: ctk.CTkFrame) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -288,7 +288,7 @@ class SearchBarFrameView(ctk.CTkFrame):
     Layout of the search bar.
     """
 
-    def __init__(self, master: ctk.CTkFrame | None = None) -> None:
+    def __init__(self, master: ctk.CTkFrame) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -448,7 +448,7 @@ class SignalListFrameView(ctk.CTkFrame):
     Layout of the signal list.
     """
 
-    def __init__(self, master: ctk.CTkFrame | None = None) -> None:
+    def __init__(self, master: ctk.CTkFrame) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -491,7 +491,7 @@ class ConfigSignalListFrameView(ctk.CTkFrame):
     Layout of the signal configuration list.
     """
 
-    def __init__(self, master: ctk.CTkFrame | None = None) -> None:
+    def __init__(self, master: ctk.CTkFrame) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -534,7 +534,7 @@ class PresetFrameView(ctk.CTkFrame):
     Layout of the signal configuration list.
     """
 
-    def __init__(self, master: ctk.CTkFrame | None = None) -> None:
+    def __init__(self, master: ctk.CTkFrame) -> None:
         super().__init__(
             master,
             height=40,
