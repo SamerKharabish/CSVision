@@ -33,6 +33,7 @@ CSVision/
 ├── utils/
 │ ├── custom_input_entry.py
 │ ├── custom_option_button.py
+│ ├── observer_publisher.py
 │ └── helper_functions.py
 ├── views/                          # Contains classes that define the visual
                                     # representation of the application.
