@@ -128,12 +128,7 @@ class FileHandlingFrameController:
         filepath = filedialog.askopenfilename(initialdir="/", filetypes=filetype)
 
         if filepath:
-            self.view.file_entry.configure(state="normal")
-            self.view.file_entry.delete(0, ctk.END)
-            self.view.file_entry.insert(0, filepath.rsplit("/", 1)[1])
-            self.view.file_entry.configure(state="readonly")
-
-            self.view.selected_file_path.set(filepath)
+            self.view.file_entry.enter_file(filepath)
 
     def open_file(self, *_: Any) -> None:
         """
@@ -141,10 +136,27 @@ class FileHandlingFrameController:
         """
         filepath = self.view.selected_file_path.get()
 
-        self.loading_thread = DataLoadingThread(filepath)
+        self.toggle_widgets("disabled")
+
+        self.loading_thread = DataLoadingThread(filepath, self.toggle_widgets)
         self.loading_thread.start()
 
         file_size_publisher.file_size = round(os.path.getsize(filepath) / 1024)
+
+    def toggle_widgets(self, state: str = "normal"):
+        """
+        Toggle the state of the widgets.
+
+        Args:
+            state (str, optional): The state to toggle to. Defaults to "normal".
+        """
+        self.view.root.after(10, lambda: self.view.file_entry.configure(state=state))
+        self.view.root.after(
+            10, lambda: self.view.open_file_button.configure(state=state)
+        )
+        self.view.root.after(
+            10, lambda: self.view.export_to_excel.configure(state=state)
+        )
 
 
 class FileSizePublisher(SimplePublisher):
@@ -187,10 +199,12 @@ class DataLoadingThread(Thread):
     Handle the data loading thread.
     """
 
-    def __init__(self, filename: str) -> None:
+    def __init__(self, filename: str, done_callback: callable) -> None:
         super().__init__()
 
         self.daemon = True
+
+        self.done_callback: callable = done_callback
 
         self.filename: str = filename
         self.file_manager: YAMLManager = YAMLManager("models/file_paths.yaml", 10)
@@ -205,6 +219,7 @@ class DataLoadingThread(Thread):
         except pd.errors.EmptyDataError as exc:
             messagebox.showerror("Error", exc)
         progress_publisher.progress = "stop"
+        self.done_callback()
 
 
 class ProgressPublisher(SimplePublisher):
