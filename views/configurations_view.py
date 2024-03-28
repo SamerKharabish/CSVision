@@ -147,6 +147,9 @@ class Config:
         CANVAS_FILL: Literal["none", "x", "y", "both"] = "both"
         CANVAS_EXPAND: bool = True
 
+        STATUSBAR_FRAME_PROGRESSBAR_SIDE: str = "left"
+        STATUSBAR_FRAME_PROGRESSBAR_PADX: Tuple[int, int] = (10, 10)
+
     class KeyBindings:
         """
         Key bindings

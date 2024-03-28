@@ -73,3 +73,5 @@ class CSVDataManager:
             raise pd.errors.EmptyDataError(
                 f"No columns to parse from file: {self.file_path}"
             ) from exc
+
+csv_data_manager = CSVDataManager()

@@ -2,12 +2,16 @@
 
 import os
 from typing import Any
-from tkinter import filedialog
+from threading import Thread
+from tkinter import filedialog, messagebox
+import pandas as pd
 from PIL import Image
 import customtkinter as ctk
 from utils.helper_functions import find_root
+from utils.observer_publisher import SimplePublisher
 from views.configurations_view import Config
 from models.yaml_manager import YAMLManager
+from models.csv_data_manager import csv_data_manager
 
 
 class SignalFrameController:
@@ -34,7 +38,7 @@ class SignalFrameController:
             self.view.filehandling_frame_view
         )
 
-    def on_toggle_side_bar(self, _ = None) -> None:
+    def on_toggle_side_bar(self, _=None) -> None:
         """
         Bound to the Ctrl + B press event.
         """
@@ -102,10 +106,11 @@ class FileHandlingFrameController:
 
     def __init__(self, view: ctk.CTkFrame) -> None:
         self.view: ctk.CTkFrame = view
+        self.loading_thread: Thread = None
+
+        self.view.root = find_root(self.view)
 
         self.view.open_file_button.configure(command=self.enter_file)
-
-        self.file_manager: YAMLManager = YAMLManager("models/file_paths.yaml", 10)
 
         self.setup_tracings()
 
@@ -123,18 +128,130 @@ class FileHandlingFrameController:
         filepath = filedialog.askopenfilename(initialdir="/", filetypes=filetype)
 
         if filepath:
-            self.view.file_entry.configure(state="normal")
-            self.view.file_entry.delete(0, ctk.END)
-            self.view.file_entry.insert(0, filepath.rsplit("/", 1)[1])
-            self.view.file_entry.configure(state="readonly")
-
-            self.view.selected_file_path.set(filepath)
+            self.view.file_entry.enter_file(filepath)
 
     def open_file(self, *_: Any) -> None:
+        """
+        Safe file path in yaml file and publish the file size.
+        """
         filepath = self.view.selected_file_path.get()
 
-        self.file_manager.dump_yaml_file(filepath)
-        # TODO: show filesize in statusbar
-        filesize_kb = round(os.path.getsize(filepath) / 1024, 3)
-        formatted_filesize = f"{filesize_kb:,.3f} KB".replace(",", ".")
-        print(f"File selected: {filepath}; size: {formatted_filesize}")
+        self.toggle_widgets("disabled")
+
+        self.loading_thread = DataLoadingThread(filepath, self.toggle_widgets)
+        self.loading_thread.start()
+
+        file_size_publisher.file_size = round(os.path.getsize(filepath) / 1024)
+
+    def toggle_widgets(self, state: str = "normal"):
+        """
+        Toggle the state of the widgets.
+
+        Args:
+            state (str, optional): The state to toggle to. Defaults to "normal".
+        """
+        self.view.root.after(10, lambda: self.view.file_entry.configure(state=state))
+        self.view.root.after(
+            10, lambda: self.view.open_file_button.configure(state=state)
+        )
+        self.view.root.after(
+            10, lambda: self.view.export_to_excel.configure(state=state)
+        )
+
+
+class FileSizePublisher(SimplePublisher):
+    """
+    Monitor the file size.
+    """
+
+    def __init__(self):
+        SimplePublisher.__init__(self)
+        super(FileSizePublisher, self).__init__()
+        self._file_size: str
+
+    @property
+    def file_size(self) -> str:
+        """
+        Get the file size.
+
+        Returns:
+            str: The set file size.
+        """
+        return self._file_size
+
+    @file_size.setter
+    def file_size(self, file_size: str) -> None:
+        """
+        Set the file size.
+
+        Args:
+            file_size (str): The file size to set.
+        """
+        self._file_size = f"{file_size:,.0f} kB".replace(",", ".")
+        self.notify()
+
+
+file_size_publisher = FileSizePublisher()
+
+
+class DataLoadingThread(Thread):
+    """
+    Handle the data loading thread.
+    """
+
+    def __init__(self, filename: str, done_callback: callable) -> None:
+        super().__init__()
+
+        self.daemon = True
+
+        self.done_callback: callable = done_callback
+
+        self.filename: str = filename
+        self.file_manager: YAMLManager = YAMLManager("models/file_paths.yaml", 10)
+
+    def run(self) -> None:
+        progress_publisher.progress = "indeterminate"
+        try:
+            csv_data_manager.open_file(self.filename)
+            self.file_manager.dump_yaml_file(self.filename)
+        except FileNotFoundError as exc:
+            messagebox.showerror("Error", exc)
+        except pd.errors.EmptyDataError as exc:
+            messagebox.showerror("Error", exc)
+        progress_publisher.progress = "stop"
+        self.done_callback()
+
+
+class ProgressPublisher(SimplePublisher):
+    """
+    Monitor the progress of the data loading thread.
+    """
+
+    def __init__(self):
+        SimplePublisher.__init__(self)
+        super(ProgressPublisher, self).__init__()
+        self._progress: str
+
+    @property
+    def progress(self) -> str:
+        """
+        Get the progress.
+
+        Returns:
+            str: The set progress.
+        """
+        return self._progress
+
+    @progress.setter
+    def progress(self, progress: str) -> None:
+        """
+        Set the progress.
+
+        Args:
+            file_size (str): The progress to set.
+        """
+        self._progress = progress
+        self.notify()
+
+
+progress_publisher = ProgressPublisher()

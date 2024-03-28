@@ -29,7 +29,7 @@ class InputEntryList(ctk.CTkEntry):
         textvariable: ctk.Variable | None = None,
         placeholder_text: str | None = None,
         font: tuple | ctk.CTkFont | None = None,
-        state: str = ctk.NORMAL,
+        state: str = "readonly",
         max_elements: int = 4,
     ):
         super().__init__(
@@ -76,35 +76,37 @@ class InputEntryList(ctk.CTkEntry):
         """
         Creates and positions a file option window relative to this CustomInputEntry.
         """
-        file_dict = self.file_manager.open_file()
-        newest_files = list(file_dict.values())[-self.max_elements :]
+        if self.cget("state") == "normal" or self.cget("state") == "readonly":
+            self.configure(state="readonly")
+            file_dict = self.file_manager.open_file()
+            newest_files = list(file_dict.values())[-self.max_elements :]
 
-        nr_files = (
-            self.max_elements
-            if self.max_elements < len(newest_files)
-            else len(newest_files)
-        )
+            nr_files = (
+                self.max_elements
+                if self.max_elements < len(newest_files)
+                else len(newest_files)
+            )
 
-        # Calculate the entries's absolute position
-        entry_x, entry_y = calculate_absolute_position(self)
+            # Calculate the entries's absolute position
+            entry_x, entry_y = calculate_absolute_position(self)
 
-        # Calculate the new window's position
-        new_window_x = self.root.winfo_rootx() + entry_x
-        new_window_y = self.root.winfo_rooty() + entry_y + self.winfo_height() + 2
+            # Calculate the new window's position
+            new_window_x = self.root.winfo_rootx() + entry_x
+            new_window_y = self.root.winfo_rooty() + entry_y + self.winfo_height() + 2
 
-        self.file_option_window = FileOptionWindow(
-            width=self.winfo_width(),
-            height=nr_files * self.winfo_height(),
-            x=new_window_x,
-            y=new_window_y,
-            corner_radius=self.corner_radius,
-            border_width=self.border_width,
-            fg_color=self.fg_color,
-            border_color=self.border_color,
-            font=self.font,
-            file_list=newest_files,
-            callback=self.enter_file,
-        )
+            self.file_option_window = FileOptionWindow(
+                width=self.winfo_width(),
+                height=nr_files * self.winfo_height(),
+                x=new_window_x,
+                y=new_window_y,
+                corner_radius=self.corner_radius,
+                border_width=self.border_width,
+                fg_color=self.fg_color,
+                border_color=self.border_color,
+                font=self.font,
+                file_list=newest_files,
+                callback=self.enter_file,
+            )
 
     def enter_file(self, filepath: str) -> None:
         """
@@ -114,10 +116,16 @@ class InputEntryList(ctk.CTkEntry):
             filepath (str): Selected file path.
         """
         self.selected_file_path.set(filepath)
-        self.configure(state="normal")
+        super().configure(False, state="normal")
         self.delete(0, ctk.END)
         self.insert(0, filepath.rsplit("/", 1)[1])
         self.configure(state="readonly")
+
+    def configure(self, require_redraw=False, **kwargs):
+        if "state" in kwargs and kwargs["state"] == "normal":
+            return super().configure(False, state="readonly")
+        else:
+            return super().configure(require_redraw, **kwargs)
 
 
 class FileOptionWindow(ctk.CTkToplevel):
@@ -218,13 +226,13 @@ class FileOptionWindow(ctk.CTkToplevel):
         """
         self.bind("<FocusOut>", self._on_focus_out)
 
-    def _on_focus_out(self, _ = None) -> None:
+    def _on_focus_out(self, _=None) -> None:
         """
         Destroy the window.
         """
         self.destroy()
 
-    def on_enter(self, button: ctk.CTkButton, _ = None) -> None:
+    def on_enter(self, button: ctk.CTkButton, _=None) -> None:
         """
         Changes the button text color to indicate hovering over it.
 
@@ -235,7 +243,7 @@ class FileOptionWindow(ctk.CTkToplevel):
         self.button_color = button.cget("text_color")
         button.configure(text_color=self.BUTTON_HOVER_COLOR)
 
-    def on_leave(self, button: ctk.CTkButton, _ = None) -> None:
+    def on_leave(self, button: ctk.CTkButton, _=None) -> None:
         """
         Changes the button text color to to turn back after it got hovered over.
 
