@@ -231,7 +231,7 @@ class DataLoadingThread(Thread):
         progress_publisher.progress = "stop"
         self.done_callback()
 
-
+        
 class DataExportingThread(Thread):
     """
     Handle the data exporting thread.
