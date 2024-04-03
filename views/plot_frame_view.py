@@ -30,7 +30,9 @@ class PlotFrameView(ctk.CTkFrame):
         Initialize widgets.
         """
         self.plot_area_frame = ctk.CTkFrame(
-            self, fg_color=Config.Colors.PLOT_FRAME_COLOR
+            self,
+            fg_color=Config.Colors.PLOT_FRAME_COLOR,
+            border_width=Config.General.FRAME_BORDER_WIDTH,
         )
         self.plot_types_segemented_button = ctk.CTkSegmentedButton(
             self,
@@ -271,6 +273,6 @@ class PlotFrameView(ctk.CTkFrame):
             side=Config.Layout.CANVAS_SIDE,
             fill=Config.Layout.CANVAS_FILL,
             expand=Config.Layout.CANVAS_EXPAND,
-            padx=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PAD,
+            padx=Config.Layout.CANVAS_PADY,
             pady=Config.Layout.STANDART_PAD,
         )

@@ -50,3 +50,7 @@ class StatusbarFrameController(SimpleObserver):
                 self.run_progress_indeterminate()
             elif simple_publisher.progress == "stop":
                 self.stop_progress()
+
+    def __del__(self):
+        self._file_size_publisher.detach(self)
+        self._progress_publisher.detach(self)

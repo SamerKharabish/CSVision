@@ -117,7 +117,7 @@ class SignalFrameView(ctk.CTkFrame):
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
         self.preset_frame_view.grid(
-            row=4,
+            row=Config.Layout.PRESET_FRAME_ROW,
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
