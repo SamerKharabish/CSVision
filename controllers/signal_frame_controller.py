@@ -111,6 +111,7 @@ class FileHandlingFrameController:
         self.view.root = find_root(self.view)
 
         self.view.open_file_button.configure(command=self.enter_file)
+        self.view.export_to_excel.configure(command=self.export_file)
 
         self.setup_tracings()
 
@@ -132,7 +133,7 @@ class FileHandlingFrameController:
 
     def open_file(self, *_: Any) -> None:
         """
-        Safe file path in yaml file and publish the file size.
+        Disable widgets and start loading data thread.
         """
         filepath = self.view.selected_file_path.get()
 
@@ -142,6 +143,15 @@ class FileHandlingFrameController:
         self.loading_thread.start()
 
         file_size_publisher.file_size = round(os.path.getsize(filepath) / 1024)
+
+    def export_file(self) -> None:
+        """
+        Disable widgets and start exporting data thread.
+        """
+        self.toggle_widgets("disabled")
+
+        self.loading_thread = DataExportingThread(self.toggle_widgets)
+        self.loading_thread.start()
 
     def toggle_widgets(self, state: str = "normal"):
         """
@@ -218,6 +228,25 @@ class DataLoadingThread(Thread):
             messagebox.showerror("Error", exc)
         except pd.errors.EmptyDataError as exc:
             messagebox.showerror("Error", exc)
+        progress_publisher.progress = "stop"
+        self.done_callback()
+
+        
+class DataExportingThread(Thread):
+    """
+    Handle the data exporting thread.
+    """
+
+    def __init__(self, done_callback: callable) -> None:
+        super().__init__()
+
+        self.daemon = True
+
+        self.done_callback: callable = done_callback
+
+    def run(self) -> None:
+        progress_publisher.progress = "indeterminate"
+        csv_data_manager.export_to_excel()
         progress_publisher.progress = "stop"
         self.done_callback()
 

@@ -24,17 +24,17 @@ CSVision/
 │ └── statusbar_frame_controller.py # Handles interactions in the status bar frame.
 ├── models/                         # Contains classes that represent the data
                                     # and business logic of the application.
-│ ├── csv_data_manager.py
-│ └── yaml_manager.py
+│ ├── csv_data_manager.py           # Handles CSV file related operations.
+│ └── yaml_manager.py               # Handles YAML file related operations.
 ├── resources/                      # Images, test files, etc.
 ├── unittests/                      # Automated tests for the application.
-│ ├── test_csv_data_manager.py
-│ └── test_yaml_manager.py
-├── utils/
-│ ├── custom_input_entry.py
-│ ├── custom_option_button.py
-│ ├── observer_publisher.py
-│ └── helper_functions.py
+│ ├── test_csv_data_manager.py      # Tests the CSV file related operations.
+│ └── test_yaml_manager.py          # Tests the YAML file related operations.
+├── utils/                          # Utility functions and classes
+│ ├── helper_functions.py           # General helper functions
+│ ├── input_entry_list.py           # Custom input entry
+│ ├── observer_publisher.py         # Observer pattern
+│ └── tristate_button.py            # Custom tristate button
 ├── views/                          # Contains classes that define the visual
                                     # representation of the application.
 │ ├── configurations_view.py        # The visual configuration of all views.
@@ -53,6 +53,10 @@ CSVision/
 
 - ```Accessibility```: Application is closable by pressing the "exit/close" button or the ESC-key
 - ```Accessibility```: The signal frame can be toggled by pressing 'Ctrl + B' or the button in the sidebar.
+- ```Functionality```: CSV files can be selected and loaded with the "Open file button" in the File Explorer section.
+- ```Functionality```: CSV files can be exported to xslx files with the "Export to excel button" in the File Explorer section.
+- ```Feedback```: Processes are being displayed by a progressbar in the statusbar.
+- ```Feedback```: File sizes are being displayed in the statusbar.
 
 ## Feedback
 

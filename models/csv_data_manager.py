@@ -74,4 +74,13 @@ class CSVDataManager:
                 f"No columns to parse from file: {self.file_path}"
             ) from exc
 
+    def export_to_excel(self):
+        """
+        Export CSV data to an excel file.
+        """
+        self._raw_data_frame.to_excel(
+            self.file_path.replace(".csv", ".xlsx"), engine="xlsxwriter", index=False
+        )
+
+
 csv_data_manager = CSVDataManager()
