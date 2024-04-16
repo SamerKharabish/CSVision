@@ -1,6 +1,6 @@
 """ Defines a CustomInputEntry class with a custom layout and functionalities. """
 
-from typing import Any, Callable
+from typing import Callable
 from functools import partial
 import customtkinter as ctk
 from utils.helper_functions import find_root, calculate_absolute_position
@@ -9,12 +9,12 @@ from models.yaml_manager import YAMLManager
 
 class InputEntryList(ctk.CTkEntry):
     """
-    Functionality and layout of the CustomInputEntry.
+    Functionality and layout of the InputEntryList.
     """
 
     def __init__(
         self,
-        master: Any,
+        master: any,
         selected_file_path: ctk.StringVar,
         collection_filepath_yaml: str,
         width: int = 140,

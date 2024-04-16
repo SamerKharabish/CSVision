@@ -5,12 +5,12 @@ import tkinter as tk
 import customtkinter as ctk
 
 
-def find_root(widget) -> ctk.CTk:
+def find_root(widget: tk.Widget) -> ctk.CTk:
     """
     Recursively traverse the widget hierarchy to find the root widget.
 
     Args:
-        widget (any): The widget from where to start the search.
+        widget (tk.Widget): The widget from where to start the search.
 
     Returns:
         ctk.CTk: The root widget of the widget hierarchy.
@@ -33,7 +33,7 @@ def calculate_absolute_position(widget: tk.Widget) -> Tuple[int, int]:
     Function to calculate the absolute position of a widget relative to the root window.
 
     Args:
-        widget (any): The widget from where to start the calculation.
+        widget (tk.Widget): The widget from where to start the calculation.
 
     Returns:
         Tuple[int, int]: The absolute position of the widget.

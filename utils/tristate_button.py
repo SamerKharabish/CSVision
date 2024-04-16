@@ -1,35 +1,38 @@
 """ Defines a CustomOptionButton class with a custom layout and functionalities.
     This button is similar to a checkbox but with three option to choose from. """
 
-from typing import Any, Callable, Tuple, List
+from typing import Callable
 import customtkinter as ctk
 
 
 class TriStateButton(ctk.CTkButton):
+    """
+    Functionality and layout of the TriStateButton.
+    """
 
     def __init__(
         self,
-        master: Any,
+        master: any,
         width: int = 17,
         height: int = 17,
         corner_radius: int | None = None,
         border_width: int | None = 2,
         border_spacing: int = 0,
-        bg_color: str | Tuple[str] = "transparent",
-        fg_color: str | Tuple[str] | None = None,
-        hover_color: str | Tuple[str] | None = None,
-        border_color: str | Tuple[str] | None = None,
-        text_color: str | Tuple[str] | None = None,
-        text_color_disabled: str | Tuple[str] | None = None,
-        background_corner_colors: Tuple[str | Tuple[str]] | None = None,
+        bg_color: str | tuple[str] = "transparent",
+        fg_color: str | tuple[str] | None = None,
+        hover_color: str | tuple[str] | None = None,
+        border_color: str | tuple[str] | None = None,
+        text_color: str | tuple[str] | None = None,
+        text_color_disabled: str | tuple[str] | None = None,
+        background_corner_colors: tuple[str | tuple[str]] | None = None,
         round_width_to_even_numbers: bool = True,
         round_height_to_even_numbers: bool = True,
-        states: List[str] | None = None,
-        font: Tuple | ctk.CTkFont | None = None,
+        states: list[str] | None = None,
+        font: tuple | ctk.CTkFont | None = None,
         textvariable: ctk.Variable | None = None,
         state: str = "normal",
         hover: bool = True,
-        user_command: Callable[[], Any] | None = None,
+        user_command: Callable[[], any] | None = None,
         compound: str = "left",
         anchor: str = "center",
     ):
@@ -70,7 +73,7 @@ class TriStateButton(ctk.CTkButton):
         if hover_color is None:
             self.configure(hover_color=master._fg_color)
 
-        self.user_command: Callable[[], Any] | None = user_command
+        self.user_command: Callable[[], any] | None = user_command
         self.configure(command=self.command)
 
     def advance_state(self):
