@@ -3,6 +3,7 @@
 import sys
 import customtkinter as ctk
 from views.configurations_view import Config
+from views.main_view import MainView
 from controllers.main_controller import MainController
 
 
@@ -24,6 +25,25 @@ class AppView(ctk.CTk):
             Config.Dimensions.APP_WINDOW_MIN_HEIGHT,
         )
 
+        self.initialize_widgets()
+        self.create_layout()
+
+    def initialize_widgets(self) -> None:
+        """
+        Initialize widgets.
+        """
+        self.main_view: ctk.CTkFrame = MainView(self)
+
+    def create_layout(self) -> None:
+        """
+        Create layout.
+        """
+        self.main_view.pack(
+            side=Config.Layout.MAIN_VIEW_SIDE,
+            fill=Config.Layout.MAIN_VIEW_FILL,
+            expand=Config.Layout.MAIN_VIEW_EXPAND,
+        )
+
 
 class AppController:
     """
@@ -34,6 +54,13 @@ class AppController:
         self.view: ctk.CTk = view
 
         self.setup_bindings()
+        self.initialize_controller()
+
+    def initialize_controller(self) -> None:
+        """
+        Initialize controller.
+        """
+        self.main_controller = MainController(self.view.main_view)
 
     def setup_bindings(self) -> None:
         """
@@ -57,9 +84,8 @@ def main() -> None:
     ctk.set_appearance_mode("Dark")
 
     app_view = AppView()
-    app = AppController(app_view)
-    MainController(app.view)
-    app.view.mainloop()
+    AppController(app_view)
+    app_view.mainloop()
 
 
 if __name__ == "__main__":

@@ -14,7 +14,7 @@ class MainView(ctk.CTkFrame):
 
     def __init__(self, master: ctk.CTk) -> None:
         super().__init__(master, corner_radius=Config.General.CORNER_RADIUS)
-        self.master: ctk.CTk = master
+        self.root: ctk.CTk
 
         self.initialize_widgets()
         self.create_layout()
@@ -31,12 +31,6 @@ class MainView(ctk.CTkFrame):
         """
         Create layout.
         """
-        self.pack(
-            side=Config.Layout.MAIN_VIEW_SIDE,
-            fill=Config.Layout.MAIN_VIEW_FILL,
-            expand=Config.Layout.MAIN_VIEW_EXPAND,
-        )
-
         self.statusbar_frame_view.pack(
             side=Config.Layout.STATUSBAR_FRAME_SIDE,
             fill=Config.Layout.STATUSBAR_FRAME_FILL,
