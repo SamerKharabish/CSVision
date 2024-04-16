@@ -58,6 +58,13 @@ class CSVDataManager:
     def open_file(self, file_path: str) -> None:
         """
         Open a CSV file and read the data.
+
+        Args:
+            file_path (str): The CSV file path.
+
+        Raises:
+            FileNotFoundError: If the file was not found.
+            pd.errors.EmptyDataError: If the file is empty.
         """
         self.file_path = file_path
 
@@ -74,13 +81,28 @@ class CSVDataManager:
                 f"No columns to parse from file: {self.file_path}"
             ) from exc
 
-    def export_to_excel(self):
+    def export_to_excel(self, file_path: str) -> None:
         """
         Export CSV data to an excel file.
+
+        Args:
+            file_path (str): The CSV file path.
+
+        Raises:
+            pd.errors.EmptyDataError: If the file is empty.
         """
-        self._raw_data_frame.to_excel(
-            self.file_path.replace(".csv", ".xlsx"), engine="xlsxwriter", index=False
-        )
+        self.file_path = file_path
+
+        if not self._raw_data_frame.empty:
+            self._raw_data_frame.to_excel(
+                self.file_path.replace(".csv", ".xlsx"),
+                engine="xlsxwriter",
+                index=False,
+            )
+        else:
+            raise pd.errors.EmptyDataError(
+                f"No columns to parse from file: {self.file_path}"
+            )
 
 
 csv_data_manager = CSVDataManager()
