@@ -231,6 +231,25 @@ class DataLoadingThread(Thread):
         progress_publisher.progress = "stop"
         self.done_callback()
 
+        
+class DataExportingThread(Thread):
+    """
+    Handle the data exporting thread.
+    """
+
+    def __init__(self, done_callback: callable) -> None:
+        super().__init__()
+
+        self.daemon = True
+
+        self.done_callback: callable = done_callback
+
+    def run(self) -> None:
+        progress_publisher.progress = "indeterminate"
+        csv_data_manager.export_to_excel()
+        progress_publisher.progress = "stop"
+        self.done_callback()
+
 
 class DataExportingThread(Thread):
     """

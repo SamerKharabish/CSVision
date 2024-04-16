@@ -67,6 +67,23 @@ class SignalFrameView(ctk.CTkFrame):
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
 
+        self.settings_button = ctk.CTkButton(
+            self.side_bar_frame,
+            width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            fg_color=Config.Colors.TRANSPARENT,
+            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            text="",
+            image=ctk.CTkImage(
+                light_image=Image.open(Config.ImageFormats.SETTINGS_BUTTON_PNG),
+                size=(
+                    Config.Dimensions.TOGGLE_SIDEPANEL_BUTTON_WIDTH_HEIGHT,
+                    Config.Dimensions.TOGGLE_SIDEPANEL_BUTTON_WIDTH_HEIGHT,
+                ),
+            ),
+            anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
+        )
+
     def create_layout(self) -> None:
         """
         Create layout.
@@ -81,6 +98,14 @@ class SignalFrameView(ctk.CTkFrame):
             fill=Config.Layout.TOGGLE_SIDE_BAR_BUTTON_FILL,
             expand=Config.Layout.TOGGLE_SIDE_BAR_BUTTON_EXPAND,
             padx=Config.Layout.TOGGLE_SIDE_BAR_BUTTON_PAD,
+            pady=Config.Layout.STANDART_PAD,
+        )
+
+        self.settings_button.pack(
+            side=Config.Layout.SETTINGS_BUTTON_SIDE,
+            fill=Config.Layout.SETTINGS_BUTTON_FILL,
+            expand=Config.Layout.SETTINGS_BUTTON_EXPAND,
+            padx=Config.Layout.SETTINGS_BUTTON_PAD,
             pady=Config.Layout.STANDART_PAD,
         )
 
@@ -117,7 +142,7 @@ class SignalFrameView(ctk.CTkFrame):
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
         self.preset_frame_view.grid(
-            row=4,
+            row=Config.Layout.PRESET_FRAME_ROW,
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )

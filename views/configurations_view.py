@@ -56,6 +56,7 @@ class Config:
         REFRESH_PNG: str = "resources/Images/refresh.png"
         HIDE_SIDEPANEL_BUTTON_PNG: str = "resources/Images/hide-sidepanel.png"
         SHOW_SIDEPANEL_BUTTON_PNG: str = "resources/Images/show-sidepanel.png"
+        SETTINGS_BUTTON_PNG: str = "resources/Images/settings.png"
         RESET_BUTTON_PNG: str = "resources/Images/reset.png"
         BACK_BUTTON_PNG: str = "resources/Images/back.png"
         PAN_BUTTON_PNG: str = "resources/Images/pan.png"
@@ -98,10 +99,16 @@ class Config:
         TOGGLE_SIDE_BAR_BUTTON_EXPAND: bool = False
         TOGGLE_SIDE_BAR_BUTTON_PAD: Tuple[int, int] = (3, 3)
 
+        SETTINGS_BUTTON_SIDE: str = "bottom"
+        SETTINGS_BUTTON_FILL: str = "x"
+        SETTINGS_BUTTON_EXPAND: bool = False
+        SETTINGS_BUTTON_PAD: Tuple[int, int] = (3, 3)
+
         FILEHANDLING_FRAME_ROW: int = 0
-        SEARCHBAR_FRAME_ROW: int = 1
-        SIGNALLIST_FRAME_ROW: int = 2
-        CONFIG_SIGNALLIST_FRAME_ROW: int = 3
+        SEARCHBAR_FRAME_ROW: int = FILEHANDLING_FRAME_ROW + 1
+        SIGNALLIST_FRAME_ROW: int = SEARCHBAR_FRAME_ROW + 1
+        CONFIG_SIGNALLIST_FRAME_ROW: int = SIGNALLIST_FRAME_ROW + 1
+        PRESET_FRAME_ROW: int = CONFIG_SIGNALLIST_FRAME_ROW + 1
         GENERAL_FRAME_STICKY: str = "nesw"
 
         SEARCHBAR_TITLE_FARME_ROW: int = 0
@@ -146,6 +153,7 @@ class Config:
         CANVAS_SIDE: Literal["left", "right", "top", "bottom"] = "top"
         CANVAS_FILL: Literal["none", "x", "y", "both"] = "both"
         CANVAS_EXPAND: bool = True
+        CANVAS_PADY: Tuple[int, int] = (2, 2)
 
         STATUSBAR_FRAME_PROGRESSBAR_SIDE: str = "left"
         STATUSBAR_FRAME_PROGRESSBAR_PADX: Tuple[int, int] = (10, 10)
@@ -187,7 +195,7 @@ class Config:
         TRANSPARENT_BUTTON_HOVER: str = "#3E3E3E"
         BORDER_COLOR: str = "#6C6C6C"
         COLORED_BUTTON_HOVER: str = "#3D3E40"
-        PLOT_FRAME_COLOR: str = "#F8F8FF"
+        PLOT_FRAME_COLOR: str = "#333333"
 
     class Values:
         """

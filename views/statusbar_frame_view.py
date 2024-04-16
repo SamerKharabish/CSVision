@@ -26,7 +26,7 @@ class StatusbarFrameView(ctk.CTkFrame):
         """
         self.filesize_label = ctk.CTkLabel(
             self,
-            text="0.0 kB",
+            text="",
             font=ctk.CTkFont(
                 family=Config.Fonts.STATUS_BAR_TEXTS[0],
                 size=Config.Fonts.STATUS_BAR_TEXTS[1],
