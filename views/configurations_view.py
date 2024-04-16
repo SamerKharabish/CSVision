@@ -56,6 +56,7 @@ class Config:
         REFRESH_PNG: str = "resources/Images/refresh.png"
         HIDE_SIDEPANEL_BUTTON_PNG: str = "resources/Images/hide-sidepanel.png"
         SHOW_SIDEPANEL_BUTTON_PNG: str = "resources/Images/show-sidepanel.png"
+        SETTINGS_BUTTON_PNG: str = "resources/Images/settings.png"
         RESET_BUTTON_PNG: str = "resources/Images/reset.png"
         BACK_BUTTON_PNG: str = "resources/Images/back.png"
         PAN_BUTTON_PNG: str = "resources/Images/pan.png"
@@ -97,6 +98,11 @@ class Config:
         TOGGLE_SIDE_BAR_BUTTON_FILL: str = "x"
         TOGGLE_SIDE_BAR_BUTTON_EXPAND: bool = False
         TOGGLE_SIDE_BAR_BUTTON_PAD: Tuple[int, int] = (3, 3)
+
+        SETTINGS_BUTTON_SIDE: str = "bottom"
+        SETTINGS_BUTTON_FILL: str = "x"
+        SETTINGS_BUTTON_EXPAND: bool = False
+        SETTINGS_BUTTON_PAD: Tuple[int, int] = (3, 3)
 
         FILEHANDLING_FRAME_ROW: int = 0
         SEARCHBAR_FRAME_ROW: int = FILEHANDLING_FRAME_ROW + 1
