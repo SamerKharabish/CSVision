@@ -58,6 +58,12 @@ class TestCSVDataManager(unittest.TestCase):
         file_path = "new_test.csv"
         csv_data_manager.file_path = file_path
         self.assertEqual(file_path, csv_data_manager.file_path)
+        self.assertTrue(csv_data_manager.raw_data.empty)
+
+        file_path = "new_test1.csv"
+        csv_data_manager.file_path = file_path
+        self.assertEqual(file_path, csv_data_manager.file_path)
+        self.assertTrue(csv_data_manager.raw_data.empty)
 
     def test_open_csv_file(self) -> None:
         """
