@@ -1,17 +1,13 @@
 """ Defines the SignalFrameController class with the signal frame functionality. """
 
-import os
 from typing import Any
 from threading import Thread
-from tkinter import filedialog, messagebox
-import pandas as pd
+from tkinter import filedialog
 from PIL import Image
 import customtkinter as ctk
 from utils.helper_functions import find_root
-from utils.observer_publisher import SimplePublisher
+from utils.threads import DataLoadingThread, DataExportingThread
 from views.configurations_view import Config
-from models.yaml_manager import YAMLManager
-from models.csv_data_manager import csv_data_manager
 
 
 class SignalFrameController:
@@ -155,132 +151,3 @@ class FileHandlingFrameController:
         self.view.root.after(
             10, lambda: self.view.export_to_excel.configure(state=state)
         )
-
-
-class FileSizePublisher(SimplePublisher):
-    """
-    Monitor the file size.
-    """
-
-    def __init__(self):
-        SimplePublisher.__init__(self)
-        super(FileSizePublisher, self).__init__()
-        self._file_size: str
-
-    @property
-    def file_size(self) -> str:
-        """
-        Get the file size.
-
-        Returns:
-            str: The set file size.
-        """
-        return self._file_size
-
-    @file_size.setter
-    def file_size(self, file_size: str | None) -> None:
-        """
-        Set the file size.
-
-        Args:
-            file_size (str): The file size to set.
-        """
-        self._file_size = (
-            f"{file_size:,.0f} kB".replace(",", ".") if file_size else "??"
-        )
-        self.notify()
-
-
-file_size_publisher = FileSizePublisher()
-
-
-class DataLoadingThread(Thread):
-    """
-    Handle the data loading thread.
-    """
-
-    def __init__(self, filename: str, toggle_callback: callable) -> None:
-        super().__init__()
-
-        self.daemon = True
-
-        self.toggle_callback: callable = toggle_callback
-
-        self.filename: str = filename
-        self.file_manager: YAMLManager = YAMLManager("models/file_paths.yaml", 10)
-
-    def run(self) -> None:
-        progress_publisher.progress = "indeterminate"
-        try:
-            csv_data_manager.open_file(self.filename)
-            self.file_manager.dump_yaml_file(self.filename)
-            file_size_publisher.file_size = round(os.path.getsize(self.filename) / 1024)
-            self.toggle_callback("disabled")
-        except FileNotFoundError as exc:
-            file_size_publisher.file_size = None
-            messagebox.showerror("Error", exc)
-        except pd.errors.EmptyDataError as exc:
-            file_size_publisher.file_size = None
-            messagebox.showerror("Error", exc)
-        progress_publisher.progress = "stop"
-        self.toggle_callback()
-
-
-class DataExportingThread(Thread):
-    """
-    Handle the data exporting thread.
-    """
-
-    def __init__(self, toogle_callback: callable) -> None:
-        super().__init__()
-
-        self.daemon = True
-
-        self.toggle_callback: callable = toogle_callback
-
-    def run(self) -> None:
-        progress_publisher.progress = "indeterminate"
-        try:
-            csv_data_manager.export_to_excel(csv_data_manager.file_path)
-            self.toggle_callback("disabled")
-        except AttributeError:
-            pass
-        except pd.errors.EmptyDataError:
-            pass
-        progress_publisher.progress = "stop"
-        self.toggle_callback()
-
-
-class ProgressPublisher(SimplePublisher):
-    """
-    Monitor the progress of the data loading thread.
-    """
-
-    def __init__(self):
-        SimplePublisher.__init__(self)
-        super(ProgressPublisher, self).__init__()
-        self._progress: str
-
-    @property
-    def progress(self) -> str:
-        """
-        Get the progress.
-
-        Returns:
-            str: The set progress.
-        """
-        return self._progress
-
-    @progress.setter
-    def progress(self, progress: str) -> None:
-        """
-        Set the progress.
-
-        Args:
-            file_size (str): The progress to set.
-        """
-        self._progress = progress
-        self.notify()
-
-
-progress_publisher = ProgressPublisher()
