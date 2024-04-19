@@ -42,8 +42,12 @@ class CSVDataManager:
         elif not file_path.endswith(self.__suffixes):
             raise ValueError(f"Invalid file type: {Path(file_path).suffix}!")
         else:
-            self._file_path = file_path
-            self._raw_data_frame = pd.DataFrame()
+            try:
+                if self._file_path != file_path:
+                    self._file_path = file_path
+                    self._raw_data_frame = pd.DataFrame()
+            except AttributeError:
+                self._file_path = file_path
 
     @property
     def raw_data(self) -> pd.DataFrame | None:
