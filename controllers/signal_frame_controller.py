@@ -25,7 +25,7 @@ class SignalFrameController:
             Config.General.SIGNAL_FRAME_MINIMIZED
         )  # Tracks the state of the signal frame
 
-        self.view.toggle_side_bar_button.configure(command=self.toggle_side_bar)
+        self.view.toggle_side_bar_button.configure(command=self.on_toggle_side_bar)
 
         self.view.root = find_root(self.view)
         self.initialize_controller()
@@ -40,15 +40,9 @@ class SignalFrameController:
 
     def on_toggle_side_bar(self, _=None) -> None:
         """
+        Toggle the visibility of the signal frame.
         Bound to the Ctrl + B press event.
         """
-        self.toggle_side_bar()
-
-    def toggle_side_bar(self) -> None:
-        """
-        Toggle the visibility of the signal frame.
-        """
-
         if self.signal_frame_minimized:
             self.hide_sidebar()
         else:
@@ -137,19 +131,13 @@ class FileHandlingFrameController:
         """
         filepath = self.view.selected_file_path.get()
 
-        self.toggle_widgets("disabled")
-
         self.loading_thread = DataLoadingThread(filepath, self.toggle_widgets)
         self.loading_thread.start()
-
-        file_size_publisher.file_size = round(os.path.getsize(filepath) / 1024)
 
     def export_file(self) -> None:
         """
         Disable widgets and start exporting data thread.
         """
-        self.toggle_widgets("disabled")
-
         self.loading_thread = DataExportingThread(self.toggle_widgets)
         self.loading_thread.start()
 
@@ -190,14 +178,16 @@ class FileSizePublisher(SimplePublisher):
         return self._file_size
 
     @file_size.setter
-    def file_size(self, file_size: str) -> None:
+    def file_size(self, file_size: str | None) -> None:
         """
         Set the file size.
 
         Args:
             file_size (str): The file size to set.
         """
-        self._file_size = f"{file_size:,.0f} kB".replace(",", ".")
+        self._file_size = (
+            f"{file_size:,.0f} kB".replace(",", ".") if file_size else "??"
+        )
         self.notify()
 
 
@@ -209,12 +199,12 @@ class DataLoadingThread(Thread):
     Handle the data loading thread.
     """
 
-    def __init__(self, filename: str, done_callback: callable) -> None:
+    def __init__(self, filename: str, toggle_callback: callable) -> None:
         super().__init__()
 
         self.daemon = True
 
-        self.done_callback: callable = done_callback
+        self.toggle_callback: callable = toggle_callback
 
         self.filename: str = filename
         self.file_manager: YAMLManager = YAMLManager("models/file_paths.yaml", 10)
@@ -224,31 +214,16 @@ class DataLoadingThread(Thread):
         try:
             csv_data_manager.open_file(self.filename)
             self.file_manager.dump_yaml_file(self.filename)
+            file_size_publisher.file_size = round(os.path.getsize(self.filename) / 1024)
+            self.toggle_callback("disabled")
         except FileNotFoundError as exc:
+            file_size_publisher.file_size = None
             messagebox.showerror("Error", exc)
         except pd.errors.EmptyDataError as exc:
+            file_size_publisher.file_size = None
             messagebox.showerror("Error", exc)
         progress_publisher.progress = "stop"
-        self.done_callback()
-
-        
-class DataExportingThread(Thread):
-    """
-    Handle the data exporting thread.
-    """
-
-    def __init__(self, done_callback: callable) -> None:
-        super().__init__()
-
-        self.daemon = True
-
-        self.done_callback: callable = done_callback
-
-    def run(self) -> None:
-        progress_publisher.progress = "indeterminate"
-        csv_data_manager.export_to_excel()
-        progress_publisher.progress = "stop"
-        self.done_callback()
+        self.toggle_callback()
 
 
 class DataExportingThread(Thread):
@@ -256,18 +231,24 @@ class DataExportingThread(Thread):
     Handle the data exporting thread.
     """
 
-    def __init__(self, done_callback: callable) -> None:
+    def __init__(self, toogle_callback: callable) -> None:
         super().__init__()
 
         self.daemon = True
 
-        self.done_callback: callable = done_callback
+        self.toggle_callback: callable = toogle_callback
 
     def run(self) -> None:
         progress_publisher.progress = "indeterminate"
-        csv_data_manager.export_to_excel()
+        try:
+            csv_data_manager.export_to_excel(csv_data_manager.file_path)
+            self.toggle_callback("disabled")
+        except AttributeError:
+            pass
+        except pd.errors.EmptyDataError:
+            pass
         progress_publisher.progress = "stop"
-        self.done_callback()
+        self.toggle_callback()
 
 
 class ProgressPublisher(SimplePublisher):

@@ -9,13 +9,13 @@ class SimplePublisher:
     Represents csv data that is being observed.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Create an empty observer list.
         """
         self._observers: list[SimpleObserver] = []
 
-    def attach(self, observer: SimpleObserver):
+    def attach(self, observer: SimpleObserver) -> None:
         """
         Attach an observer to the list if not already attached.
 
@@ -25,7 +25,7 @@ class SimplePublisher:
         if observer not in self._observers:
             self._observers.append(observer)
 
-    def detach(self, observer: SimpleObserver):
+    def detach(self, observer: SimpleObserver) -> None:
         """
         Detach an observer from the list if attached.
 
@@ -35,7 +35,7 @@ class SimplePublisher:
         if observer in self._observers:
             self._observers.remove(observer)
 
-    def notify(self, modifier: SimpleObserver | None = None):
+    def notify(self, modifier: SimpleObserver | None = None) -> None:
         """
         Notify all registered observers, except the one that might have triggered the update.
 
