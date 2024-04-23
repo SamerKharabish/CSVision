@@ -10,12 +10,13 @@ class CSVDataManager:
     """
     Class for CSV file operations.
     """
+    __slots__ = "__suffixes", "__file_path", "__raw_data_frame"
 
     def __init__(self) -> None:
         self.__suffixes: tuple[str, ...] = (".csv", ".CSV")
 
-        self._file_path: str
-        self._raw_data_frame: pd.DataFrame = pd.DataFrame()
+        self.__file_path: str
+        self.__raw_data_frame: pd.DataFrame = pd.DataFrame()
 
     @property
     def file_path(self) -> str:
@@ -25,7 +26,7 @@ class CSVDataManager:
         Returns:
             str: The set CSV file path.
         """
-        return self._file_path
+        return self.__file_path
 
     @file_path.setter
     def file_path(self, file_path: str) -> None:
@@ -43,11 +44,11 @@ class CSVDataManager:
             raise ValueError(f"Invalid file type: {Path(file_path).suffix}!")
         else:
             try:
-                if self._file_path != file_path:
-                    self._file_path = file_path
-                    self._raw_data_frame = pd.DataFrame()
+                if self.__file_path != file_path:
+                    self.__file_path = file_path
+                    self.__raw_data_frame = pd.DataFrame()
             except AttributeError:
-                self._file_path = file_path
+                self.__file_path = file_path
 
     @property
     def raw_data(self) -> pd.DataFrame | None:
@@ -57,7 +58,7 @@ class CSVDataManager:
         Returns:
             pd.DataFrame: The read raw CSV data.
         """
-        return self._raw_data_frame
+        return self.__raw_data_frame
 
     def open_file(self, file_path: str) -> None:
         """
@@ -73,7 +74,7 @@ class CSVDataManager:
         self.file_path = file_path
 
         try:
-            self._raw_data_frame = pd.read_csv(
+            self.__raw_data_frame = pd.read_csv(
                 self.file_path, delimiter=";", quotechar="|"
             )
         except FileNotFoundError as exc:
@@ -97,8 +98,8 @@ class CSVDataManager:
         """
         self.file_path = file_path
 
-        if not self._raw_data_frame.empty:
-            self._raw_data_frame.to_excel(
+        if not self.__raw_data_frame.empty:
+            self.__raw_data_frame.to_excel(
                 self.file_path.replace(".csv", ".xlsx"),
                 engine="xlsxwriter",
                 index=False,

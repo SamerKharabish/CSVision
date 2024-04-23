@@ -12,6 +12,8 @@ class AppView(ctk.CTk):
     Layout of the main application.
     """
 
+    __slots__ = ("main_view",)
+
     def __init__(self) -> None:
         super().__init__()
 
@@ -50,6 +52,8 @@ class AppController:
     Functionality of the main application.
     """
 
+    __slots__ = ("__view",)
+
     def __init__(self, view: AppView) -> None:
         self.__view: AppView = view
 
@@ -69,7 +73,7 @@ class AppController:
         self.__view.bind(Config.KeyBindings.CLOSE_APPLICATION, self.__close_application)
         self.__view.protocol("WM_DELETE_WINDOW", self.__close_application)
 
-    def __close_application(self, _ = None) -> None:
+    def __close_application(self, _=None) -> None:
         """
         Close the application.
         """
@@ -85,6 +89,7 @@ def main() -> None:
 
     app_view = AppView()
     AppController(app_view)
+
     app_view.mainloop()
 
 

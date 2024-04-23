@@ -5,13 +5,14 @@ from views.main_view import MainView
 from utils.helper_functions import find_root
 from controllers.statusbar_frame_controller import StatusbarFrameController
 from controllers.signal_frame_controller import SignalFrameController
-from controllers.plot_frame_controller import PlotFrameController
 
 
 class MainController:
     """
     Functionality of the main application.
     """
+
+    __slots__ = "__view", "__signal_frame_controller"
 
     def __init__(self, view: MainView) -> None:
         self.__view: MainView = view
@@ -28,7 +29,6 @@ class MainController:
         self.__signal_frame_controller: SignalFrameController = SignalFrameController(
             self.__view.signal_frame_view
         )
-        PlotFrameController(self.__view.plot_frame_view)
 
     def __setup_bindings(self) -> None:
         """

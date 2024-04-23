@@ -2,8 +2,12 @@
 
 from views.statusbar_frame_view import StatusbarFrameView
 from views.configurations_view import Config
-from utils.observer_publisher import SimplePublisher, SimpleObserver
-from controllers.signal_frame_controller import file_size_publisher, progress_publisher
+from utils.observer_publisher import (
+    SimplePublisher,
+    SimpleObserver,
+    progress_publisher,
+    file_size_publisher,
+)
 
 
 class StatusbarFrameController(SimpleObserver):
@@ -44,7 +48,9 @@ class StatusbarFrameController(SimpleObserver):
 
     def update(self, simple_publisher: SimplePublisher) -> None:
         if simple_publisher == self.__file_size_publisher:
-            self.__view.filesize_label.configure(text=self.__file_size_publisher.file_size)
+            self.__view.filesize_label.configure(
+                text=self.__file_size_publisher.file_size
+            )
         elif simple_publisher == self.__progress_publisher:
             if simple_publisher.progress == "indeterminate":
                 self.__run_progress_indeterminate()

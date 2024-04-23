@@ -1,17 +1,11 @@
 """ Defines the SignalFrameController class with the signal frame functionality. """
 
-import os
-from typing import Any
-from threading import Thread
-from tkinter import filedialog, messagebox
-import pandas as pd
+from tkinter import filedialog
 from PIL import Image
 import customtkinter as ctk
 from utils.helper_functions import find_root
-from utils.observer_publisher import SimplePublisher
+from utils.threads import DataLoadingThread, DataExportingThread
 from views.configurations_view import Config
-from models.yaml_manager import YAMLManager
-from models.csv_data_manager import csv_data_manager
 
 
 class SignalFrameController:
@@ -19,45 +13,45 @@ class SignalFrameController:
     Functionality of the signal frame view.
     """
 
+    __slots__ = "__view", "__signal_frame_minimized"
+
     def __init__(self, view: ctk.CTkFrame) -> None:
-        self.view: ctk.CTkFrame = view
-        self.signal_frame_minimized: bool = (
+        self.__view: ctk.CTkFrame = view
+        self.__signal_frame_minimized: bool = (
             Config.General.SIGNAL_FRAME_MINIMIZED
         )  # Tracks the state of the signal frame
 
-        self.view.toggle_side_bar_button.configure(command=self.on_toggle_side_bar)
+        self.__view.toggle_side_bar_button.configure(command=self.on_toggle_side_bar)
 
-        self.view.root = find_root(self.view)
-        self.initialize_controller()
+        self.__view.root = find_root(self.__view)
+        self.__initialize_controller()
 
-    def initialize_controller(self) -> None:
+    def __initialize_controller(self) -> None:
         """
         Initialize controller.
         """
-        self.file_handling_frame_controller = FileHandlingFrameController(
-            self.view.filehandling_frame_view
-        )
+        FileHandlingFrameController(self.__view.filehandling_frame_view)
 
     def on_toggle_side_bar(self, _=None) -> None:
         """
         Toggle the visibility of the signal frame.
         Bound to the Ctrl + B press event.
         """
-        if self.signal_frame_minimized:
-            self.hide_sidebar()
+        if self.__signal_frame_minimized:
+            self.__hide_sidebar()
         else:
-            self.show_sidebar()
+            self.__show_sidebar()
 
-    def hide_sidebar(self) -> None:
+    def __hide_sidebar(self) -> None:
         """
         Hide the signal frame and update the toggle button image to indicate it can be shown.
         """
-        self.view.root.after(
-            0, self.view.signal_panel.pack(side="right", fill="y", expand=True)
+        self.__view.root.after(
+            0, self.__view.signal_panel.pack(side="right", fill="y", expand=True)
         )
-        self.view.root.after(
+        self.__view.root.after(
             0,
-            self.view.toggle_side_bar_button.configure(
+            self.__view.toggle_side_bar_button.configure(
                 image=ctk.CTkImage(
                     light_image=Image.open(
                         Config.ImageFormats.HIDE_SIDEPANEL_BUTTON_PNG
@@ -69,16 +63,16 @@ class SignalFrameController:
                 )
             ),
         )
-        self.signal_frame_minimized = False
+        self.__signal_frame_minimized = False
 
-    def show_sidebar(self) -> None:
+    def __show_sidebar(self) -> None:
         """
         Show the signal frame and update the toggle button image to indicate it can be hidden.
         """
-        self.view.root.after(0, self.view.signal_panel.pack_forget())
-        self.view.root.after(
+        self.__view.root.after(0, self.__view.signal_panel.pack_forget())
+        self.__view.root.after(
             0,
-            self.view.toggle_side_bar_button.configure(
+            self.__view.toggle_side_bar_button.configure(
                 image=ctk.CTkImage(
                     light_image=Image.open(
                         Config.ImageFormats.SHOW_SIDEPANEL_BUTTON_PNG
@@ -90,7 +84,7 @@ class SignalFrameController:
                 )
             ),
         )
-        self.signal_frame_minimized = True
+        self.__signal_frame_minimized = True
 
 
 class FileHandlingFrameController:
@@ -98,24 +92,32 @@ class FileHandlingFrameController:
     Functionality of the file handling frame view.
     """
 
+    __slots__ = "__view", "__exporting_thread", "__loading_thread"
+
     def __init__(self, view: ctk.CTkFrame) -> None:
-        self.view: ctk.CTkFrame = view
-        self.loading_thread: Thread = None
+        self.__view: ctk.CTkFrame = view
 
-        self.view.root = find_root(self.view)
+        self.__view.root = find_root(self.__view)
 
-        self.view.open_file_button.configure(command=self.enter_file)
-        self.view.export_to_excel.configure(command=self.export_file)
+        self.__exporting_thread: DataExportingThread = DataExportingThread(
+            self.toggle_widgets
+        )
+        self.__loading_thread: DataLoadingThread = DataLoadingThread(
+            self.toggle_widgets
+        )
 
-        self.setup_tracings()
+        self.__view.open_file_button.configure(command=self.__enter_file)
+        self.__view.export_to_excel.configure(command=self.__exporting_thread.start)
 
-    def setup_tracings(self) -> None:
+        self.__setup_tracings()
+
+    def __setup_tracings(self) -> None:
         """
         Tracing variables from the widgets.
         """
-        self.view.selected_file_path.trace("w", self.open_file)
+        self.__view.selected_file_path.trace("w", self.__open_file)
 
-    def enter_file(self) -> None:
+    def __enter_file(self) -> None:
         """
         Open a filedialog and show the selected file path in the entry.
         """
@@ -123,23 +125,14 @@ class FileHandlingFrameController:
         filepath = filedialog.askopenfilename(initialdir="/", filetypes=filetype)
 
         if filepath:
-            self.view.file_entry.enter_file(filepath)
+            self.__view.file_entry.enter_file(filepath)
 
-    def open_file(self, *_: Any) -> None:
+    def __open_file(self, *_: any) -> None:
         """
         Disable widgets and start loading data thread.
         """
-        filepath = self.view.selected_file_path.get()
-
-        self.loading_thread = DataLoadingThread(filepath, self.toggle_widgets)
-        self.loading_thread.start()
-
-    def export_file(self) -> None:
-        """
-        Disable widgets and start exporting data thread.
-        """
-        self.loading_thread = DataExportingThread(self.toggle_widgets)
-        self.loading_thread.start()
+        self.__loading_thread.file_path = self.__view.selected_file_path.get()
+        self.__loading_thread.start()
 
     def toggle_widgets(self, state: str = "normal"):
         """
@@ -148,139 +141,12 @@ class FileHandlingFrameController:
         Args:
             state (str, optional): The state to toggle to. Defaults to "normal".
         """
-        self.view.root.after(10, lambda: self.view.file_entry.configure(state=state))
-        self.view.root.after(
-            10, lambda: self.view.open_file_button.configure(state=state)
+        self.__view.root.after(
+            10, lambda: self.__view.file_entry.configure(state=state)
         )
-        self.view.root.after(
-            10, lambda: self.view.export_to_excel.configure(state=state)
+        self.__view.root.after(
+            10, lambda: self.__view.open_file_button.configure(state=state)
         )
-
-
-class FileSizePublisher(SimplePublisher):
-    """
-    Monitor the file size.
-    """
-
-    def __init__(self):
-        SimplePublisher.__init__(self)
-        super(FileSizePublisher, self).__init__()
-        self._file_size: str
-
-    @property
-    def file_size(self) -> str:
-        """
-        Get the file size.
-
-        Returns:
-            str: The set file size.
-        """
-        return self._file_size
-
-    @file_size.setter
-    def file_size(self, file_size: str | None) -> None:
-        """
-        Set the file size.
-
-        Args:
-            file_size (str): The file size to set.
-        """
-        self._file_size = (
-            f"{file_size:,.0f} kB".replace(",", ".") if file_size else "??"
+        self.__view.root.after(
+            10, lambda: self.__view.export_to_excel.configure(state=state)
         )
-        self.notify()
-
-
-file_size_publisher = FileSizePublisher()
-
-
-class DataLoadingThread(Thread):
-    """
-    Handle the data loading thread.
-    """
-
-    def __init__(self, filename: str, toggle_callback: callable) -> None:
-        super().__init__()
-
-        self.daemon = True
-
-        self.toggle_callback: callable = toggle_callback
-
-        self.filename: str = filename
-        self.file_manager: YAMLManager = YAMLManager("models/file_paths.yaml", 10)
-
-    def run(self) -> None:
-        progress_publisher.progress = "indeterminate"
-        try:
-            csv_data_manager.open_file(self.filename)
-            self.file_manager.dump_yaml_file(self.filename)
-            file_size_publisher.file_size = round(os.path.getsize(self.filename) / 1024)
-            self.toggle_callback("disabled")
-        except FileNotFoundError as exc:
-            file_size_publisher.file_size = None
-            messagebox.showerror("Error", exc)
-        except pd.errors.EmptyDataError as exc:
-            file_size_publisher.file_size = None
-            messagebox.showerror("Error", exc)
-        progress_publisher.progress = "stop"
-        self.toggle_callback()
-
-
-class DataExportingThread(Thread):
-    """
-    Handle the data exporting thread.
-    """
-
-    def __init__(self, toogle_callback: callable) -> None:
-        super().__init__()
-
-        self.daemon = True
-
-        self.toggle_callback: callable = toogle_callback
-
-    def run(self) -> None:
-        progress_publisher.progress = "indeterminate"
-        try:
-            csv_data_manager.export_to_excel(csv_data_manager.file_path)
-            self.toggle_callback("disabled")
-        except AttributeError:
-            pass
-        except pd.errors.EmptyDataError:
-            pass
-        progress_publisher.progress = "stop"
-        self.toggle_callback()
-
-
-class ProgressPublisher(SimplePublisher):
-    """
-    Monitor the progress of the data loading thread.
-    """
-
-    def __init__(self):
-        SimplePublisher.__init__(self)
-        super(ProgressPublisher, self).__init__()
-        self._progress: str
-
-    @property
-    def progress(self) -> str:
-        """
-        Get the progress.
-
-        Returns:
-            str: The set progress.
-        """
-        return self._progress
-
-    @progress.setter
-    def progress(self, progress: str) -> None:
-        """
-        Set the progress.
-
-        Args:
-            file_size (str): The progress to set.
-        """
-        self._progress = progress
-        self.notify()
-
-
-progress_publisher = ProgressPublisher()

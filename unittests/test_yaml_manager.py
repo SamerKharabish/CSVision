@@ -2,7 +2,6 @@
 
 import unittest
 from unittest.mock import mock_open, patch
-from typing import Dict
 from pathlib import Path
 import os
 from models.yaml_manager import YAMLManager
@@ -28,14 +27,14 @@ class TestYAMLManager(unittest.TestCase):
         file_path: str = "test.yaml"
         content_limit: int = 10
         yaml_manager = YAMLManager(file_path, content_limit)
-        for attr, value in vars(yaml_manager).items():
+        for attr in YAMLManager.__slots__:
             if (
                 not attr.startswith("_YAMLManager__")
                 and not attr.startswith("_file_path")
                 and not attr.startswith("_content_limit")
             ):
                 with self.subTest(attr=attr):
-                    self.assertIsNone(value, f"{attr} is not None")
+                    self.assertIsNone(getattr(yaml_manager, attr, None), f"{attr} is not None")
         self.assertEqual(file_path, yaml_manager.file_path)
         self.assertEqual(content_limit, yaml_manager.content_limit)
 
@@ -100,7 +99,7 @@ class TestYAMLManager(unittest.TestCase):
         ) as mocked_file:
             file_list = yaml_manager.open_file()
             mocked_file.assert_called_once_with(file_path, "r", encoding="utf-8")
-            self.assertIsInstance(file_list, Dict)
+            self.assertIsInstance(file_list, dict)
             self.assertEqual(file_list, {})
 
         mock_file_content = "---\ntest1: 'test1'\ntest2: 'test2'\n"
@@ -111,7 +110,7 @@ class TestYAMLManager(unittest.TestCase):
         ) as mocked_file:
             file_list = yaml_manager.open_file()
             mocked_file.assert_called_once_with(file_path, "r", encoding="utf-8")
-            self.assertIsInstance(file_list, Dict)
+            self.assertIsInstance(file_list, dict)
             self.assertEqual(file_list, {"test1": "test1", "test2": "test2"})
 
     def test_dump_yaml_file(self) -> None:

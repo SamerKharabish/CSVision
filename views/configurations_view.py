@@ -1,6 +1,6 @@
 """Centralized configuration file for the visual representation of the application."""
 
-from typing import Tuple, List, Literal
+from typing import Literal
 
 
 class Config:
@@ -48,22 +48,22 @@ class Config:
         Image formats
         """
 
-        MAIN_WINDOW_ICO: str = "resources/Images/CSVision.ico"
+        BACK_BUTTON_PNG: str = "resources/Images/back.png"
         CLEAR_SEARCH_RESULT_PNG: str = "resources/Images/clear-search-results.png"
         DOWN_ARROW_PNG: str = "resources/Images/down-arrow.png"
         EXCEL_PNG: str = "resources/Images/excel.png"
-        OPEN_FILE_PNG: str = "resources/Images/open-file.png"
-        REFRESH_PNG: str = "resources/Images/refresh.png"
-        HIDE_SIDEPANEL_BUTTON_PNG: str = "resources/Images/hide-sidepanel.png"
-        SHOW_SIDEPANEL_BUTTON_PNG: str = "resources/Images/show-sidepanel.png"
-        SETTINGS_BUTTON_PNG: str = "resources/Images/settings.png"
-        RESET_BUTTON_PNG: str = "resources/Images/reset.png"
-        BACK_BUTTON_PNG: str = "resources/Images/back.png"
-        PAN_BUTTON_PNG: str = "resources/Images/pan.png"
-        SAVE_BUTTON_PNG: str = "resources/Images/save.png"
         FORWARD_BUTTON_PNG: str = "resources/Images/forward.png"
-        ZOOM_BUTTON_PNG: str = "resources/Images/zoom.png"
+        HIDE_SIDEPANEL_BUTTON_PNG: str = "resources/Images/hide-sidepanel.png"
         LEGEND_BUTTON_PNG: str = "resources/Images/legend.png"
+        MAIN_WINDOW_ICO: str = "resources/Images/CSVision.ico"
+        OPEN_FILE_PNG: str = "resources/Images/open-file.png"
+        PAN_BUTTON_PNG: str = "resources/Images/pan.png"
+        REFRESH_PNG: str = "resources/Images/refresh.png"
+        RESET_BUTTON_PNG: str = "resources/Images/reset.png"
+        SAVE_BUTTON_PNG: str = "resources/Images/save.png"
+        SETTINGS_BUTTON_PNG: str = "resources/Images/settings.png"
+        SHOW_SIDEPANEL_BUTTON_PNG: str = "resources/Images/show-sidepanel.png"
+        ZOOM_BUTTON_PNG: str = "resources/Images/zoom.png"
 
     class Layout:
         """
@@ -97,12 +97,12 @@ class Config:
         TOGGLE_SIDE_BAR_BUTTON_SIDE: str = "top"
         TOGGLE_SIDE_BAR_BUTTON_FILL: str = "x"
         TOGGLE_SIDE_BAR_BUTTON_EXPAND: bool = False
-        TOGGLE_SIDE_BAR_BUTTON_PAD: Tuple[int, int] = (3, 3)
+        TOGGLE_SIDE_BAR_BUTTON_PAD: tuple[int, int] = (3, 3)
 
         SETTINGS_BUTTON_SIDE: str = "bottom"
         SETTINGS_BUTTON_FILL: str = "x"
         SETTINGS_BUTTON_EXPAND: bool = False
-        SETTINGS_BUTTON_PAD: Tuple[int, int] = (3, 3)
+        SETTINGS_BUTTON_PAD: tuple[int, int] = (3, 3)
 
         FILEHANDLING_FRAME_ROW: int = 0
         SEARCHBAR_FRAME_ROW: int = FILEHANDLING_FRAME_ROW + 1
@@ -121,19 +121,19 @@ class Config:
 
         SIGNAL_FRAME_LABELS_ANCHOR: str = "w"
         ACTION_BUTTON_TEXT_ANCHOR: str = "center"
-        STANDART_PAD: Tuple[int, int] = (7, 7)
-        ZERO_PAD: Tuple[int, int] = (0, 0)
-        LABELS_IN_FRAME_PADX: Tuple[int, int] = (14, 0)
+        STANDART_PAD: tuple[int, int] = (7, 7)
+        ZERO_PAD: tuple[int, int] = (0, 0)
+        LABELS_IN_FRAME_PADX: tuple[int, int] = (14, 0)
 
         SIGNAL_FRAME_SCROLLABLEFRAME_SIDE: str = "top"
         SIGNAL_FRAME_SCROLLABLEFRAME_FILL: str = "both"
         SIGNAL_FRAME_SCROLLABLEFRAME_EXPAND: bool = True
-        SIGNAL_FRAME_SCROLLABLEFRAME_PAD: Tuple[int, int] = (1, 1)
+        SIGNAL_FRAME_SCROLLABLEFRAME_PAD: tuple[int, int] = (1, 1)
 
         PLOT_FRAME_PLOT_AREA_FRAME_SIDE: str = "top"
         PLOT_FRAME_PLOT_AREA_FRAME_FILL: str = "both"
         PLOT_FRAME_PLOT_AREA_FRAME_EXPAND: bool = True
-        PLOT_FRAME_PLOT_AREA_FRAME_PADY: Tuple[int, int] = (20, 30)
+        PLOT_FRAME_PLOT_AREA_FRAME_PADY: tuple[int, int] = (20, 30)
 
         PLOT_FRAME_SEGMENTED_BUTTON_X: int = 40
         PLOT_FRAME_SEGMENTED_BUTTON_Y: int = 7
@@ -147,16 +147,16 @@ class Config:
 
         NAV_TOOLBAR_BUTTONS_SIDE: str = "left"
         NAV_TOOLBAR_BUTTONS_EXPAND: bool = True
-        NAV_TOOLBAR_LEFT_BUTTONS_PADX: Tuple[int, int] = (30, 7)
-        NAV_TOOLBAR_RIGHT_BUTTONS_PADX: Tuple[int, int] = (7, 30)
+        NAV_TOOLBAR_LEFT_BUTTONS_PADX: tuple[int, int] = (30, 7)
+        NAV_TOOLBAR_RIGHT_BUTTONS_PADX: tuple[int, int] = (7, 30)
 
         CANVAS_SIDE: Literal["left", "right", "top", "bottom"] = "top"
         CANVAS_FILL: Literal["none", "x", "y", "both"] = "both"
         CANVAS_EXPAND: bool = True
-        CANVAS_PADY: Tuple[int, int] = (2, 2)
+        CANVAS_PADY: tuple[int, int] = (2, 2)
 
         STATUSBAR_FRAME_PROGRESSBAR_SIDE: str = "left"
-        STATUSBAR_FRAME_PROGRESSBAR_PADX: Tuple[int, int] = (10, 10)
+        STATUSBAR_FRAME_PROGRESSBAR_PADX: tuple[int, int] = (10, 10)
 
     class KeyBindings:
         """
@@ -181,9 +181,9 @@ class Config:
         Fonts
         """
 
-        STATUS_BAR_TEXTS: Tuple[str, int] = ("Kento", 12)
-        LABEL_TEXTS: Tuple[str, int] = ("Kento", 12)
-        BUTTON_TEXTS: Tuple[str, int, str] = ("Kento", 12, "bold")
+        STATUS_BAR_TEXTS: tuple[str, int] = ("Kento", 12)
+        LABEL_TEXTS: tuple[str, int] = ("Kento", 12)
+        BUTTON_TEXTS: tuple[str, int, str] = ("Kento", 12, "bold")
 
     class Colors:
         """
@@ -202,17 +202,17 @@ class Config:
         Values of different widgets.
         """
 
-        SEARCH_SELECTION_SEGMENTED_BUTTON: List[str] = ["Signals", "Groups"]
-        FILTER_SIGNALS_SEGMENTED_BUTTON: List[str] = [
+        SEARCH_SELECTION_SEGMENTED_BUTTON: list[str] = ["Signals", "Groups"]
+        FILTER_SIGNALS_SEGMENTED_BUTTON: list[str] = [
             "All",
             "Non const. zero",
             "Non const.",
         ]
-        PLOT_TYPES: List[str] = [
+        PLOT_TYPES: list[str] = [
             "Plot",
             "Scatter",
             "Bar",
             "Stem",
         ]
         COLLECTION_FILEPATH_YAML: str = "models/file_paths.yaml"
-        FILE_TYPE_TO_READ: List[Tuple[str, str]] = [("CSV", "*.csv*")]
+        FILE_TYPE_TO_READ: list[tuple[str, str]] = [("CSV", "*.csv*")]
