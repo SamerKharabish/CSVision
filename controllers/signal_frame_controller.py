@@ -31,7 +31,6 @@ class SignalFrameController:
         Initialize controller.
         """
         FileHandlingFrameController(self.__view.filehandling_frame_view)
-        SignalListFrameController(self.__view.signallist_frame_view)
 
     def on_toggle_side_bar(self, _=None) -> None:
         """
