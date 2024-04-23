@@ -169,137 +169,34 @@ class FileHandlingFrameController:
         )
 
 
-class FileSizePublisher(SimplePublisher):
+class SignalListFrameController:
     """
-    Monitor the file size.
-    """
-
-    def __init__(self):
-        SimplePublisher.__init__(self)
-        super(FileSizePublisher, self).__init__()
-        self._file_size: str
-
-    @property
-    def file_size(self) -> str:
-        """
-        Get the file size.
-
-        Returns:
-            str: The set file size.
-        """
-        return self._file_size
-
-    @file_size.setter
-    def file_size(self, file_size: str) -> None:
-        """
-        Set the file size.
-
-        Args:
-            file_size (str): The file size to set.
-        """
-        self._file_size = f"{file_size:,.0f} kB".replace(",", ".")
-        self.notify()
-
-
-file_size_publisher = FileSizePublisher()
-
-
-class DataLoadingThread(Thread):
-    """
-    Handle the data loading thread.
+    Functionality of the file signal list view.
     """
 
-    def __init__(self, filename: str, done_callback: callable) -> None:
-        super().__init__()
+    def __init__(self, view: ctk.CTkFrame) -> None:
+        self.view: ctk.CTkFrame = view
 
-        self.daemon = True
+    def create_signal_selector_group_frame_view(self):
+        pass
 
-        self.done_callback: callable = done_callback
 
-        self.filename: str = filename
-        self.file_manager: YAMLManager = YAMLManager("models/file_paths.yaml", 10)
-
-    def run(self) -> None:
-        progress_publisher.progress = "indeterminate"
-        try:
-            csv_data_manager.open_file(self.filename)
-            self.file_manager.dump_yaml_file(self.filename)
-        except FileNotFoundError as exc:
-            messagebox.showerror("Error", exc)
-        except pd.errors.EmptyDataError as exc:
-            messagebox.showerror("Error", exc)
-        progress_publisher.progress = "stop"
-        self.done_callback()
-
-        
-class DataExportingThread(Thread):
+class SignalSelectorGroupFrameController:
     """
-    Handle the data exporting thread.
+    Functionality of the file signal list view.
     """
 
-    def __init__(self, done_callback: callable) -> None:
-        super().__init__()
+    def __init__(self, view: ctk.CTkFrame) -> None:
+        self.view: ctk.CTkFrame = view
 
-        self.daemon = True
-
-        self.done_callback: callable = done_callback
-
-    def run(self) -> None:
-        progress_publisher.progress = "indeterminate"
-        csv_data_manager.export_to_excel()
-        progress_publisher.progress = "stop"
-        self.done_callback()
+    def create_signal_selector_button_view(self):
+        pass
 
 
-class DataExportingThread(Thread):
+class SignalSelectorButtonController:
     """
-    Handle the data exporting thread.
+    Functionality of the file signal list view.
     """
 
-    def __init__(self, done_callback: callable) -> None:
-        super().__init__()
-
-        self.daemon = True
-
-        self.done_callback: callable = done_callback
-
-    def run(self) -> None:
-        progress_publisher.progress = "indeterminate"
-        csv_data_manager.export_to_excel()
-        progress_publisher.progress = "stop"
-        self.done_callback()
-
-
-class ProgressPublisher(SimplePublisher):
-    """
-    Monitor the progress of the data loading thread.
-    """
-
-    def __init__(self):
-        SimplePublisher.__init__(self)
-        super(ProgressPublisher, self).__init__()
-        self._progress: str
-
-    @property
-    def progress(self) -> str:
-        """
-        Get the progress.
-
-        Returns:
-            str: The set progress.
-        """
-        return self._progress
-
-    @progress.setter
-    def progress(self, progress: str) -> None:
-        """
-        Set the progress.
-
-        Args:
-            file_size (str): The progress to set.
-        """
-        self._progress = progress
-        self.notify()
-
-
-progress_publisher = ProgressPublisher()
+    def __init__(self, view: ctk.CTkFrame) -> None:
+        self.view: ctk.CTkFrame = view
