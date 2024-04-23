@@ -1,6 +1,5 @@
 """ Defines helper funtions. """
 
-from typing import Tuple
 import tkinter as tk
 import customtkinter as ctk
 
@@ -28,7 +27,7 @@ def find_root(widget: tk.Widget) -> ctk.CTk:
     return find_root(parent_widget)
 
 
-def calculate_absolute_position(widget: tk.Widget) -> Tuple[int, int]:
+def calculate_absolute_position(widget: tk.Widget) -> tuple[int, int]:
     """
     Function to calculate the absolute position of a widget relative to the root window.
 
@@ -36,7 +35,7 @@ def calculate_absolute_position(widget: tk.Widget) -> Tuple[int, int]:
         widget (tk.Widget): The widget from where to start the calculation.
 
     Returns:
-        Tuple[int, int]: The absolute position of the widget.
+        tuple[int, int]: The absolute position of the widget.
     """
     x, y = widget.winfo_x(), widget.winfo_y()
 

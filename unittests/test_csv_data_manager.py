@@ -26,12 +26,12 @@ class TestCSVDataManager(unittest.TestCase):
         """
         csv_data_manager = CSVDataManager()
 
-        for attr, value in vars(csv_data_manager).items():
+        for attr in CSVDataManager.__slots__:
             if not attr.startswith("_CSVDataManager__") and not attr.startswith(
                 "_raw_data_frame"
             ):
                 with self.subTest(attr=attr):
-                    self.assertIsNone(value, f"{attr} is not None")
+                    self.assertIsNone(getattr(csv_data_manager, attr, None), f"{attr} is not None")
 
         self.assertTrue(csv_data_manager.raw_data.empty)
 

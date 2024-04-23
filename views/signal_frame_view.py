@@ -11,6 +11,19 @@ class SignalFrameView(ctk.CTkFrame):
     Layout of the signal frame.
     """
 
+    __slots__ = (
+        "root",
+        "__side_bar_frame",
+        "signal_panel",
+        "filehandling_frame_view",
+        "__searchbar_frame_view",
+        "signallist_frame_view",
+        "__config_signallist_frame_view",
+        "__preset_frame_view",
+        "toggle_side_bar_button",
+        "__settings_button",
+    )
+
     def __init__(self, master: ctk.CTkFrame) -> None:
         super().__init__(
             master,
@@ -19,14 +32,14 @@ class SignalFrameView(ctk.CTkFrame):
         )
         self.root: ctk.CTk
 
-        self.initialize_widgets()
-        self.create_layout()
+        self.__initialize_widgets()
+        self.__create_layout()
 
-    def initialize_widgets(self) -> None:
+    def __initialize_widgets(self) -> None:
         """
         Initialize widgets.
         """
-        self.side_bar_frame: ctk.CTkFrame = ctk.CTkFrame(
+        self.__side_bar_frame: ctk.CTkFrame = ctk.CTkFrame(
             self,
             corner_radius=Config.General.CORNER_RADIUS,
             border_width=Config.General.FRAME_BORDER_WIDTH,
@@ -41,17 +54,19 @@ class SignalFrameView(ctk.CTkFrame):
         self.filehandling_frame_view: ctk.CTkFrame = FileHandlingFrameView(
             self.signal_panel
         )
-        self.searchbar_frame_view: ctk.CTkFrame = SearchBarFrameView(self.signal_panel)
+        self.__searchbar_frame_view: ctk.CTkFrame = SearchBarFrameView(
+            self.signal_panel
+        )
         self.signallist_frame_view: ctk.CTkFrame = SignalListFrameView(
             self.signal_panel
         )
-        self.config_signallist_frame_view: ctk.CTkFrame = ConfigSignalListFrameView(
+        self.__config_signallist_frame_view: ctk.CTkFrame = ConfigSignalListFrameView(
             self.signal_panel
         )
-        self.preset_frame_view: ctk.CTkFrame = PresetFrameView(self.signal_panel)
+        self.__preset_frame_view: ctk.CTkFrame = PresetFrameView(self.signal_panel)
 
         self.toggle_side_bar_button = ctk.CTkButton(
-            self.side_bar_frame,
+            self.__side_bar_frame,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             fg_color=Config.Colors.TRANSPARENT,
@@ -67,8 +82,8 @@ class SignalFrameView(ctk.CTkFrame):
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
 
-        self.settings_button = ctk.CTkButton(
-            self.side_bar_frame,
+        self.__settings_button = ctk.CTkButton(
+            self.__side_bar_frame,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             fg_color=Config.Colors.TRANSPARENT,
@@ -84,11 +99,11 @@ class SignalFrameView(ctk.CTkFrame):
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
 
-    def create_layout(self) -> None:
+    def __create_layout(self) -> None:
         """
         Create layout.
         """
-        self.side_bar_frame.pack(
+        self.__side_bar_frame.pack(
             side=Config.Layout.SIDE_BAR_FRAME_SIDE,
             fill=Config.Layout.SIDE_BAR_FRAME_FILL,
             expand=Config.Layout.SIDE_BAR_FRAME_EXPAND,
@@ -101,7 +116,7 @@ class SignalFrameView(ctk.CTkFrame):
             pady=Config.Layout.STANDART_PAD,
         )
 
-        self.settings_button.pack(
+        self.__settings_button.pack(
             side=Config.Layout.SETTINGS_BUTTON_SIDE,
             fill=Config.Layout.SETTINGS_BUTTON_FILL,
             expand=Config.Layout.SETTINGS_BUTTON_EXPAND,
@@ -126,7 +141,7 @@ class SignalFrameView(ctk.CTkFrame):
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
-        self.searchbar_frame_view.grid(
+        self.__searchbar_frame_view.grid(
             row=Config.Layout.SEARCHBAR_FRAME_ROW,
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
@@ -136,12 +151,12 @@ class SignalFrameView(ctk.CTkFrame):
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
-        self.config_signallist_frame_view.grid(
+        self.__config_signallist_frame_view.grid(
             row=Config.Layout.CONFIG_SIGNALLIST_FRAME_ROW,
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
-        self.preset_frame_view.grid(
+        self.__preset_frame_view.grid(
             row=Config.Layout.PRESET_FRAME_ROW,
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,

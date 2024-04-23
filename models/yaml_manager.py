@@ -2,7 +2,6 @@
     and update data in YAML files. """
 
 from pathlib import Path
-from typing import Dict, Tuple
 from datetime import datetime
 import yaml
 
@@ -11,14 +10,15 @@ class YAMLManager:
     """
     Class for managing YAML files.
     """
+    __slots__ = "__suffixes", "__file_path", "__content_limit"
 
     def __init__(self, file_path: str, content_limit: int) -> None:
-        self.__suffixes: Tuple[str, ...] = (".yaml", ".yml")
+        self.__suffixes: tuple[str, ...] = (".yaml", ".yml")
 
-        self._file_path: str
+        self.__file_path: str
         self.file_path = file_path
 
-        self._content_limit: int = content_limit
+        self.__content_limit: int = content_limit
         self.content_limit = content_limit
 
     @property
@@ -29,7 +29,7 @@ class YAMLManager:
         Returns:
             str: The set YAML file path.
         """
-        return self._file_path
+        return self.__file_path
 
     @file_path.setter
     def file_path(self, file_path: str) -> None:
@@ -46,7 +46,7 @@ class YAMLManager:
         elif not file_path.endswith(self.__suffixes):
             raise ValueError(f"Invalid file type: {Path(file_path).suffix}!")
         else:
-            self._file_path = file_path
+            self.__file_path = file_path
 
     @property
     def content_limit(self) -> int:
@@ -56,7 +56,7 @@ class YAMLManager:
         Returns:
             int: Maximum content length of the YAML file.
         """
-        return self._content_limit
+        return self.__content_limit
 
     @content_limit.setter
     def content_limit(self, content_limit: int) -> None:
@@ -69,14 +69,14 @@ class YAMLManager:
         if not isinstance(content_limit, int):
             raise TypeError("Invalid content limit type!")
         else:
-            self._content_limit = content_limit
+            self.__content_limit = content_limit
 
-    def open_file(self) -> Dict:
+    def open_file(self) -> dict:
         """
         Open a YAML file.
 
         Returns:
-            Dict: Returns the content of the YAML file or an empty dictionary.
+            dict: Returns the content of the YAML file or an empty dictionary.
         """
         try:
             with open(self.file_path, "r", encoding="utf-8") as file_open:
