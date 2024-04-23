@@ -19,7 +19,7 @@ class MainView(ctk.CTkFrame):
     """
 
     __slots__ = "root", "statusbar_frame_view", "signal_frame_view", "plot_frame_view"
-
+  
     def __init__(self, master: AppView) -> None:
         super().__init__(master, corner_radius=Config.General.CORNER_RADIUS)
         self.root: AppView
