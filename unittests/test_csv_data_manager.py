@@ -113,9 +113,40 @@ class TestCSVDataManager(unittest.TestCase):
         ):
             csv_data_manager.read_file("file.csv")
             self.assertEqual(
-                ["heading1::subheading1",
-                "heading2::subheading2"],
+                ["heading1::subheading1", "heading2::subheading2"],
                 csv_data_manager.get_header_list(),
+            )
+
+        mock_file_content = "asdf_heading1::subheading1;asdf_heading2::subheading2"
+        with patch(
+            "builtins.open", mock_open(read_data=mock_file_content), create=True
+        ):
+            csv_data_manager.read_file("file.csv")
+            self.assertEqual(
+                ["heading1::subheading1", "heading2::subheading2"],
+                csv_data_manager.get_header_list("asdf_"),
+            )
+
+        mock_file_content = "heading1::subheading1_asdf;heading2::subheading2_asdf"
+        with patch(
+            "builtins.open", mock_open(read_data=mock_file_content), create=True
+        ):
+            csv_data_manager.read_file("file.csv")
+            self.assertEqual(
+                ["heading1::subheading1", "heading2::subheading2"],
+                csv_data_manager.get_header_list(postfix="_asdf"),
+            )
+
+        mock_file_content = (
+            "asdf_heading1::subheading1_asdf;asdf_heading2::subheading2_asdf"
+        )
+        with patch(
+            "builtins.open", mock_open(read_data=mock_file_content), create=True
+        ):
+            csv_data_manager.read_file("file.csv")
+            self.assertEqual(
+                ["heading1::subheading1", "heading2::subheading2"],
+                csv_data_manager.get_header_list("asdf_", "_asdf"),
             )
 
 
