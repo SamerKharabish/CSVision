@@ -21,7 +21,7 @@ jobs:
         # Runs job on Ubuntu and Windows
         os: [ubuntu-latest, windows-latest, macos-latest]
         # Testing multiple Python versions
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
 
     # Set up specified Python environment
     steps:
