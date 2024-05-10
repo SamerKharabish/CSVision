@@ -4,12 +4,14 @@ access to the data for visualization purposes. """
 
 from pathlib import Path
 import pandas as pd
+from utils.helper_functions import search_substring
 
 
 class CSVDataManager:
     """
     Class for CSV file operations.
     """
+
     __slots__ = "__suffixes", "__file_path", "__raw_data_frame"
 
     def __init__(self) -> None:
@@ -60,7 +62,29 @@ class CSVDataManager:
         """
         return self.__raw_data_frame
 
-    def open_file(self, file_path: str) -> None:
+    def get_header_list(self, prefix: str = None, postfix: str = None) -> list[str]:
+        """
+        Get the list of headers from the CSV file without prefix or postfix.
+
+        Args:
+            prefix (str, optional): The prefix of the header. Defaults to None.
+            postfix (str, optional): The postfix of the header. Defaults to None.
+
+        Returns:
+            list[str]: The reduced header list.
+        """
+        headers = self.raw_data.columns.tolist()
+        header_list = []
+
+        if prefix or postfix:
+            for header in headers:
+                header_list.append(search_substring(header, prefix, postfix))
+        else:
+            header_list = headers
+
+        return header_list
+
+    def read_file(self, file_path: str) -> None:
         """
         Open a CSV file and read the data.
 
