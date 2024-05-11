@@ -150,3 +150,36 @@ class FileHandlingFrameController:
         self.__view.root.after(
             10, lambda: self.__view.export_to_excel.configure(state=state)
         )
+
+
+class SignalListFrameController:
+    """
+    Functionality of the file signal list view.
+    """
+
+    def __init__(self, view: ctk.CTkFrame) -> None:
+        self.view: ctk.CTkFrame = view
+
+    def create_signal_selector_group_frame_view(self):
+        pass
+
+
+class SignalSelectorGroupFrameController:
+    """
+    Functionality of the file signal list view.
+    """
+
+    def __init__(self, view: ctk.CTkFrame) -> None:
+        self.view: ctk.CTkFrame = view
+
+    def create_signal_selector_button_view(self):
+        pass
+
+
+class SignalSelectorButtonController:
+    """
+    Functionality of the file signal list view.
+    """
+
+    def __init__(self, view: ctk.CTkFrame) -> None:
+        self.view: ctk.CTkFrame = view
