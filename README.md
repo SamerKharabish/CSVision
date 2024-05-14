@@ -28,7 +28,7 @@ CSVision/
                                             # update models, and reflect changes in views.
 │ ├── sidebar_controllers/                  # Contains classes that act as intermediaries
                                             # between models and sidebar views.
-│ ├── ├── filehandling_frame_controller.py  # Handles interactions in the file handling frame window.
+│ ├── ├── filehandling_frame_controller.py  # Handles interactions in the file handling frame.
 │ ├── ├── header_frame_controller.py        # Handles interactions in the header frame.
 │ ├── └── navigation_frame_controller.py    # Handles interactions in the navigation frame.
 │ ├── main_controller.py                    # Handles interactions in the main window.
