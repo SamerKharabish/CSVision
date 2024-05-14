@@ -40,8 +40,8 @@ CSVision/
 │ ├── csv_data_manager.py                   # Handles CSV file related operations.
 │ └── yaml_manager.py                       # Handles YAML file related operations.
 ├── resources/                              # Images, yaml files, etc.
-│ ├── images/                               # Images
-│ ├── yaml-files/                           # YAML files
+│ ├── images/                               # Images.
+│ ├── yaml-files/                           # YAML files.
 │ ├── ├── file_paths.yaml                   # YAML file to store file paths.
 │ ├── └── user_settings.yaml                # YAML file to store user settings.
 ├── unittests/                              # Automated tests for the application.
@@ -71,7 +71,7 @@ CSVision/
 │ ├── sidebar_frame_view.py                 # The visual representation of the sidebar frame.
 │ └── statusbar_frame_view.py               # The visual representation of the statusbar frame.
 ├── app.py                                  # Entry point of the application.
-├── README.md                               # README
+├── README.md                               # README.
 ├── requirements.txt                        # Project dependencies.
 └── UML.drwaio                              # UML class diagram of the project.
 ```
