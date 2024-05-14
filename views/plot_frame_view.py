@@ -1,5 +1,8 @@
 """ Defines the PlotFrameView class with the plot frame layout. """
 
+from __future__ import annotations
+from typing import TYPE_CHECKING
+from tkinter import Canvas
 from PIL import Image
 from tkinter import Canvas
 import customtkinter as ctk
@@ -8,13 +11,16 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.backends._backend_tk import NavigationToolbar2Tk
 from views.configurations_view import Config
 
+if TYPE_CHECKING:
+    from views.main_view import MainView
+
 
 class PlotFrameView(ctk.CTkFrame):
     """
     Layout of the plot frame.
     """
 
-    def __init__(self, master: ctk.CTkFrame) -> None:
+    def __init__(self, master: MainView) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
