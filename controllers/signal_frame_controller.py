@@ -18,7 +18,7 @@ class SignalFrameController:
     def __init__(self, view: ctk.CTkFrame) -> None:
         self.__view: ctk.CTkFrame = view
         self.__signal_frame_minimized: bool = (
-            Config.General.SIGNAL_FRAME_MINIMIZED
+            Config.General.HEADER_FRAME_MINIMIZED
         )  # Tracks the state of the signal frame
 
         self.__view.toggle_side_bar_button.configure(command=self.on_toggle_side_bar)
@@ -54,11 +54,11 @@ class SignalFrameController:
             self.__view.toggle_side_bar_button.configure(
                 image=ctk.CTkImage(
                     light_image=Image.open(
-                        Config.ImageFormats.HIDE_SIDEPANEL_BUTTON_PNG
+                        Config.ImageFormats.HIDE_HEADER_FRAME_BUTTON_PNG
                     ),
                     size=(
-                        Config.Dimensions.TOGGLE_SIDEPANEL_BUTTON_WIDTH_HEIGHT,
-                        Config.Dimensions.TOGGLE_SIDEPANEL_BUTTON_WIDTH_HEIGHT,
+                        Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,
+                        Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,
                     ),
                 )
             ),
@@ -75,11 +75,11 @@ class SignalFrameController:
             self.__view.toggle_side_bar_button.configure(
                 image=ctk.CTkImage(
                     light_image=Image.open(
-                        Config.ImageFormats.SHOW_SIDEPANEL_BUTTON_PNG
+                        Config.ImageFormats.SHOW_HEADER_FRAME_BUTTON_PNG
                     ),
                     size=(
-                        Config.Dimensions.TOGGLE_SIDEPANEL_BUTTON_WIDTH_HEIGHT,
-                        Config.Dimensions.TOGGLE_SIDEPANEL_BUTTON_WIDTH_HEIGHT,
+                        Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,
+                        Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,
                     ),
                 )
             ),
