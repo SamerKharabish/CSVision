@@ -9,7 +9,7 @@ from controllers.main_controller import MainController
 
 class AppView(ctk.CTk):
     """
-    Layout of the main application.
+    Layout of the main window.
     """
 
     __slots__ = ("main_view",)
@@ -49,7 +49,7 @@ class AppView(ctk.CTk):
 
 class AppController:
     """
-    Functionality of the main application.
+    Functionality of the main window.
     """
 
     __slots__ = ("__view",)
