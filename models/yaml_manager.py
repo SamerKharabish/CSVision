@@ -10,6 +10,7 @@ class YAMLManager:
     """
     Class for managing YAML files.
     """
+
     __slots__ = "__suffixes", "__file_path", "__content_limit"
 
     def __init__(self, file_path: str, content_limit: int) -> None:
@@ -99,30 +100,8 @@ class YAMLManager:
         try:
             old_content_dict = self.open_file()
 
-            new_content_dict = {
-                datetime.now().strftime("%d-%m-%Y %H:%M:%S,%f"): new_content
-            }
-
-            if old_content_dict:
-                file_found = False
-                for date_time, file in old_content_dict.items():
-                    if new_content == file:
-                        file_found = True
-
-                        del old_content_dict[date_time]
-
-                        old_content_dict[
-                            datetime.now().strftime("%d-%m-%Y %H:%M:%S,%f")
-                        ] = new_content
-
-                        break
-
-                if not file_found:
-                    if len(old_content_dict) >= self.content_limit:
-                        old_content_dict.pop(next(iter(old_content_dict)))
-                    old_content_dict.update(new_content_dict)
-            else:
-                old_content_dict = new_content_dict
+            if self.file_path.find("file_paths"):
+                old_content_dict = self.fiel_paths_update(new_content, old_content_dict)
 
             with open(self.file_path, "w", encoding="utf-8") as file_dump:
                 yaml.dump(old_content_dict, file_dump, default_flow_style=False)
@@ -131,3 +110,43 @@ class YAMLManager:
             raise FileNotFoundError(
                 f"The file {self.file_path} was not found."
             ) from exc
+
+    def fiel_paths_update(self, new_file_path: str, old_content_dict: dict) -> dict:
+        """
+        Adds a new filepath with the current timestamp as the key to the old_content_dict.
+        If the number of filepaths exceeds the content limit, the oldest filepath is removed.
+
+        Args:
+            new_file_path (str): New filepath to be added to the YAML file.
+            old_content_dict (dict): The current dictionary of filepaths from the YAML file,
+                                        with timestamp keys.
+
+        Returns:
+            dict: The updated dictionary of contents after the new dilepath is added.
+        """
+        new_content_dict = {
+            datetime.now().strftime("%d-%m-%Y %H:%M:%S,%f"): new_file_path
+        }
+
+        if old_content_dict:
+            file_found = False
+            for date_time, file in old_content_dict.items():
+                if new_file_path == file:
+                    file_found = True
+
+                    del old_content_dict[date_time]
+
+                    old_content_dict[
+                        datetime.now().strftime("%d-%m-%Y %H:%M:%S,%f")
+                    ] = new_file_path
+
+                    break
+
+            if not file_found:
+                if len(old_content_dict) >= self.content_limit:
+                    old_content_dict.pop(next(iter(old_content_dict)))
+                old_content_dict.update(new_content_dict)
+        else:
+            old_content_dict = new_content_dict
+
+        return old_content_dict

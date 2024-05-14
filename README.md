@@ -20,7 +20,7 @@ CSVision/
                                     # in views.
 │ ├── main_controller.py            # Handles interactions in the main window.
 │ ├── plot_frame_controller.py      # Handles interactions in the plot frame.
-│ ├── signal_frame_controller.py    # Handles interactions in the signal frame.
+│ ├── header_frame_controller.py    # Handles interactions in the header frame.
 │ └── statusbar_frame_controller.py # Handles interactions in the status bar frame.
 ├── models/                         # Contains classes that represent the data
                                     # and business logic of the application.
@@ -40,7 +40,7 @@ CSVision/
 │ ├── configurations_view.py        # The visual configuration of all views.
 │ ├── main_view.py                  # The visual representation of main window.
 │ ├── plot_frame_view.py            # The visual representation of the plot frame.
-│ ├── signal_frame_view.py          # The visual representation of the signal
+│ ├── header_frame_view.py          # The visual representation of the header
                                     # frame.
 │ └── statusbar_frame_view.py       # The visual representation of the status bar
                                     # frame.
@@ -52,7 +52,7 @@ CSVision/
 ## Features
 
 - ```Accessibility```: Application is closable by pressing the "exit/close" button or the ESC-key
-- ```Accessibility```: The signal frame can be toggled by pressing 'Ctrl + B' or the button in the sidebar.
+- ```Accessibility```: The header frame can be toggled by pressing 'Ctrl + B' or the button in the sidebar.
 - ```Functionality```: CSV files can be selected and loaded with the "Open file button" in the File Explorer section.
 - ```Functionality```: CSV files can be exported to xslx files with the "Export to excel button" in the File Explorer section.
 - ```Feedback```: Processes are being displayed by a progressbar in the statusbar.
