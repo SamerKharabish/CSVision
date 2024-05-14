@@ -218,5 +218,5 @@ class Config:
             "Bar",
             "Stem",
         ]
-        COLLECTION_FILEPATH_YAML: str = "models/file_paths.yaml"
+        COLLECTION_FILEPATH_YAML: str = "resources/yaml-files/file_paths.yaml"
         FILE_TYPE_TO_READ: list[tuple[str, str]] = [("CSV", "*.csv*")]

@@ -22,7 +22,9 @@ class DataLoadingThread(Thread):
         self.toggle_callback: callable = toggle_callback
 
         self.filename: str = filename
-        self.file_manager: YAMLManager = YAMLManager("models/file_paths.yaml", 10)
+        self.file_manager: YAMLManager = YAMLManager(
+            "resources/yaml-files/file_paths.yaml", 10
+        )
 
     def run(self) -> None:
         progress_publisher.progress = "indeterminate"
