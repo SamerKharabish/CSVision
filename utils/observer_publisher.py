@@ -1,4 +1,4 @@
-""" Defines all subscriptable subject classes. """
+""" Defines all subscriptable publisher classes and the observer interface. """
 
 from __future__ import annotations
 from abc import ABC, abstractmethod
@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 
 class SimplePublisher:
     """
-    Represents csv data that is being observed.
+    Represents a simple publisher.
     """
 
     def __init__(self) -> None:
@@ -54,7 +54,6 @@ class ProgressPublisher(SimplePublisher):
 
     def __init__(self) -> None:
         SimplePublisher.__init__(self)
-        super(ProgressPublisher, self).__init__()
 
         self.__progress: str
 
@@ -74,7 +73,7 @@ class ProgressPublisher(SimplePublisher):
         Set the progress.
 
         Args:
-            file_size (str): The progress to set.
+            progress (str): The progress to set.
         """
         self.__progress = progress
         self.notify()
@@ -90,7 +89,6 @@ class FileSizePublisher(SimplePublisher):
 
     def __init__(self) -> None:
         SimplePublisher.__init__(self)
-        super(FileSizePublisher, self).__init__()
 
         self.__file_size: str
 
@@ -121,6 +119,41 @@ class FileSizePublisher(SimplePublisher):
 file_size_publisher = FileSizePublisher()
 
 
+class HeaderFrameStatePublisher(SimplePublisher):
+    """
+    Monitor the state of the header frame.
+    """
+
+    def __init__(self) -> None:
+        SimplePublisher.__init__(self)
+
+        self.__hide_frame: bool = False
+
+    @property
+    def hide_frame(self) -> str:
+        """
+        Get the state of the header frame.
+
+        Returns:
+            str: The set state of the header frame.
+        """
+        return self.__hide_frame
+
+    @hide_frame.setter
+    def hide_frame(self, hide_frame: bool) -> None:
+        """
+        Set the state of the header frame.
+
+        Args:
+            hide_frame (str): The state of the header frame to set.
+        """
+        self.__hide_frame = hide_frame
+        self.notify()
+
+
+header_frame_state_publisher = HeaderFrameStatePublisher()
+
+
 class SimpleObserver(ABC):
     """
     Defines the Observer interface.
@@ -129,8 +162,8 @@ class SimpleObserver(ABC):
     @abstractmethod
     def update(self, simple_publisher: SimplePublisher) -> None:
         """
-        Receives updates from the CSVManager. Called when the CSVManager's state changes.
+        Receives updates.
 
         Args:
-            simple_publisher (SimplePublisher): Publisher to be attached to.
+            simple_publisher (SimplePublisher): Publisher which triggered the update.
         """
