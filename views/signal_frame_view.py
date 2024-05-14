@@ -11,6 +11,19 @@ class SignalFrameView(ctk.CTkFrame):
     Layout of the signal frame.
     """
 
+    __slots__ = (
+        "root",
+        "__side_bar_frame",
+        "signal_panel",
+        "filehandling_frame_view",
+        "__searchbar_frame_view",
+        "signallist_frame_view",
+        "__config_signallist_frame_view",
+        "__preset_frame_view",
+        "toggle_side_bar_button",
+        "__settings_button",
+    )
+
     def __init__(self, master: ctk.CTkFrame) -> None:
         super().__init__(
             master,
@@ -19,14 +32,14 @@ class SignalFrameView(ctk.CTkFrame):
         )
         self.root: ctk.CTk
 
-        self.initialize_widgets()
-        self.create_layout()
+        self.__initialize_widgets()
+        self.__create_layout()
 
-    def initialize_widgets(self) -> None:
+    def __initialize_widgets(self) -> None:
         """
         Initialize widgets.
         """
-        self.side_bar_frame: ctk.CTkFrame = ctk.CTkFrame(
+        self.__side_bar_frame: ctk.CTkFrame = ctk.CTkFrame(
             self,
             corner_radius=Config.General.CORNER_RADIUS,
             border_width=Config.General.FRAME_BORDER_WIDTH,
@@ -41,58 +54,87 @@ class SignalFrameView(ctk.CTkFrame):
         self.filehandling_frame_view: ctk.CTkFrame = FileHandlingFrameView(
             self.signal_panel
         )
-        self.searchbar_frame_view: ctk.CTkFrame = SearchBarFrameView(self.signal_panel)
+        self.__searchbar_frame_view: ctk.CTkFrame = SearchBarFrameView(
+            self.signal_panel
+        )
         self.signallist_frame_view: ctk.CTkFrame = SignalListFrameView(
             self.signal_panel
         )
-        self.config_signallist_frame_view: ctk.CTkFrame = ConfigSignalListFrameView(
+        self.__config_signallist_frame_view: ctk.CTkFrame = ConfigSignalListFrameView(
             self.signal_panel
         )
-        self.preset_frame_view: ctk.CTkFrame = PresetFrameView(self.signal_panel)
+        self.__preset_frame_view: ctk.CTkFrame = PresetFrameView(self.signal_panel)
 
         self.toggle_side_bar_button = ctk.CTkButton(
-            self.side_bar_frame,
+            self.__side_bar_frame,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             fg_color=Config.Colors.TRANSPARENT,
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
             image=ctk.CTkImage(
-                light_image=Image.open(Config.ImageFormats.HIDE_SIDEPANEL_BUTTON_PNG),
+                light_image=Image.open(
+                    Config.ImageFormats.HIDE_HEADER_FRAME_BUTTON_PNG
+                ),
                 size=(
-                    Config.Dimensions.TOGGLE_SIDEPANEL_BUTTON_WIDTH_HEIGHT,
-                    Config.Dimensions.TOGGLE_SIDEPANEL_BUTTON_WIDTH_HEIGHT,
+                    Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,
+                    Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,
                 ),
             ),
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
 
-    def create_layout(self) -> None:
+        self.__settings_button = ctk.CTkButton(
+            self.__side_bar_frame,
+            width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
+            fg_color=Config.Colors.TRANSPARENT,
+            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            text="",
+            image=ctk.CTkImage(
+                light_image=Image.open(Config.ImageFormats.SETTINGS_BUTTON_PNG),
+                size=(
+                    Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,
+                    Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,
+                ),
+            ),
+            anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
+        )
+
+    def __create_layout(self) -> None:
         """
         Create layout.
         """
-        self.side_bar_frame.pack(
-            side=Config.Layout.SIDE_BAR_FRAME_SIDE,
-            fill=Config.Layout.SIDE_BAR_FRAME_FILL,
-            expand=Config.Layout.SIDE_BAR_FRAME_EXPAND,
+        self.__side_bar_frame.pack(
+            side=Config.Layout.NAVIGATION_FRAME_SIDE,
+            fill=Config.Layout.NAVIGATION_FRAME_FILL,
+            expand=Config.Layout.NAVIGATION_FRAME_EXPAND,
         )
         self.toggle_side_bar_button.pack(
-            side=Config.Layout.TOGGLE_SIDE_BAR_BUTTON_SIDE,
-            fill=Config.Layout.TOGGLE_SIDE_BAR_BUTTON_FILL,
-            expand=Config.Layout.TOGGLE_SIDE_BAR_BUTTON_EXPAND,
-            padx=Config.Layout.TOGGLE_SIDE_BAR_BUTTON_PAD,
+            side=Config.Layout.TOGGLE_HEADER_FRAME_BUTTON_SIDE,
+            fill=Config.Layout.TOGGLE_HEADER_FRAME_BUTTON_FILL,
+            expand=Config.Layout.TOGGLE_HEADER_FRAME_BUTTON_EXPAND,
+            padx=Config.Layout.TOGGLE_HEADER_FRAME_BUTTON_PAD,
+            pady=Config.Layout.STANDART_PAD,
+        )
+
+        self.__settings_button.pack(
+            side=Config.Layout.SETTINGS_BUTTON_SIDE,
+            fill=Config.Layout.SETTINGS_BUTTON_FILL,
+            expand=Config.Layout.SETTINGS_BUTTON_EXPAND,
+            padx=Config.Layout.SETTINGS_BUTTON_PAD,
             pady=Config.Layout.STANDART_PAD,
         )
 
         self.signal_panel.pack(
-            side=Config.Layout.SIGNAL_PANEL_SIDE,
-            fill=Config.Layout.SIGNAL_PANEL_FILL,
-            expand=Config.Layout.SIGNAL_PANEL_EXPAND,
+            side=Config.Layout.HEADER_PANEL_SIDE,
+            fill=Config.Layout.HEADER_PANEL_FILL,
+            expand=Config.Layout.HEADER_PANEL_EXPAND,
         )
         self.signal_panel.grid_rowconfigure(
             (
-                Config.Layout.SIGNALLIST_FRAME_ROW,
-                Config.Layout.CONFIG_SIGNALLIST_FRAME_ROW,
+                Config.Layout.HEADER_LIST_FRAME_ROW,
+                Config.Layout.CONFIG_HEADER_LIST_FRAME_ROW,
             ),
             weight=1,
         )
@@ -101,22 +143,22 @@ class SignalFrameView(ctk.CTkFrame):
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
-        self.searchbar_frame_view.grid(
+        self.__searchbar_frame_view.grid(
             row=Config.Layout.SEARCHBAR_FRAME_ROW,
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
         self.signallist_frame_view.grid(
-            row=Config.Layout.SIGNALLIST_FRAME_ROW,
+            row=Config.Layout.HEADER_LIST_FRAME_ROW,
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
-        self.config_signallist_frame_view.grid(
-            row=Config.Layout.CONFIG_SIGNALLIST_FRAME_ROW,
+        self.__config_signallist_frame_view.grid(
+            row=Config.Layout.CONFIG_HEADER_LIST_FRAME_ROW,
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
         )
-        self.preset_frame_view.grid(
+        self.__preset_frame_view.grid(
             row=Config.Layout.PRESET_FRAME_ROW,
             column=0,
             sticky=Config.Layout.GENERAL_FRAME_STICKY,
@@ -155,7 +197,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
             font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
-            anchor=Config.Layout.SIGNAL_FRAME_LABELS_ANCHOR,
+            anchor=Config.Layout.HEADER_FRAME_LABELS_ANCHOR,
         )
 
         self.open_file_button = ctk.CTkButton(
@@ -291,7 +333,7 @@ class SearchBarFrameView(ctk.CTkFrame):
             font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
-            anchor=Config.Layout.SIGNAL_FRAME_LABELS_ANCHOR,
+            anchor=Config.Layout.HEADER_FRAME_LABELS_ANCHOR,
         )
 
         self.clear_search_result_button = ctk.CTkButton(
@@ -339,14 +381,14 @@ class SearchBarFrameView(ctk.CTkFrame):
         )
 
         self.filter_signals_segmented_button_var = ctk.StringVar(
-            value=Config.Values.FILTER_SIGNALS_SEGMENTED_BUTTON[0]
+            value=Config.Values.FILTER_SUBHEADINGS_SEGMENTED_BUTTON[0]
         )
         self.filter_signals_segmented_button = ctk.CTkSegmentedButton(
             self,
             font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
-            values=Config.Values.FILTER_SIGNALS_SEGMENTED_BUTTON,
+            values=Config.Values.FILTER_SUBHEADINGS_SEGMENTED_BUTTON,
             variable=self.filter_signals_segmented_button_var,
         )
 
@@ -442,11 +484,11 @@ class SignalListFrameView(ctk.CTkFrame):
         self.signal_scrollableframe = ctk.CTkScrollableFrame(
             self,
             fg_color=Config.Colors.TRANSPARENT,
-            label_text=Config.LabelTexts.SIGNALLIST_TEXT,
+            label_text=Config.LabelTexts.HEADER_LIST_TEXT,
             label_font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
-            label_anchor=Config.Layout.SIGNAL_FRAME_LABELS_ANCHOR,
+            label_anchor=Config.Layout.HEADER_FRAME_LABELS_ANCHOR,
         )
 
     def create_layout(self) -> None:
@@ -455,11 +497,11 @@ class SignalListFrameView(ctk.CTkFrame):
         """
         self.pack_propagate(False)
         self.signal_scrollableframe.pack(
-            side=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_SIDE,
-            fill=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_FILL,
-            expand=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_EXPAND,
-            padx=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PAD,
-            pady=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PAD,
+            side=Config.Layout.HEADER_FRAME_SCROLLABLEFRAME_SIDE,
+            fill=Config.Layout.HEADER_FRAME_SCROLLABLEFRAME_FILL,
+            expand=Config.Layout.HEADER_FRAME_SCROLLABLEFRAME_EXPAND,
+            padx=Config.Layout.HEADER_FRAME_SCROLLABLEFRAME_PAD,
+            pady=Config.Layout.HEADER_FRAME_SCROLLABLEFRAME_PAD,
         )
 
 
@@ -485,11 +527,11 @@ class ConfigSignalListFrameView(ctk.CTkFrame):
         self.signal_scrollableframe = ctk.CTkScrollableFrame(
             self,
             fg_color=Config.Colors.TRANSPARENT,
-            label_text=Config.LabelTexts.CONFIG_SIGNALLIST_TEXT,
+            label_text=Config.LabelTexts.CONFIG_HEADER_LIST_TEXT,
             label_font=ctk.CTkFont(
                 family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
             ),
-            label_anchor=Config.Layout.SIGNAL_FRAME_LABELS_ANCHOR,
+            label_anchor=Config.Layout.HEADER_FRAME_LABELS_ANCHOR,
         )
 
     def create_layout(self) -> None:
@@ -498,11 +540,11 @@ class ConfigSignalListFrameView(ctk.CTkFrame):
         """
         self.pack_propagate(False)
         self.signal_scrollableframe.pack(
-            side=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_SIDE,
-            fill=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_FILL,
-            expand=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_EXPAND,
-            padx=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PAD,
-            pady=Config.Layout.SIGNAL_FRAME_SCROLLABLEFRAME_PAD,
+            side=Config.Layout.HEADER_FRAME_SCROLLABLEFRAME_SIDE,
+            fill=Config.Layout.HEADER_FRAME_SCROLLABLEFRAME_FILL,
+            expand=Config.Layout.HEADER_FRAME_SCROLLABLEFRAME_EXPAND,
+            padx=Config.Layout.HEADER_FRAME_SCROLLABLEFRAME_PAD,
+            pady=Config.Layout.HEADER_FRAME_SCROLLABLEFRAME_PAD,
         )
 
 

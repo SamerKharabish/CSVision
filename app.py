@@ -3,13 +3,16 @@
 import sys
 import customtkinter as ctk
 from views.configurations_view import Config
+from views.main_view import MainView
 from controllers.main_controller import MainController
 
 
 class AppView(ctk.CTk):
     """
-    Layout of the main application.
+    Layout of the main window.
     """
+
+    __slots__ = ("main_view",)
 
     def __init__(self) -> None:
         super().__init__()
@@ -24,29 +27,57 @@ class AppView(ctk.CTk):
             Config.Dimensions.APP_WINDOW_MIN_HEIGHT,
         )
 
+        self.__initialize_widgets()
+        self.__create_layout()
+
+    def __initialize_widgets(self) -> None:
+        """
+        Initialize widgets.
+        """
+        self.main_view: MainView = MainView(self)
+
+    def __create_layout(self) -> None:
+        """
+        Create layout.
+        """
+        self.main_view.pack(
+            side=Config.Layout.MAIN_VIEW_SIDE,
+            fill=Config.Layout.MAIN_VIEW_FILL,
+            expand=Config.Layout.MAIN_VIEW_EXPAND,
+        )
+
 
 class AppController:
     """
-    Functionality of the main application.
+    Functionality of the main window.
     """
 
-    def __init__(self, view: ctk.CTk) -> None:
-        self.view: ctk.CTk = view
+    __slots__ = ("__view",)
 
-        self.setup_bindings()
+    def __init__(self, view: AppView) -> None:
+        self.__view: AppView = view
 
-    def setup_bindings(self) -> None:
+        self.__initialize_controller()
+        self.__setup_bindings()
+
+    def __initialize_controller(self) -> None:
+        """
+        Initialize controller.
+        """
+        MainController(self.__view.main_view)
+
+    def __setup_bindings(self) -> None:
         """
         Binding the AppController widgets to accessibility callback functions.
         """
-        self.view.bind(Config.KeyBindings.CLOSE_APPLICATION, self.close_application)
-        self.view.protocol("WM_DELETE_WINDOW", self.close_application)
+        self.__view.bind(Config.KeyBindings.CLOSE_APPLICATION, self.__close_application)
+        self.__view.protocol("WM_DELETE_WINDOW", self.__close_application)
 
-    def close_application(self, _ = None) -> None:
+    def __close_application(self, _=None) -> None:
         """
         Close the application.
         """
-        self.view.destroy()
+        self.__view.destroy()
         sys.exit(0)
 
 
@@ -57,9 +88,9 @@ def main() -> None:
     ctk.set_appearance_mode("Dark")
 
     app_view = AppView()
-    app = AppController(app_view)
-    MainController(app.view)
-    app.view.mainloop()
+    AppController(app_view)
+
+    app_view.mainloop()
 
 
 if __name__ == "__main__":

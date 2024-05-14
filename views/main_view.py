@@ -1,5 +1,7 @@
 """ Defines the MainView class with the main layout. """
 
+from __future__ import annotations
+from typing import TYPE_CHECKING
 import customtkinter as ctk
 from views.configurations_view import Config
 from views.statusbar_frame_view import StatusbarFrameView
@@ -7,36 +9,36 @@ from views.signal_frame_view import SignalFrameView
 from views.plot_frame_view import PlotFrameView
 
 
+if TYPE_CHECKING:
+    from app import AppView
+
+
 class MainView(ctk.CTkFrame):
     """
     Layout of the main application.
     """
 
-    def __init__(self, master: ctk.CTk) -> None:
+    __slots__ = "root", "statusbar_frame_view", "signal_frame_view", "plot_frame_view"
+  
+    def __init__(self, master: AppView) -> None:
         super().__init__(master, corner_radius=Config.General.CORNER_RADIUS)
-        self.master: ctk.CTk = master
+        self.root: AppView
 
-        self.initialize_widgets()
-        self.create_layout()
+        self.__initialize_widgets()
+        self.__create_layout()
 
-    def initialize_widgets(self) -> None:
+    def __initialize_widgets(self) -> None:
         """
         Initialize widgets.
         """
-        self.statusbar_frame_view: ctk.CTkFrame = StatusbarFrameView(self)
-        self.signal_frame_view: ctk.CTkFrame = SignalFrameView(self)
-        self.plot_frame_view: ctk.CTkFrame = PlotFrameView(self)
+        self.statusbar_frame_view: StatusbarFrameView = StatusbarFrameView(self)
+        self.signal_frame_view: SignalFrameView = SignalFrameView(self)
+        self.plot_frame_view: PlotFrameView = PlotFrameView(self)
 
-    def create_layout(self) -> None:
+    def __create_layout(self) -> None:
         """
         Create layout.
         """
-        self.pack(
-            side=Config.Layout.MAIN_VIEW_SIDE,
-            fill=Config.Layout.MAIN_VIEW_FILL,
-            expand=Config.Layout.MAIN_VIEW_EXPAND,
-        )
-
         self.statusbar_frame_view.pack(
             side=Config.Layout.STATUSBAR_FRAME_SIDE,
             fill=Config.Layout.STATUSBAR_FRAME_FILL,
