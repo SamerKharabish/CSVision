@@ -10,8 +10,8 @@ This module contains the GUI implementation for a CSV plotter application. It pr
 
 ## Features
 
-- ```Accessibility```: Application is closable by pressing the "exit/close" button or the ESC-key
-- ```Accessibility```: The header frame can be toggled by pressing 'Ctrl + B' or the button in the sidebar.
+- ```Accessibility```: Application is closable by pressing the "exit/close" button or the ESC-key.
+- ```Accessibility```: The header frame can be toggled by pressing 'Ctrl + B' or the button on the top of the sidebar.
 - ```Functionality```: CSV files can be selected and loaded with the "Open file button" in the File Explorer section.
 - ```Functionality```: CSV files can be exported to xslx files with the "Export to excel button" in the File Explorer section.
 - ```Feedback```: Processes are being displayed by a progressbar in the statusbar.
@@ -23,14 +23,12 @@ To enhance maintainability, scalability, and testability of the application a Mo
 
 ```bash
 CSVision/
-├── controllers/                            # Contains classes that act as intermediaries
-                                            # between models and views. They handle user
-                                            # input, update models, and reflect changes
-                                            # in views.
+├── controllers/                            # Contains classes that act as intermediaries between
+                                            # models and views. They handle user input,
+                                            # update models, and reflect changes in views.
 │ ├── sidebar_controllers/                  # Contains classes that act as intermediaries
-                                            # between models and sidebar_views.
-│ ├── ├── filehandling_frame_controller.py  # Handles interactions in the file handling
-                                            # frame window.
+                                            # between models and sidebar views.
+│ ├── ├── filehandling_frame_controller.py  # Handles interactions in the file handling frame window.
 │ ├── ├── header_frame_controller.py        # Handles interactions in the header frame.
 │ ├── └── navigation_frame_controller.py    # Handles interactions in the navigation frame.
 │ ├── main_controller.py                    # Handles interactions in the main window.
@@ -58,7 +56,7 @@ CSVision/
 ├── views/                                  # Contains classes that define the visual
                                             # representation of the application.
 │ ├── sidebar_views/                        # Contains classes that define the visual
-                                            # representation of the sidebar views.
+                                            # representation of the sidebar.
 │ ├── ├── config_header_list_frame_view.py  # The visual configuration of the configuration
                                             # header list frame.
 │ ├── ├── filehandling_frame_view.py        # The visual configuration of the file handling frame.
@@ -70,10 +68,8 @@ CSVision/
 │ ├── configurations_view.py                # The visual configuration of all views.
 │ ├── main_view.py                          # The visual representation of main window.
 │ ├── plot_frame_view.py                    # The visual representation of the plot frame.
-│ ├── sidebar_frame_view.py                 # The visual representation of the sidebar
-                                            # frame.
-│ └── statusbar_frame_view.py               # The visual representation of the statusbar
-                                            # frame.
+│ ├── sidebar_frame_view.py                 # The visual representation of the sidebar frame.
+│ └── statusbar_frame_view.py               # The visual representation of the statusbar frame.
 ├── app.py                                  # Entry point of the application.
 ├── README.md                               # README
 ├── requirements.txt                        # Project dependencies.
