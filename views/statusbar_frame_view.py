@@ -1,7 +1,12 @@
 """ Defines the StatusbarFrameView class with the statusbar frame layout. """
 
+from __future__ import annotations
+from typing import TYPE_CHECKING
 import customtkinter as ctk
 from views.configurations_view import Config
+
+if TYPE_CHECKING:
+    from views.main_view import MainView
 
 
 class StatusbarFrameView(ctk.CTkFrame):
@@ -9,7 +14,9 @@ class StatusbarFrameView(ctk.CTkFrame):
     Layout of the statusbar frame.
     """
 
-    def __init__(self, master: ctk.CTkFrame) -> None:
+    __slots__ = "filesize_label", "progressbar"
+
+    def __init__(self, master: MainView) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,
@@ -17,14 +24,14 @@ class StatusbarFrameView(ctk.CTkFrame):
             border_width=Config.General.FRAME_BORDER_WIDTH,
         )
 
-        self.initialize_widgets()
-        self.create_layout()
+        self.__initialize_widgets()
+        self.__create_layout()
 
-    def initialize_widgets(self) -> None:
+    def __initialize_widgets(self) -> None:
         """
         Initialize widgets.
         """
-        self.filesize_label = ctk.CTkLabel(
+        self.filesize_label: ctk.CTkLabel = ctk.CTkLabel(
             self,
             text="",
             font=ctk.CTkFont(
@@ -32,10 +39,15 @@ class StatusbarFrameView(ctk.CTkFrame):
                 size=Config.Fonts.STATUS_BAR_TEXTS[1],
             ),
         )
-        self.progressbar = ctk.CTkProgressBar(self, width=310)
+        self.progressbar: ctk.CTkProgressBar = ctk.CTkProgressBar(self, width=310)
 
-    def create_layout(self) -> None:
+    def __create_layout(self) -> None:
         """
         Create layout.
         """
-        self.filesize_label.pack(side="left", padx=(50, 10), pady=(1, 1))
+        self.pack_propagate(False)
+        self.filesize_label.pack(
+            side=Config.Layout.STATUSBAR_FRAME_LABEL_SIDE,
+            padx=Config.Layout.STATUSBAR_FRAME_LABEL_PADX,
+            pady=Config.Layout.STATUSBAR_FRAME_LABEL_PADY,
+        )

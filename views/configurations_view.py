@@ -1,6 +1,6 @@
 """Centralized configuration file for the visual representation of the application."""
 
-from typing import Tuple, List, Literal
+from typing import Literal
 
 
 class Config:
@@ -18,7 +18,7 @@ class Config:
         FRAME_BORDER_WIDTH: int = 1
         INPUT_ENTRY_BORDER_WIDTH: int = 0
         OUTPUT_ENTRY_BORDER_WIDTH: int = 1
-        SIGNAL_FRAME_MINIMIZED: bool = False
+        HEADER_FRAME_MINIMIZED: bool = False
 
     class WindowTitles:
         """
@@ -41,29 +41,29 @@ class Config:
 
         ACTION_BUTTON_WIDTH_HEIGHT: int = 10
         ACTION_IMAGE_WIDTH_HEIGHT: int = 17
-        TOGGLE_SIDEPANEL_BUTTON_WIDTH_HEIGHT: int = 20
+        TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT: int = 20
 
     class ImageFormats:
         """
         Image formats
         """
 
-        MAIN_WINDOW_ICO: str = "resources/Images/CSVision.ico"
+        BACK_BUTTON_PNG: str = "resources/Images/back.png"
         CLEAR_SEARCH_RESULT_PNG: str = "resources/Images/clear-search-results.png"
         DOWN_ARROW_PNG: str = "resources/Images/down-arrow.png"
         EXCEL_PNG: str = "resources/Images/excel.png"
-        OPEN_FILE_PNG: str = "resources/Images/open-file.png"
-        REFRESH_PNG: str = "resources/Images/refresh.png"
-        HIDE_SIDEPANEL_BUTTON_PNG: str = "resources/Images/hide-sidepanel.png"
-        SHOW_SIDEPANEL_BUTTON_PNG: str = "resources/Images/show-sidepanel.png"
-        SETTINGS_BUTTON_PNG: str = "resources/Images/settings.png"
-        RESET_BUTTON_PNG: str = "resources/Images/reset.png"
-        BACK_BUTTON_PNG: str = "resources/Images/back.png"
-        PAN_BUTTON_PNG: str = "resources/Images/pan.png"
-        SAVE_BUTTON_PNG: str = "resources/Images/save.png"
         FORWARD_BUTTON_PNG: str = "resources/Images/forward.png"
-        ZOOM_BUTTON_PNG: str = "resources/Images/zoom.png"
+        HIDE_HEADER_FRAME_BUTTON_PNG: str = "resources/Images/hide-sidepanel.png"
         LEGEND_BUTTON_PNG: str = "resources/Images/legend.png"
+        MAIN_WINDOW_ICO: str = "resources/Images/CSVision.ico"
+        OPEN_FILE_PNG: str = "resources/Images/open-file.png"
+        PAN_BUTTON_PNG: str = "resources/Images/pan.png"
+        REFRESH_PNG: str = "resources/Images/refresh.png"
+        RESET_BUTTON_PNG: str = "resources/Images/reset.png"
+        SAVE_BUTTON_PNG: str = "resources/Images/save.png"
+        SETTINGS_BUTTON_PNG: str = "resources/Images/settings.png"
+        SHOW_HEADER_FRAME_BUTTON_PNG: str = "resources/Images/show-sidepanel.png"
+        ZOOM_BUTTON_PNG: str = "resources/Images/zoom.png"
 
     class Layout:
         """
@@ -78,37 +78,46 @@ class Config:
         STATUSBAR_FRAME_FILL: str = "x"
         STATUSBAR_FRAME_EXPAND: bool = False
 
-        SIGNAL_FRAME_SIDE: str = "left"
-        SIGNAL_FRAME_FILL: str = "y"
-        SIGNAL_FRAME_EXPAND: bool = False
+        SIDEBAR_FRAME_SIDE: str = "left"
+        SIDEBAR_FRAME_FILL: str = "y"
+        SIDEBAR_FRAME_EXPAND: bool = False
 
         PLOT_FRAME_SIDE: str = "right"
         PLOT_FRAME_FILL: str = "both"
         PLOT_FRAME_EXPAND: bool = True
 
-        SIDE_BAR_FRAME_SIDE: str = "left"
-        SIDE_BAR_FRAME_FILL: str = "y"
-        SIDE_BAR_FRAME_EXPAND: bool = False
+        STATUSBAR_FRAME_LABEL_SIDE: str = "left"
+        STATUSBAR_FRAME_LABEL_PADX: tuple[int, int] = (50, 10)
+        STATUSBAR_FRAME_LABEL_PADY: tuple[int, int] = (1, 1)
 
-        SIGNAL_PANEL_SIDE: str = "right"
-        SIGNAL_PANEL_FILL: str = "y"
-        SIGNAL_PANEL_EXPAND: bool = True
+        NAVIGATION_FRAME_SIDE: str = "left"
+        NAVIGATION_FRAME_FILL: str = "y"
+        NAVIGATION_FRAME_EXPAND: bool = False
 
-        TOGGLE_SIDE_BAR_BUTTON_SIDE: str = "top"
-        TOGGLE_SIDE_BAR_BUTTON_FILL: str = "x"
-        TOGGLE_SIDE_BAR_BUTTON_EXPAND: bool = False
-        TOGGLE_SIDE_BAR_BUTTON_PAD: Tuple[int, int] = (3, 3)
+        HEADER_PANEL_SIDE: str = "right"
+        HEADER_PANEL_FILL: str = "y"
+        HEADER_PANEL_EXPAND: bool = True
+
+        TOGGLE_HEADER_FRAME_BUTTON_SIDE: str = "top"
+        TOGGLE_HEADER_FRAME_BUTTON_FILL: str = "x"
+        TOGGLE_HEADER_FRAME_BUTTON_EXPAND: bool = False
+        TOGGLE_HEADER_FRAME_BUTTON_PAD: tuple[int, int] = (3, 3)
 
         SETTINGS_BUTTON_SIDE: str = "bottom"
         SETTINGS_BUTTON_FILL: str = "x"
         SETTINGS_BUTTON_EXPAND: bool = False
-        SETTINGS_BUTTON_PAD: Tuple[int, int] = (3, 3)
+        SETTINGS_BUTTON_PAD: tuple[int, int] = (3, 3)
+
+        SETTINGS_BUTTON_SIDE: str = "bottom"
+        SETTINGS_BUTTON_FILL: str = "x"
+        SETTINGS_BUTTON_EXPAND: bool = False
+        SETTINGS_BUTTON_PAD: tuple[int, int] = (3, 3)
 
         FILEHANDLING_FRAME_ROW: int = 0
         SEARCHBAR_FRAME_ROW: int = FILEHANDLING_FRAME_ROW + 1
-        SIGNALLIST_FRAME_ROW: int = SEARCHBAR_FRAME_ROW + 1
-        CONFIG_SIGNALLIST_FRAME_ROW: int = SIGNALLIST_FRAME_ROW + 1
-        PRESET_FRAME_ROW: int = CONFIG_SIGNALLIST_FRAME_ROW + 1
+        HEADER_LIST_FRAME_ROW: int = SEARCHBAR_FRAME_ROW + 1
+        CONFIG_HEADER_LIST_FRAME_ROW: int = HEADER_LIST_FRAME_ROW + 1
+        PRESET_FRAME_ROW: int = CONFIG_HEADER_LIST_FRAME_ROW + 1
         GENERAL_FRAME_STICKY: str = "nesw"
 
         SEARCHBAR_TITLE_FARME_ROW: int = 0
@@ -119,21 +128,21 @@ class Config:
         FILEHANDLING_FILTER_FARME_ROW: int = 2
         GENERAL_INNER_FRAME_STICKY: str = "ew"
 
-        SIGNAL_FRAME_LABELS_ANCHOR: str = "w"
+        HEADER_FRAME_LABELS_ANCHOR: str = "w"
         ACTION_BUTTON_TEXT_ANCHOR: str = "center"
-        STANDART_PAD: Tuple[int, int] = (7, 7)
-        ZERO_PAD: Tuple[int, int] = (0, 0)
-        LABELS_IN_FRAME_PADX: Tuple[int, int] = (14, 0)
+        STANDART_PAD: tuple[int, int] = (7, 7)
+        ZERO_PAD: tuple[int, int] = (0, 0)
+        LABELS_IN_FRAME_PADX: tuple[int, int] = (14, 0)
 
-        SIGNAL_FRAME_SCROLLABLEFRAME_SIDE: str = "top"
-        SIGNAL_FRAME_SCROLLABLEFRAME_FILL: str = "both"
-        SIGNAL_FRAME_SCROLLABLEFRAME_EXPAND: bool = True
-        SIGNAL_FRAME_SCROLLABLEFRAME_PAD: Tuple[int, int] = (1, 1)
+        HEADER_FRAME_SCROLLABLEFRAME_SIDE: str = "top"
+        HEADER_FRAME_SCROLLABLEFRAME_FILL: str = "both"
+        HEADER_FRAME_SCROLLABLEFRAME_EXPAND: bool = True
+        HEADER_FRAME_SCROLLABLEFRAME_PAD: tuple[int, int] = (1, 1)
 
         PLOT_FRAME_PLOT_AREA_FRAME_SIDE: str = "top"
         PLOT_FRAME_PLOT_AREA_FRAME_FILL: str = "both"
         PLOT_FRAME_PLOT_AREA_FRAME_EXPAND: bool = True
-        PLOT_FRAME_PLOT_AREA_FRAME_PADY: Tuple[int, int] = (20, 30)
+        PLOT_FRAME_PLOT_AREA_FRAME_PADY: tuple[int, int] = (20, 30)
 
         PLOT_FRAME_SEGMENTED_BUTTON_X: int = 40
         PLOT_FRAME_SEGMENTED_BUTTON_Y: int = 7
@@ -147,16 +156,16 @@ class Config:
 
         NAV_TOOLBAR_BUTTONS_SIDE: str = "left"
         NAV_TOOLBAR_BUTTONS_EXPAND: bool = True
-        NAV_TOOLBAR_LEFT_BUTTONS_PADX: Tuple[int, int] = (30, 7)
-        NAV_TOOLBAR_RIGHT_BUTTONS_PADX: Tuple[int, int] = (7, 30)
+        NAV_TOOLBAR_LEFT_BUTTONS_PADX: tuple[int, int] = (30, 7)
+        NAV_TOOLBAR_RIGHT_BUTTONS_PADX: tuple[int, int] = (7, 30)
 
         CANVAS_SIDE: Literal["left", "right", "top", "bottom"] = "top"
         CANVAS_FILL: Literal["none", "x", "y", "both"] = "both"
         CANVAS_EXPAND: bool = True
-        CANVAS_PADY: Tuple[int, int] = (2, 2)
+        CANVAS_PADY: tuple[int, int] = (2, 2)
 
         STATUSBAR_FRAME_PROGRESSBAR_SIDE: str = "left"
-        STATUSBAR_FRAME_PROGRESSBAR_PADX: Tuple[int, int] = (10, 10)
+        STATUSBAR_FRAME_PROGRESSBAR_PADX: tuple[int, int] = (10, 10)
 
     class KeyBindings:
         """
@@ -164,7 +173,7 @@ class Config:
         """
 
         CLOSE_APPLICATION: str = "<Escape>"
-        RESIZE_SIGNAL_FRAME: str = "<Control-b>"
+        RESIZE_HEADER_FRAME: str = "<Control-b>"
 
     class LabelTexts:
         """
@@ -173,17 +182,17 @@ class Config:
 
         FILEHANDLING_TEXT: str = "FILE EXPLORER"
         SEARCHBAR_TEXT: str = "SEARCH"
-        SIGNALLIST_TEXT: str = f"{'SIGNALS':>9}"
-        CONFIG_SIGNALLIST_TEXT: str = f"{'CONFIGURATIONS':>16}"
+        HEADER_LIST_TEXT: str = f"{'HEADERS':>9}"
+        CONFIG_HEADER_LIST_TEXT: str = f"{'CONFIGURATIONS':>16}"
 
     class Fonts:
         """
         Fonts
         """
 
-        STATUS_BAR_TEXTS: Tuple[str, int] = ("Kento", 12)
-        LABEL_TEXTS: Tuple[str, int] = ("Kento", 12)
-        BUTTON_TEXTS: Tuple[str, int, str] = ("Kento", 12, "bold")
+        STATUS_BAR_TEXTS: tuple[str, int] = ("Kento", 12)
+        LABEL_TEXTS: tuple[str, int] = ("Kento", 12, "bold")
+        BUTTON_TEXTS: tuple[str, int, str] = ("Kento", 12, "bold")
 
     class Colors:
         """
@@ -202,17 +211,17 @@ class Config:
         Values of different widgets.
         """
 
-        SEARCH_SELECTION_SEGMENTED_BUTTON: List[str] = ["Signals", "Groups"]
-        FILTER_SIGNALS_SEGMENTED_BUTTON: List[str] = [
+        SEARCH_SELECTION_SEGMENTED_BUTTON: list[str] = ["Sub-H", "Heading"]
+        FILTER_SUBHEADINGS_SEGMENTED_BUTTON: list[str] = [
             "All",
             "Non const. zero",
             "Non const.",
         ]
-        PLOT_TYPES: List[str] = [
+        PLOT_TYPES: list[str] = [
             "Plot",
             "Scatter",
             "Bar",
             "Stem",
         ]
-        COLLECTION_FILEPATH_YAML: str = "models/file_paths.yaml"
-        FILE_TYPE_TO_READ: List[Tuple[str, str]] = [("CSV", "*.csv*")]
+        COLLECTION_FILEPATH_YAML: str = "resources/yaml-files/file_paths.yaml"
+        FILE_TYPE_TO_READ: list[tuple[str, str]] = [("CSV", "*.csv*")]

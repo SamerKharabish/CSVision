@@ -9,4 +9,4 @@ class PlotFrameController:
     """
 
     def __init__(self, view: ctk.CTkFrame) -> None:
-        self.view: ctk.CTkFrame = view
+        self.__view: ctk.CTkFrame = view

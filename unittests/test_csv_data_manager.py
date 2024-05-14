@@ -26,12 +26,14 @@ class TestCSVDataManager(unittest.TestCase):
         """
         csv_data_manager = CSVDataManager()
 
-        for attr, value in vars(csv_data_manager).items():
+        for attr in CSVDataManager.__slots__:
             if not attr.startswith("_CSVDataManager__") and not attr.startswith(
                 "_raw_data_frame"
             ):
                 with self.subTest(attr=attr):
-                    self.assertIsNone(value, f"{attr} is not None")
+                    self.assertIsNone(
+                        getattr(csv_data_manager, attr, None), f"{attr} is not None"
+                    )
 
         self.assertTrue(csv_data_manager.raw_data.empty)
 
@@ -58,6 +60,12 @@ class TestCSVDataManager(unittest.TestCase):
         file_path = "new_test.csv"
         csv_data_manager.file_path = file_path
         self.assertEqual(file_path, csv_data_manager.file_path)
+        self.assertTrue(csv_data_manager.raw_data.empty)
+
+        file_path = "new_test1.csv"
+        csv_data_manager.file_path = file_path
+        self.assertEqual(file_path, csv_data_manager.file_path)
+        self.assertTrue(csv_data_manager.raw_data.empty)
 
     def test_open_csv_file(self) -> None:
         """
@@ -68,7 +76,7 @@ class TestCSVDataManager(unittest.TestCase):
         with self.assertRaises(
             FileNotFoundError, msg=f"The file {file_path} was not found."
         ):
-            yaml_manager.open_file(file_path)
+            yaml_manager.read_file(file_path)
 
         mock_file_content = ""
         file_path = "empty_file.csv"
@@ -80,7 +88,7 @@ class TestCSVDataManager(unittest.TestCase):
                 pd.errors.EmptyDataError,
                 msg=f"No columns to parse from file: {file_path}",
             ):
-                csv_data_manager.open_file(file_path)
+                csv_data_manager.read_file(file_path)
 
         mock_file_content = "time_index;value\n10;20\n"
         file_path = "file.csv"
@@ -88,11 +96,58 @@ class TestCSVDataManager(unittest.TestCase):
         with patch(
             "builtins.open", mock_open(read_data=mock_file_content), create=True
         ):
-            csv_data_manager.open_file(file_path)
+            csv_data_manager.read_file(file_path)
             self.assertEqual("time_index", csv_data_manager.raw_data.columns[0])
             self.assertEqual("value", csv_data_manager.raw_data.columns[1])
             self.assertEqual(10, csv_data_manager.raw_data["time_index"][0])
             self.assertEqual(20, csv_data_manager.raw_data["value"][0])
+
+    def test_get_header_list(self) -> None:
+        """
+        Testing the getter function for the header list..
+        """
+        mock_file_content = "heading1::subheading1;heading2::subheading2"
+        csv_data_manager = CSVDataManager()
+        with patch(
+            "builtins.open", mock_open(read_data=mock_file_content), create=True
+        ):
+            csv_data_manager.read_file("file.csv")
+            self.assertEqual(
+                ["heading1::subheading1", "heading2::subheading2"],
+                csv_data_manager.get_header_list(),
+            )
+
+        mock_file_content = "asdf_heading1::subheading1;asdf_heading2::subheading2"
+        with patch(
+            "builtins.open", mock_open(read_data=mock_file_content), create=True
+        ):
+            csv_data_manager.read_file("file.csv")
+            self.assertEqual(
+                ["heading1::subheading1", "heading2::subheading2"],
+                csv_data_manager.get_header_list("asdf_"),
+            )
+
+        mock_file_content = "heading1::subheading1_asdf;heading2::subheading2_asdf"
+        with patch(
+            "builtins.open", mock_open(read_data=mock_file_content), create=True
+        ):
+            csv_data_manager.read_file("file.csv")
+            self.assertEqual(
+                ["heading1::subheading1", "heading2::subheading2"],
+                csv_data_manager.get_header_list(postfix="_asdf"),
+            )
+
+        mock_file_content = (
+            "asdf_heading1::subheading1_asdf;asdf_heading2::subheading2_asdf"
+        )
+        with patch(
+            "builtins.open", mock_open(read_data=mock_file_content), create=True
+        ):
+            csv_data_manager.read_file("file.csv")
+            self.assertEqual(
+                ["heading1::subheading1", "heading2::subheading2"],
+                csv_data_manager.get_header_list("asdf_", "_asdf"),
+            )
 
 
 if __name__ == "__main__":
