@@ -7,10 +7,10 @@ from utils.observer_publisher import (
     SimplePublisher,
     header_frame_state_publisher,
 )
-from controllers.sidebar_controller.navigation_frame_controller import (
+from controllers.sidebar_controllers.navigation_frame_controller import (
     NavigationFrameController,
 )
-from controllers.sidebar_controller.header_frame_controller import (
+from controllers.sidebar_controllers.header_frame_controller import (
     HeaderFrameController,
 )
 
