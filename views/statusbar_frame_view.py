@@ -14,6 +14,8 @@ class StatusbarFrameView(ctk.CTkFrame):
     Layout of the statusbar frame.
     """
 
+    __slots__ = "filesize_label", "progressbar"
+
     def __init__(self, master: MainView) -> None:
         super().__init__(
             master,
@@ -44,4 +46,8 @@ class StatusbarFrameView(ctk.CTkFrame):
         Create layout.
         """
         self.pack_propagate(False)
-        self.filesize_label.pack(side="left", padx=(50, 10), pady=(1, 1))
+        self.filesize_label.pack(
+            side=Config.Layout.STATUSBAR_FRAME_LABEL_SIDE,
+            padx=Config.Layout.STATUSBAR_FRAME_LABEL_PADX,
+            pady=Config.Layout.STATUSBAR_FRAME_LABEL_PADY,
+        )
