@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from PIL import Image
 import customtkinter as ctk
 from views.configurations_view import Config
+from views.sidebar_views.settings_window_view import SettingsWindowView
 
 if TYPE_CHECKING:
     from views.sidebar_frame_view import SidebarFrameView
@@ -15,7 +16,7 @@ class NavigationFrameView(ctk.CTkFrame):
     Layout of the navigation frame.
     """
 
-    __slots__ = "root", "toggle_header_button", "__settings_button"
+    __slots__ = "root", "settings_window", "toggle_header_button", "settings_button"
 
     def __init__(self, master: SidebarFrameView) -> None:
         super().__init__(
@@ -33,6 +34,8 @@ class NavigationFrameView(ctk.CTkFrame):
         """
         Initialize widgets.
         """
+        self.settings_window_view: SettingsWindowView = SettingsWindowView(self)
+
         self.toggle_header_button: ctk.CTkButton = ctk.CTkButton(
             self,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
@@ -52,7 +55,7 @@ class NavigationFrameView(ctk.CTkFrame):
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
 
-        self.__settings_button: ctk.CTkButton = ctk.CTkButton(
+        self.settings_button: ctk.CTkButton = ctk.CTkButton(
             self,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
@@ -81,7 +84,7 @@ class NavigationFrameView(ctk.CTkFrame):
             pady=Config.Layout.STANDART_PAD,
         )
 
-        self.__settings_button.pack(
+        self.settings_button.pack(
             side=Config.Layout.SETTINGS_BUTTON_SIDE,
             fill=Config.Layout.SETTINGS_BUTTON_FILL,
             expand=Config.Layout.SETTINGS_BUTTON_EXPAND,

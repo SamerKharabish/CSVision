@@ -18,7 +18,7 @@ class AppView(ctk.CTk):
         super().__init__()
 
         self.title(Config.WindowTitles.APP_WINDOW_TITLE)
-        self.iconbitmap(Config.ImageFormats.MAIN_WINDOW_ICO)
+        self.iconbitmap(Config.ImageFormats.APP_ICON)
         self.geometry(
             f"{Config.Dimensions.APP_WINDOW_WIDTH}x{Config.Dimensions.APP_WINDOW_HEIGHT}+{int(self.winfo_screenwidth() / 2 - Config.Dimensions.APP_WINDOW_WIDTH / 2)}+{int(self.winfo_screenheight() / 2 - Config.Dimensions.APP_WINDOW_HEIGHT / 2)}"
         )
@@ -68,7 +68,7 @@ class AppController:
 
     def __setup_bindings(self) -> None:
         """
-        Binding the AppController widgets to accessibility callback functions.
+        Binding the application to accessibility callback functions.
         """
         self.__view.bind(Config.KeyBindings.CLOSE_APPLICATION, self.__close_application)
         self.__view.protocol("WM_DELETE_WINDOW", self.__close_application)

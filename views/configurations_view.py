@@ -48,6 +48,7 @@ class Config:
         Image formats
         """
 
+        APP_ICON: str = "resources/Images/CSVision.ico"
         BACK_BUTTON_PNG: str = "resources/Images/back.png"
         CLEAR_SEARCH_RESULT_PNG: str = "resources/Images/clear-search-results.png"
         DOWN_ARROW_PNG: str = "resources/Images/down-arrow.png"
@@ -55,7 +56,6 @@ class Config:
         FORWARD_BUTTON_PNG: str = "resources/Images/forward.png"
         HIDE_HEADER_FRAME_BUTTON_PNG: str = "resources/Images/hide-sidepanel.png"
         LEGEND_BUTTON_PNG: str = "resources/Images/legend.png"
-        MAIN_WINDOW_ICO: str = "resources/Images/CSVision.ico"
         OPEN_FILE_PNG: str = "resources/Images/open-file.png"
         PAN_BUTTON_PNG: str = "resources/Images/pan.png"
         REFRESH_PNG: str = "resources/Images/refresh.png"
@@ -225,3 +225,29 @@ class Config:
         ]
         COLLECTION_FILEPATH_YAML: str = "resources/yaml-files/file_paths.yaml"
         FILE_TYPE_TO_READ: list[tuple[str, str]] = [("CSV", "*.csv*")]
+
+
+class SettingsWindowConfig:
+    """
+    Contains classes that define the configurations of the visual representation of the settings window.
+    """
+
+    class General:
+        """
+        General configurations.
+        """
+
+        TITLE: str = "Settings"
+        ICON: str = Config.ImageFormats.APP_ICON
+        CLOSE_APPLICATION_KEYBIND: str = "<Escape>"
+
+    class Dimensions:
+        """
+        Dimensions.
+        """
+
+        WIDTH: int = 500
+        HEIGHT: int = 200
+
+        RESIZABLE_WIDTH: bool = False
+        RESIZABLE_HEIGHT: bool = False

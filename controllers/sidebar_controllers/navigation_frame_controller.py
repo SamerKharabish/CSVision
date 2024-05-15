@@ -10,6 +10,9 @@ from utils.observer_publisher import (
     SimplePublisher,
     header_frame_state_publisher,
 )
+from controllers.sidebar_controllers.settings_window_controller import (
+    SettingsWindowController,
+)
 
 
 class NavigationFrameController(SimpleObserver):
@@ -17,10 +20,12 @@ class NavigationFrameController(SimpleObserver):
     Functionality of the navigation frame view.
     """
 
-    __slots__ = ("__view",)
+    __slots__ = "__view", "__settings_window_controller"
 
     def __init__(self, view: NavigationFrameView) -> None:
         self.__view: NavigationFrameView = view
+
+        self.__view.root = find_root(self.__view)
 
         header_frame_state_publisher.attach(self)
 
@@ -28,7 +33,17 @@ class NavigationFrameController(SimpleObserver):
             command=self.__on_toggle_header_frame
         )
 
-        self.__view.root = find_root(self.__view)
+        self.__view.settings_button.configure(command=self.__on_open_settings_window)
+
+        self.__initialize_controller()
+
+    def __initialize_controller(self) -> None:
+        """
+        Initialize controller.
+        """
+        self.__settings_window_controller = SettingsWindowController(
+            self.__view.settings_window_view
+        )
 
     def update(self, simple_publisher: SimplePublisher) -> None:
         if simple_publisher == header_frame_state_publisher:
@@ -78,3 +93,13 @@ class NavigationFrameController(SimpleObserver):
                     )
                 ),
             )
+
+    def __on_open_settings_window(self) -> None:
+        """
+        Open the settings window.
+        """
+        if self.__view.settings_window_view.state() == "withdrawn":
+            self.__view.settings_window_view.deiconify()
+        else:
+            self.__settings_window_controller.on_deiconify()
+            self.__view.settings_window_view.focus()
