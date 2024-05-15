@@ -36,7 +36,8 @@ class PresetFrameView(ctk.CTkFrame):
             border_color=Config.Colors.BORDER_COLOR,
             fg_color=Config.Colors.ONYX,
             font=ctk.CTkFont(
-                family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
+                family=Config.Fonts.FONT_SIZE_WEIGHT[0],
+                size=Config.Fonts.FONT_SIZE_WEIGHT[1],
             ),
         )
 

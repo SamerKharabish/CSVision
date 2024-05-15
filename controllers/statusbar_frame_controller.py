@@ -1,6 +1,6 @@
 """ Defines the StatusbarFrameController class with the statusbar frame functionality. """
 
-from views.configurations_view import Config
+from views.configurations_view import StatusbarConfig
 from views.statusbar_frame_view import StatusbarFrameView
 from utils.observer_publisher import (
     SimplePublisher,
@@ -31,9 +31,9 @@ class StatusbarFrameController(SimpleObserver):
         self.__view.progressbar.configure(mode="indeterminate")
         self.__view.progressbar.set(0)
         self.__view.progressbar.pack(
-            side=Config.Layout.STATUSBAR_FRAME_PROGRESSBAR_SIDE,
-            padx=Config.Layout.STATUSBAR_FRAME_PROGRESSBAR_PADX,
-            pady=Config.Layout.STANDART_PAD,
+            side=StatusbarConfig.Layout.PROGRESSBAR_SIDE,
+            padx=StatusbarConfig.Layout.PROGRESSBAR_PADX,
+            pady=StatusbarConfig.Layout.STANDART_PAD,
         )
         self.__view.progressbar.start()
 

@@ -17,9 +17,11 @@ class FileHandlingFrameView(ctk.CTkFrame):
     """
 
     def __init__(self, master: HeaderFrameView) -> None:
-        super().__init__(master,
+        super().__init__(
+            master,
             corner_radius=Config.General.CORNER_RADIUS,
-            border_width=Config.General.FRAME_BORDER_WIDTH,)
+            border_width=Config.General.FRAME_BORDER_WIDTH,
+        )
 
         self.__initialize_widgets()
         self.__create_layout()
@@ -38,9 +40,9 @@ class FileHandlingFrameView(ctk.CTkFrame):
             self.title_frame,
             text=Config.LabelTexts.FILEHANDLING_TEXT,
             font=ctk.CTkFont(
-                family=Config.Fonts.LABEL_TEXTS[0],
-                size=Config.Fonts.LABEL_TEXTS[1],
-                weight=Config.Fonts.LABEL_TEXTS[2],
+                family=Config.Fonts.FONT_SIZE_WEIGHT[0],
+                size=Config.Fonts.FONT_SIZE_WEIGHT[1],
+                weight=Config.Fonts.FONT_SIZE_WEIGHT[2],
             ),
             anchor=Config.Layout.HEADER_FRAME_LABELS_ANCHOR,
         )
@@ -88,7 +90,8 @@ class FileHandlingFrameView(ctk.CTkFrame):
             border_color=Config.Colors.BORDER_COLOR,
             selected_file_path=self.selected_file_path,
             font=ctk.CTkFont(
-                family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
+                family=Config.Fonts.FONT_SIZE_WEIGHT[0],
+                size=Config.Fonts.FONT_SIZE_WEIGHT[1],
             ),
             state="readonly",
             collection_filepath_yaml=Config.Values.COLLECTION_FILEPATH_YAML,

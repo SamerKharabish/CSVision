@@ -1,4 +1,4 @@
-"""Centralized configuration file for the visual representation of the application."""
+"""Centralized configuration file."""
 
 from typing import Literal
 
@@ -14,34 +14,28 @@ class Config:
         """
 
         CORNER_RADIUS: int = 0
-        NAV_TOOLBAR_CORNER_RADIUS: int = 10
         FRAME_BORDER_WIDTH: int = 1
+
+        NAV_TOOLBAR_CORNER_RADIUS: int = 10
         INPUT_ENTRY_BORDER_WIDTH: int = 0
         OUTPUT_ENTRY_BORDER_WIDTH: int = 1
-        HEADER_FRAME_MINIMIZED: bool = False
-
-    class WindowTitles:
-        """
-        Titles
-        """
-
-        APP_WINDOW_TITLE: str = "CSVision"
 
     class Dimensions:
         """
         Dimensions
         """
 
-        APP_WINDOW_WIDTH: int = 1150
-        APP_WINDOW_MIN_WIDTH: int = APP_WINDOW_WIDTH - 200
-        APP_WINDOW_HEIGHT: int = 666
-        APP_WINDOW_MIN_HEIGHT: int = APP_WINDOW_HEIGHT - 200
-
-        STATUSBAR_FRAME_HEIGHT: int = 20
-
         ACTION_BUTTON_WIDTH_HEIGHT: int = 10
         ACTION_IMAGE_WIDTH_HEIGHT: int = 17
         TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT: int = 20
+
+    class KeyBindings:
+        """
+        Key bindings
+        """
+
+        ESCAPE_KEY: str = "<Escape>"
+        CTRL_B_KEY: str = "<Control-b>"
 
     class ImageFormats:
         """
@@ -49,46 +43,52 @@ class Config:
         """
 
         APP_ICON: str = "resources/Images/CSVision.ico"
-        BACK_BUTTON_PNG: str = "resources/Images/back.png"
+        BACK_PNG: str = "resources/Images/back.png"
         CLEAR_SEARCH_RESULT_PNG: str = "resources/Images/clear-search-results.png"
         DOWN_ARROW_PNG: str = "resources/Images/down-arrow.png"
         EXCEL_PNG: str = "resources/Images/excel.png"
-        FORWARD_BUTTON_PNG: str = "resources/Images/forward.png"
-        HIDE_HEADER_FRAME_BUTTON_PNG: str = "resources/Images/hide-sidepanel.png"
-        LEGEND_BUTTON_PNG: str = "resources/Images/legend.png"
+        FORWARD_PNG: str = "resources/Images/forward.png"
+        HIDE_SIDEPANEL_PNG: str = "resources/Images/hide-sidepanel.png"
+        LEGEND_PNG: str = "resources/Images/legend.png"
         OPEN_FILE_PNG: str = "resources/Images/open-file.png"
-        PAN_BUTTON_PNG: str = "resources/Images/pan.png"
+        PAN_PNG: str = "resources/Images/pan.png"
         REFRESH_PNG: str = "resources/Images/refresh.png"
-        RESET_BUTTON_PNG: str = "resources/Images/reset.png"
-        SAVE_BUTTON_PNG: str = "resources/Images/save.png"
-        SETTINGS_BUTTON_PNG: str = "resources/Images/settings.png"
-        SHOW_HEADER_FRAME_BUTTON_PNG: str = "resources/Images/show-sidepanel.png"
-        ZOOM_BUTTON_PNG: str = "resources/Images/zoom.png"
+        RESET_PNG: str = "resources/Images/reset.png"
+        SAVE_PNG: str = "resources/Images/save.png"
+        SETTINGS_PNG: str = "resources/Images/settings.png"
+        SHOW_SIDEPANEL_PNG: str = "resources/Images/show-sidepanel.png"
+        ZOOM_PNG: str = "resources/Images/zoom.png"
+
+    class Fonts:
+        """
+        Fonts
+        """
+
+        FONT: str = "Kento"
+        NORMAL_SIZE: int = 12
+
+        FONT_SIZE: tuple[str, int] = ("Kento", 12)
+        FONT_SIZE_WEIGHT: tuple[str, int] = ("Kento", 12, "bold")
+        BUTTON_TEXTS: tuple[str, int, str] = ("Kento", 12, "bold")
+
+    class Colors:
+        """
+        Colors
+        """
+
+        TRANSPARENT: str = "transparent"
+        ONYX: str = "#343638"
+        TRANSPARENT_BUTTON_HOVER: str = "#3E3E3E"
+        BORDER_COLOR: str = "#6C6C6C"
+        COLORED_BUTTON_HOVER: str = "#3D3E40"
+        PLOT_FRAME_COLOR: str = "#333333"
 
     class Layout:
         """
         Layout
         """
 
-        MAIN_VIEW_SIDE: str = "top"
-        MAIN_VIEW_FILL: str = "both"
-        MAIN_VIEW_EXPAND: bool = True
-
-        STATUSBAR_FRAME_SIDE: str = "bottom"
-        STATUSBAR_FRAME_FILL: str = "x"
-        STATUSBAR_FRAME_EXPAND: bool = False
-
-        SIDEBAR_FRAME_SIDE: str = "left"
-        SIDEBAR_FRAME_FILL: str = "y"
-        SIDEBAR_FRAME_EXPAND: bool = False
-
-        PLOT_FRAME_SIDE: str = "right"
-        PLOT_FRAME_FILL: str = "both"
-        PLOT_FRAME_EXPAND: bool = True
-
-        STATUSBAR_FRAME_LABEL_SIDE: str = "left"
-        STATUSBAR_FRAME_LABEL_PADX: tuple[int, int] = (50, 10)
-        STATUSBAR_FRAME_LABEL_PADY: tuple[int, int] = (1, 1)
+        STANDART_PAD: tuple[int, int] = (7, 7)
 
         NAVIGATION_FRAME_SIDE: str = "left"
         NAVIGATION_FRAME_FILL: str = "y"
@@ -130,7 +130,6 @@ class Config:
 
         HEADER_FRAME_LABELS_ANCHOR: str = "w"
         ACTION_BUTTON_TEXT_ANCHOR: str = "center"
-        STANDART_PAD: tuple[int, int] = (7, 7)
         ZERO_PAD: tuple[int, int] = (0, 0)
         LABELS_IN_FRAME_PADX: tuple[int, int] = (14, 0)
 
@@ -164,17 +163,6 @@ class Config:
         CANVAS_EXPAND: bool = True
         CANVAS_PADY: tuple[int, int] = (2, 2)
 
-        STATUSBAR_FRAME_PROGRESSBAR_SIDE: str = "left"
-        STATUSBAR_FRAME_PROGRESSBAR_PADX: tuple[int, int] = (10, 10)
-
-    class KeyBindings:
-        """
-        Key bindings
-        """
-
-        CLOSE_APPLICATION: str = "<Escape>"
-        RESIZE_HEADER_FRAME: str = "<Control-b>"
-
     class LabelTexts:
         """
         Label texts
@@ -184,27 +172,6 @@ class Config:
         SEARCHBAR_TEXT: str = "SEARCH"
         HEADER_LIST_TEXT: str = f"{'HEADERS':>9}"
         CONFIG_HEADER_LIST_TEXT: str = f"{'CONFIGURATIONS':>16}"
-
-    class Fonts:
-        """
-        Fonts
-        """
-
-        STATUS_BAR_TEXTS: tuple[str, int] = ("Kento", 12)
-        LABEL_TEXTS: tuple[str, int] = ("Kento", 12, "bold")
-        BUTTON_TEXTS: tuple[str, int, str] = ("Kento", 12, "bold")
-
-    class Colors:
-        """
-        Colors
-        """
-
-        TRANSPARENT: str = "transparent"
-        ONYX: str = "#343638"
-        TRANSPARENT_BUTTON_HOVER: str = "#3E3E3E"
-        BORDER_COLOR: str = "#6C6C6C"
-        COLORED_BUTTON_HOVER: str = "#3D3E40"
-        PLOT_FRAME_COLOR: str = "#333333"
 
     class Values:
         """
@@ -227,9 +194,137 @@ class Config:
         FILE_TYPE_TO_READ: list[tuple[str, str]] = [("CSV", "*.csv*")]
 
 
+class AppWindowConfig:
+    """
+    Contains classes that define the configurations of the app window.
+    """
+
+    class General:
+        """
+        General configurations.
+        """
+
+        TITLE: str = "CSVision"
+        ICON: str = Config.ImageFormats.APP_ICON
+
+    class Dimensions:
+        """
+        Dimensions.
+        """
+
+        WIDTH: int = 1150
+        HEIGHT: int = 666
+
+        MIN_WIDTH: int = WIDTH - 200
+        MIN_HEIGHT: int = HEIGHT - 200
+
+    class Layout:
+        """
+        Layout.
+        """
+
+        MAINVIEW_SIDE: str = "top"
+        MAINVIEW_FILL: str = "both"
+        MAINVIEW_EXPAND: bool = True
+
+    class KeyBindings:
+        """
+        Key bindings.
+        """
+
+        CLOSE_APPLICATION: str = Config.KeyBindings.ESCAPE_KEY
+
+
+class MainConfig:
+    """
+    Contains classes that define the configurations of the settings window.
+    """
+
+    class General:
+        """
+        General configurations.
+        """
+
+        CORNER_RADIUS: int = Config.General.CORNER_RADIUS
+
+    class Layout:
+        """
+        Layout.
+        """
+
+        STATUSBARVIEW_SIDE: str = "bottom"
+        STATUSBARVIEW_FILL: str = "x"
+        STATUSBARVIEW_EXPAND: bool = False
+
+        SIDEBARVIEW_SIDE: str = "left"
+        SIDEBARVIEW_FILL: str = "y"
+        SIDEBARVIEW_EXPAND: bool = False
+
+        PLOTVIEW_SIDE: str = "right"
+        PLOTVIEW_FILL: str = "both"
+        PLOTVIEW_EXPAND: bool = True
+
+    class KeyBindings:
+        """
+        Key bindings.
+        """
+
+        RESIZE_HEADER_FRAME: str = Config.KeyBindings.CTRL_B_KEY
+
+
+class StatusbarConfig:
+    """
+    Contains classes that define the configurations of the statusbar.
+    """
+
+    class General:
+        """
+        General configurations.
+        """
+
+        CORNER_RADIUS: int = Config.General.CORNER_RADIUS
+        FRAME_BORDER_WIDTH: int = Config.General.FRAME_BORDER_WIDTH
+
+    class KeyBindings:
+        """
+        Key bindings.
+        """
+
+        CLOSE_APPLICATION: str = Config.KeyBindings.ESCAPE_KEY
+
+    class Dimensions:
+        """
+        Dimensions.
+        """
+
+        HEIGHT: int = 20
+
+    class Layout:
+        """
+        Layout.
+        """
+
+        STANDART_PAD: tuple[int, int] = Config.Layout.STANDART_PAD
+
+        FILSIZE_LABEL_SIDE: str = "left"
+        FILSIZE_LABEL_PADX: tuple[int, int] = (50, 10)
+        FILSIZE_LABEL_PADY: tuple[int, int] = (1, 1)
+
+        PROGRESSBAR_SIDE: str = "left"
+        PROGRESSBAR_PADX: tuple[int, int] = (10, 10)
+
+    class Fonts:
+        """
+        Fonts.
+        """
+
+        FILSIZE_LABEL_FONT: str = Config.Fonts.FONT
+        FILSIZE_LABEL_FONT_SIZE: int = Config.Fonts.NORMAL_SIZE
+
+
 class SettingsWindowConfig:
     """
-    Contains classes that define the configurations of the visual representation of the settings window.
+    Contains classes that define the configurations of the settings window.
     """
 
     class General:
@@ -239,7 +334,6 @@ class SettingsWindowConfig:
 
         TITLE: str = "Settings"
         ICON: str = Config.ImageFormats.APP_ICON
-        CLOSE_APPLICATION_KEYBIND: str = "<Escape>"
 
     class Dimensions:
         """
@@ -251,3 +345,10 @@ class SettingsWindowConfig:
 
         RESIZABLE_WIDTH: bool = False
         RESIZABLE_HEIGHT: bool = False
+
+    class KeyBindings:
+        """
+        Key bindings.
+        """
+
+        CLOSE_SETTINGS: str = Config.KeyBindings.ESCAPE_KEY

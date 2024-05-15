@@ -39,9 +39,9 @@ class SearchbarFrameView(ctk.CTkFrame):
             self.title_frame,
             text=Config.LabelTexts.SEARCHBAR_TEXT,
             font=ctk.CTkFont(
-                family=Config.Fonts.LABEL_TEXTS[0],
-                size=Config.Fonts.LABEL_TEXTS[1],
-                weight=Config.Fonts.LABEL_TEXTS[2],
+                family=Config.Fonts.FONT_SIZE_WEIGHT[0],
+                size=Config.Fonts.FONT_SIZE_WEIGHT[1],
+                weight=Config.Fonts.FONT_SIZE_WEIGHT[2],
             ),
             anchor=Config.Layout.HEADER_FRAME_LABELS_ANCHOR,
         )
@@ -74,7 +74,8 @@ class SearchbarFrameView(ctk.CTkFrame):
             width=204,
             border_width=Config.General.INPUT_ENTRY_BORDER_WIDTH,
             font=ctk.CTkFont(
-                family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
+                family=Config.Fonts.FONT_SIZE_WEIGHT[0],
+                size=Config.Fonts.FONT_SIZE_WEIGHT[1],
             ),
         )
 
@@ -84,9 +85,9 @@ class SearchbarFrameView(ctk.CTkFrame):
         self.search_selection_segmented_button = ctk.CTkSegmentedButton(
             self.entry_frame,
             font=ctk.CTkFont(
-                family=Config.Fonts.LABEL_TEXTS[0],
-                size=Config.Fonts.LABEL_TEXTS[1],
-                weight=Config.Fonts.LABEL_TEXTS[2],
+                family=Config.Fonts.FONT_SIZE_WEIGHT[0],
+                size=Config.Fonts.FONT_SIZE_WEIGHT[1],
+                weight=Config.Fonts.FONT_SIZE_WEIGHT[2],
             ),
             values=Config.Values.SEARCH_SELECTION_SEGMENTED_BUTTON,
             variable=self.search_selection_segmented_button_var,
@@ -98,9 +99,9 @@ class SearchbarFrameView(ctk.CTkFrame):
         self.filter_subheadings_segmented_button = ctk.CTkSegmentedButton(
             self,
             font=ctk.CTkFont(
-                family=Config.Fonts.LABEL_TEXTS[0],
-                size=Config.Fonts.LABEL_TEXTS[1],
-                weight=Config.Fonts.LABEL_TEXTS[2],
+                family=Config.Fonts.FONT_SIZE_WEIGHT[0],
+                size=Config.Fonts.FONT_SIZE_WEIGHT[1],
+                weight=Config.Fonts.FONT_SIZE_WEIGHT[2],
             ),
             values=Config.Values.FILTER_SUBHEADINGS_SEGMENTED_BUTTON,
             variable=self.filter_subheadings_segmented_button_var,

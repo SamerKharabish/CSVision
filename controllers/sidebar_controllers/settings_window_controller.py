@@ -1,5 +1,6 @@
 """ Defines the NavigationFrameController class with the navigation frame functionality. """
 
+from tkinter import messagebox
 from views.configurations_view import SettingsWindowConfig
 from views.sidebar_views.settings_window_view import SettingsWindowView
 from utils.helper_functions import find_root
@@ -24,7 +25,7 @@ class SettingsWindowController:
         Binding the settings window to accessibility callback functions.
         """
         self.__view.bind(
-            SettingsWindowConfig.General.CLOSE_APPLICATION_KEYBIND,
+            SettingsWindowConfig.KeyBindings.CLOSE_SETTINGS,
             self.__close_application,
         )
         self.__view.protocol("WM_DELETE_WINDOW", self.__close_application)
@@ -38,7 +39,10 @@ class SettingsWindowController:
         """
         Withdraw the settings window instead of closing it.
         """
-        self.__view.withdraw()
+        if messagebox.askokcancel(
+            title="Warning", message="Close settings?\nAll settings will be lost!"
+        ):
+            self.__view.withdraw()
 
     def on_deiconify(self, _=None) -> None:
         """

@@ -3,7 +3,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 import customtkinter as ctk
-from views.configurations_view import Config
+from views.configurations_view import MainConfig
 from views.statusbar_frame_view import StatusbarFrameView
 from views.sidebar_frame_view import SidebarFrameView
 from views.plot_frame_view import PlotFrameView
@@ -21,7 +21,7 @@ class MainView(ctk.CTkFrame):
     __slots__ = "root", "statusbar_frame_view", "sidebar_frame_view", "plot_frame_view"
 
     def __init__(self, master: AppView) -> None:
-        super().__init__(master, corner_radius=Config.General.CORNER_RADIUS)
+        super().__init__(master, corner_radius=MainConfig.General.CORNER_RADIUS)
         self.root: ctk.CTk
 
         self.__initialize_widgets()
@@ -40,19 +40,19 @@ class MainView(ctk.CTkFrame):
         Create layout.
         """
         self.statusbar_frame_view.pack(
-            side=Config.Layout.STATUSBAR_FRAME_SIDE,
-            fill=Config.Layout.STATUSBAR_FRAME_FILL,
-            expand=Config.Layout.STATUSBAR_FRAME_EXPAND,
+            side=MainConfig.Layout.STATUSBARVIEW_SIDE,
+            fill=MainConfig.Layout.STATUSBARVIEW_FILL,
+            expand=MainConfig.Layout.STATUSBARVIEW_EXPAND,
         )
 
         self.sidebar_frame_view.pack(
-            side=Config.Layout.SIDEBAR_FRAME_SIDE,
-            fill=Config.Layout.SIDEBAR_FRAME_FILL,
-            expand=Config.Layout.SIDEBAR_FRAME_EXPAND,
+            side=MainConfig.Layout.SIDEBARVIEW_SIDE,
+            fill=MainConfig.Layout.SIDEBARVIEW_FILL,
+            expand=MainConfig.Layout.SIDEBARVIEW_EXPAND,
         )
 
         self.plot_frame_view.pack(
-            side=Config.Layout.PLOT_FRAME_SIDE,
-            fill=Config.Layout.PLOT_FRAME_FILL,
-            expand=Config.Layout.PLOT_FRAME_EXPAND,
+            side=MainConfig.Layout.PLOTVIEW_SIDE,
+            fill=MainConfig.Layout.PLOTVIEW_FILL,
+            expand=MainConfig.Layout.PLOTVIEW_EXPAND,
         )
