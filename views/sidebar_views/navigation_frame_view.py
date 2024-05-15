@@ -44,9 +44,7 @@ class NavigationFrameView(ctk.CTkFrame):
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
             image=ctk.CTkImage(
-                light_image=Image.open(
-                    Config.ImageFormats.HIDE_HEADER_FRAME_BUTTON_PNG
-                ),
+                light_image=Image.open(Config.ImageFormats.HIDE_SIDEPANEL_PNG),
                 size=(
                     Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,
                     Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,
@@ -63,7 +61,7 @@ class NavigationFrameView(ctk.CTkFrame):
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
             image=ctk.CTkImage(
-                light_image=Image.open(Config.ImageFormats.SETTINGS_BUTTON_PNG),
+                light_image=Image.open(Config.ImageFormats.SETTINGS_PNG),
                 size=(
                     Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,
                     Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,

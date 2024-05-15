@@ -68,9 +68,7 @@ class NavigationFrameController(SimpleObserver):
                 0,
                 self.__view.toggle_header_button.configure(
                     image=ctk.CTkImage(
-                        light_image=Image.open(
-                            Config.ImageFormats.SHOW_HEADER_FRAME_BUTTON_PNG
-                        ),
+                        light_image=Image.open(Config.ImageFormats.SHOW_SIDEPANEL_PNG),
                         size=(
                             Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,
                             Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,
@@ -83,9 +81,7 @@ class NavigationFrameController(SimpleObserver):
                 0,
                 self.__view.toggle_header_button.configure(
                     image=ctk.CTkImage(
-                        light_image=Image.open(
-                            Config.ImageFormats.HIDE_HEADER_FRAME_BUTTON_PNG
-                        ),
+                        light_image=Image.open(Config.ImageFormats.HIDE_SIDEPANEL_PNG),
                         size=(
                             Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,
                             Config.Dimensions.TOGGLE_HEADER_FRAME_BUTTON_WIDTH_HEIGHT,

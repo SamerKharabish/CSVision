@@ -51,7 +51,8 @@ class PlotFrameView(ctk.CTkFrame):
                     Config.Colors.PLOT_FRAME_COLOR,
                 ),
                 font=ctk.CTkFont(
-                    family=Config.Fonts.LABEL_TEXTS[0], size=Config.Fonts.LABEL_TEXTS[1]
+                    family=Config.Fonts.FONT_SIZE_WEIGHT[0],
+                    size=Config.Fonts.FONT_SIZE_WEIGHT[1],
                 ),
                 values=Config.Values.PLOT_TYPES,
             )
@@ -79,7 +80,7 @@ class PlotFrameView(ctk.CTkFrame):
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
             image=ctk.CTkImage(
-                light_image=Image.open(Config.ImageFormats.RESET_BUTTON_PNG),
+                light_image=Image.open(Config.ImageFormats.RESET_PNG),
                 size=(
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
@@ -96,7 +97,7 @@ class PlotFrameView(ctk.CTkFrame):
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
             image=ctk.CTkImage(
-                light_image=Image.open(Config.ImageFormats.BACK_BUTTON_PNG),
+                light_image=Image.open(Config.ImageFormats.BACK_PNG),
                 size=(
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
@@ -113,7 +114,7 @@ class PlotFrameView(ctk.CTkFrame):
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
             image=ctk.CTkImage(
-                light_image=Image.open(Config.ImageFormats.FORWARD_BUTTON_PNG),
+                light_image=Image.open(Config.ImageFormats.FORWARD_PNG),
                 size=(
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
@@ -130,7 +131,7 @@ class PlotFrameView(ctk.CTkFrame):
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
             image=ctk.CTkImage(
-                light_image=Image.open(Config.ImageFormats.PAN_BUTTON_PNG),
+                light_image=Image.open(Config.ImageFormats.PAN_PNG),
                 size=(
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
@@ -147,7 +148,7 @@ class PlotFrameView(ctk.CTkFrame):
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
             image=ctk.CTkImage(
-                light_image=Image.open(Config.ImageFormats.ZOOM_BUTTON_PNG),
+                light_image=Image.open(Config.ImageFormats.ZOOM_PNG),
                 size=(
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
@@ -164,7 +165,7 @@ class PlotFrameView(ctk.CTkFrame):
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
             image=ctk.CTkImage(
-                light_image=Image.open(Config.ImageFormats.SAVE_BUTTON_PNG),
+                light_image=Image.open(Config.ImageFormats.SAVE_PNG),
                 size=(
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
@@ -181,7 +182,7 @@ class PlotFrameView(ctk.CTkFrame):
             hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
             text="",
             image=ctk.CTkImage(
-                light_image=Image.open(Config.ImageFormats.LEGEND_BUTTON_PNG),
+                light_image=Image.open(Config.ImageFormats.LEGEND_PNG),
                 size=(
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,
                     Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT,

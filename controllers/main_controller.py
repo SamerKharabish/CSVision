@@ -1,6 +1,6 @@
 """ Defines the MainController class with the main functionality. """
 
-from views.configurations_view import Config
+from views.configurations_view import MainConfig
 from views.main_view import MainView
 from utils.helper_functions import find_root
 from utils.observer_publisher import header_frame_state_publisher
@@ -36,7 +36,7 @@ class MainController:
         Binding the MainView widgets to callback functions.
         """
         self.__view.root.bind(
-            Config.KeyBindings.RESIZE_HEADER_FRAME,
+            MainConfig.KeyBindings.RESIZE_HEADER_FRAME,
             self.__toggle_header_frame,
         )
 

@@ -33,9 +33,9 @@ class ConfigHeaderListFrameView(ctk.CTkFrame):
             fg_color=Config.Colors.TRANSPARENT,
             label_text=Config.LabelTexts.CONFIG_HEADER_LIST_TEXT,
             label_font=ctk.CTkFont(
-                family=Config.Fonts.LABEL_TEXTS[0],
-                size=Config.Fonts.LABEL_TEXTS[1],
-                weight=Config.Fonts.LABEL_TEXTS[2],
+                family=Config.Fonts.FONT_SIZE_WEIGHT[0],
+                size=Config.Fonts.FONT_SIZE_WEIGHT[1],
+                weight=Config.Fonts.FONT_SIZE_WEIGHT[2],
             ),
             label_anchor=Config.Layout.HEADER_FRAME_LABELS_ANCHOR,
         )
