@@ -101,7 +101,7 @@ class YAMLManager:
             old_content_dict = self.open_file()
 
             if self.file_path.find("file_paths"):
-                old_content_dict = self.fiel_paths_update(new_content, old_content_dict)
+                old_content_dict = self.file_paths_update(new_content, old_content_dict)
 
             with open(self.file_path, "w", encoding="utf-8") as file_dump:
                 yaml.dump(old_content_dict, file_dump, default_flow_style=False)
@@ -111,7 +111,7 @@ class YAMLManager:
                 f"The file {self.file_path} was not found."
             ) from exc
 
-    def fiel_paths_update(self, new_file_path: str, old_content_dict: dict) -> dict:
+    def file_paths_update(self, new_file_path: str, old_content_dict: dict) -> dict:
         """
         Adds a new filepath with the current timestamp as the key to the old_content_dict.
         If the number of filepaths exceeds the content limit, the oldest filepath is removed.

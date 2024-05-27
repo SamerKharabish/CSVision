@@ -4,7 +4,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from tkinter import Canvas
 from PIL import Image
-from tkinter import Canvas
 import customtkinter as ctk
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -38,7 +37,7 @@ class PlotFrameView(ctk.CTkFrame):
         """
         self.__plot_area_frame: ctk.CTkFrame = ctk.CTkFrame(
             self,
-            fg_color=Config.Colors.PLOT_FRAME_COLOR,
+            fg_color=Config.Colors.ONYX_LIGHT,
             border_width=Config.General.FRAME_BORDER_WIDTH,
         )
         self.__plot_types_segemented_button: ctk.CTkSegmentedButton = (
@@ -47,8 +46,8 @@ class PlotFrameView(ctk.CTkFrame):
                 background_corner_colors=(
                     self._fg_color,
                     self._fg_color,
-                    Config.Colors.PLOT_FRAME_COLOR,
-                    Config.Colors.PLOT_FRAME_COLOR,
+                    Config.Colors.ONYX_LIGHT,
+                    Config.Colors.ONYX_LIGHT,
                 ),
                 font=ctk.CTkFont(
                     family=Config.Fonts.FONT_SIZE_WEIGHT[0],
@@ -63,8 +62,8 @@ class PlotFrameView(ctk.CTkFrame):
             self,
             corner_radius=Config.General.NAV_TOOLBAR_CORNER_RADIUS,
             background_corner_colors=(
-                Config.Colors.PLOT_FRAME_COLOR,
-                Config.Colors.PLOT_FRAME_COLOR,
+                Config.Colors.ONYX_LIGHT,
+                Config.Colors.ONYX_LIGHT,
                 self._fg_color,
                 self._fg_color,
             ),
@@ -77,7 +76,7 @@ class PlotFrameView(ctk.CTkFrame):
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             border_width=Config.General.FRAME_BORDER_WIDTH,
             fg_color=Config.Colors.TRANSPARENT,
-            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            hover_color=Config.Colors.ONYX_LIGHT,
             text="",
             image=ctk.CTkImage(
                 light_image=Image.open(Config.ImageFormats.RESET_PNG),
@@ -94,7 +93,7 @@ class PlotFrameView(ctk.CTkFrame):
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             border_width=Config.General.FRAME_BORDER_WIDTH,
             fg_color=Config.Colors.TRANSPARENT,
-            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            hover_color=Config.Colors.ONYX_LIGHT,
             text="",
             image=ctk.CTkImage(
                 light_image=Image.open(Config.ImageFormats.BACK_PNG),
@@ -111,7 +110,7 @@ class PlotFrameView(ctk.CTkFrame):
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             border_width=Config.General.FRAME_BORDER_WIDTH,
             fg_color=Config.Colors.TRANSPARENT,
-            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            hover_color=Config.Colors.ONYX_LIGHT,
             text="",
             image=ctk.CTkImage(
                 light_image=Image.open(Config.ImageFormats.FORWARD_PNG),
@@ -128,7 +127,7 @@ class PlotFrameView(ctk.CTkFrame):
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             border_width=Config.General.FRAME_BORDER_WIDTH,
             fg_color=Config.Colors.TRANSPARENT,
-            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            hover_color=Config.Colors.ONYX_LIGHT,
             text="",
             image=ctk.CTkImage(
                 light_image=Image.open(Config.ImageFormats.PAN_PNG),
@@ -145,7 +144,7 @@ class PlotFrameView(ctk.CTkFrame):
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             border_width=Config.General.FRAME_BORDER_WIDTH,
             fg_color=Config.Colors.TRANSPARENT,
-            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            hover_color=Config.Colors.ONYX_LIGHT,
             text="",
             image=ctk.CTkImage(
                 light_image=Image.open(Config.ImageFormats.ZOOM_PNG),
@@ -162,7 +161,7 @@ class PlotFrameView(ctk.CTkFrame):
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             border_width=Config.General.FRAME_BORDER_WIDTH,
             fg_color=Config.Colors.TRANSPARENT,
-            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            hover_color=Config.Colors.ONYX_LIGHT,
             text="",
             image=ctk.CTkImage(
                 light_image=Image.open(Config.ImageFormats.SAVE_PNG),
@@ -179,7 +178,7 @@ class PlotFrameView(ctk.CTkFrame):
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             border_width=Config.General.FRAME_BORDER_WIDTH,
             fg_color=Config.Colors.TRANSPARENT,
-            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            hover_color=Config.Colors.ONYX_LIGHT,
             text="",
             image=ctk.CTkImage(
                 light_image=Image.open(Config.ImageFormats.LEGEND_PNG),
@@ -265,7 +264,7 @@ class PlotFrameView(ctk.CTkFrame):
         Initialize figure.
         """
         self.__figure: Figure = Figure()  # Create a matplotlib figure
-        self.__figure.set_facecolor(Config.Colors.PLOT_FRAME_COLOR)
+        self.__figure.set_facecolor(Config.Colors.ONYX_LIGHT)
         # self.figure.set_tight_layout(True)
         self.__figure.tight_layout()
 
