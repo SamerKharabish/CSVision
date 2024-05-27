@@ -28,7 +28,7 @@ class FileHandlingFrameController:
         """
         Tracing variables from the widgets.
         """
-        self.__view.selected_file_path.trace("w", self.__open_file)
+        self.__view.selected_file_path.trace_add("write", self.__open_file)
 
     def __enter_file(self) -> None:
         """

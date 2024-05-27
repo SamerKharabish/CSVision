@@ -52,7 +52,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             fg_color=Config.Colors.TRANSPARENT,
-            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            hover_color=Config.Colors.ONYX_LIGHT,
             text="",
             image=ctk.CTkImage(
                 light_image=Image.open(Config.ImageFormats.OPEN_FILE_PNG),
@@ -69,7 +69,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             fg_color=Config.Colors.TRANSPARENT,
-            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            hover_color=Config.Colors.ONYX_LIGHT,
             text="",
             image=ctk.CTkImage(
                 light_image=Image.open(Config.ImageFormats.EXCEL_PNG),
@@ -87,7 +87,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
             width=320,
             border_width=Config.General.OUTPUT_ENTRY_BORDER_WIDTH,
             fg_color=Config.Colors.ONYX,
-            border_color=Config.Colors.BORDER_COLOR,
+            border_color=Config.Colors.DIM_GRAY,
             selected_file_path=self.selected_file_path,
             font=ctk.CTkFont(
                 family=Config.Fonts.FONT_SIZE_WEIGHT[0],

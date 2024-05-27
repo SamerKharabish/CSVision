@@ -77,11 +77,12 @@ class Config:
         """
 
         TRANSPARENT: str = "transparent"
+        DIM_GRAY: str = "#6C6C6C"
         ONYX: str = "#343638"
-        TRANSPARENT_BUTTON_HOVER: str = "#3E3E3E"
-        BORDER_COLOR: str = "#6C6C6C"
-        COLORED_BUTTON_HOVER: str = "#3D3E40"
-        PLOT_FRAME_COLOR: str = "#333333"
+        ONYX_LIGHT: str = "#3D3E40"
+        ALICE_BLUE: str = "#DCE4EE"
+        ERROR: str = "#C91C1C"
+        WARNING: str = "#C6A11D"
 
     class Layout:
         """

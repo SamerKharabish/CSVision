@@ -51,7 +51,7 @@ class SearchbarFrameView(ctk.CTkFrame):
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             fg_color=Config.Colors.TRANSPARENT,
-            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            hover_color=Config.Colors.ONYX_LIGHT,
             text="",
             image=ctk.CTkImage(
                 light_image=Image.open(Config.ImageFormats.CLEAR_SEARCH_RESULT_PNG),
