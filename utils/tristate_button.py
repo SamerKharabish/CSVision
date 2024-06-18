@@ -1,4 +1,4 @@
-""" Defines a CustomOptionButton class with a custom layout and functionalities.
+""" Defines a TriStateButton class with a custom layout and functionalities.
     This button is similar to a checkbox but with three option to choose from. """
 
 from typing import Callable
