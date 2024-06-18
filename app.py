@@ -80,9 +80,9 @@ class AppController:
         """
         Close the application.
         """
-        if messagebox.askokcancel(title="Warning", message="Close application?"):
-            self.__view.destroy()
-            sys.exit(0)
+        # TODO: if messagebox.askokcancel(title="Warning", message="Close application?"):
+        self.__view.destroy()
+        sys.exit(0)
 
 
 def main() -> None:
