@@ -3,7 +3,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 import customtkinter as ctk
-from views.configurations_view import Config
+from views.configurations_view import StatusbarConfig
 
 if TYPE_CHECKING:
     from views.main_view import MainView
@@ -19,9 +19,9 @@ class StatusbarFrameView(ctk.CTkFrame):
     def __init__(self, master: MainView) -> None:
         super().__init__(
             master,
-            corner_radius=Config.General.CORNER_RADIUS,
-            height=Config.Dimensions.STATUSBAR_FRAME_HEIGHT,
-            border_width=Config.General.FRAME_BORDER_WIDTH,
+            height=StatusbarConfig.Dimensions.HEIGHT,
+            corner_radius=StatusbarConfig.General.CORNER_RADIUS,
+            border_width=StatusbarConfig.General.FRAME_BORDER_WIDTH,
         )
 
         self.__initialize_widgets()
@@ -35,8 +35,8 @@ class StatusbarFrameView(ctk.CTkFrame):
             self,
             text="",
             font=ctk.CTkFont(
-                family=Config.Fonts.STATUS_BAR_TEXTS[0],
-                size=Config.Fonts.STATUS_BAR_TEXTS[1],
+                family=StatusbarConfig.Fonts.FILSIZE_LABEL_FONT,
+                size=StatusbarConfig.Fonts.FILSIZE_LABEL_FONT_SIZE,
             ),
         )
         self.progressbar: ctk.CTkProgressBar = ctk.CTkProgressBar(self, width=310)
@@ -47,7 +47,7 @@ class StatusbarFrameView(ctk.CTkFrame):
         """
         self.pack_propagate(False)
         self.filesize_label.pack(
-            side=Config.Layout.STATUSBAR_FRAME_LABEL_SIDE,
-            padx=Config.Layout.STATUSBAR_FRAME_LABEL_PADX,
-            pady=Config.Layout.STATUSBAR_FRAME_LABEL_PADY,
+            side=StatusbarConfig.Layout.FILSIZE_LABEL_SIDE,
+            padx=StatusbarConfig.Layout.FILSIZE_LABEL_PADX,
+            pady=StatusbarConfig.Layout.FILSIZE_LABEL_PADY,
         )
