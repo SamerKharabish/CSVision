@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 from PIL import Image
 import customtkinter as ctk
 from views.configurations_view import Config
-from views.sidebar_views.settings_window_view import SettingsWindowView
 
 if TYPE_CHECKING:
     from views.sidebar_frame_view import SidebarFrameView
@@ -16,7 +15,7 @@ class NavigationFrameView(ctk.CTkFrame):
     Layout of the navigation frame.
     """
 
-    __slots__ = "root", "settings_window", "toggle_header_button", "settings_button"
+    __slots__ = "root", "toggle_header_button", "settings_button"
 
     def __init__(self, master: SidebarFrameView) -> None:
         super().__init__(
@@ -34,14 +33,12 @@ class NavigationFrameView(ctk.CTkFrame):
         """
         Initialize widgets.
         """
-        self.settings_window_view: SettingsWindowView = SettingsWindowView(self)
-
         self.toggle_header_button: ctk.CTkButton = ctk.CTkButton(
             self,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             fg_color=Config.Colors.TRANSPARENT,
-            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            hover_color=Config.Colors.ONYX_LIGHT,
             text="",
             image=ctk.CTkImage(
                 light_image=Image.open(Config.ImageFormats.HIDE_SIDEPANEL_PNG),
@@ -58,7 +55,7 @@ class NavigationFrameView(ctk.CTkFrame):
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             fg_color=Config.Colors.TRANSPARENT,
-            hover_color=Config.Colors.TRANSPARENT_BUTTON_HOVER,
+            hover_color=Config.Colors.ONYX_LIGHT,
             text="",
             image=ctk.CTkImage(
                 light_image=Image.open(Config.ImageFormats.SETTINGS_PNG),

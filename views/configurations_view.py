@@ -46,9 +46,11 @@ class Config:
         BACK_PNG: str = "resources/Images/back.png"
         CLEAR_SEARCH_RESULT_PNG: str = "resources/Images/clear-search-results.png"
         DOWN_ARROW_PNG: str = "resources/Images/down-arrow.png"
+        ERROR: str = "resources/Images/error.png"
         EXCEL_PNG: str = "resources/Images/excel.png"
         FORWARD_PNG: str = "resources/Images/forward.png"
         HIDE_SIDEPANEL_PNG: str = "resources/Images/hide-sidepanel.png"
+        INFO_PNG: str = "resources/Images/info.png"
         LEGEND_PNG: str = "resources/Images/legend.png"
         OPEN_FILE_PNG: str = "resources/Images/open-file.png"
         PAN_PNG: str = "resources/Images/pan.png"
@@ -66,6 +68,7 @@ class Config:
 
         FONT: str = "Kento"
         NORMAL_SIZE: int = 12
+        WEIGHT_BOLD: str = "bold"
 
         FONT_SIZE: tuple[str, int] = ("Kento", 12)
         FONT_SIZE_WEIGHT: tuple[str, int] = ("Kento", 12, "bold")
@@ -192,6 +195,7 @@ class Config:
             "Stem",
         ]
         COLLECTION_FILEPATH_YAML: str = "resources/yaml-files/file_paths.yaml"
+        USER_SETTINGS_YAML: str = "resources/yaml-files/user_settings.yaml"
         FILE_TYPE_TO_READ: list[tuple[str, str]] = [("CSV", "*.csv*")]
 
 
@@ -207,6 +211,13 @@ class AppWindowConfig:
 
         TITLE: str = "CSVision"
         ICON: str = Config.ImageFormats.APP_ICON
+
+    class KeyBindings:
+        """
+        Key bindings.
+        """
+
+        CLOSE_APPLICATION: str = Config.KeyBindings.ESCAPE_KEY
 
     class Dimensions:
         """
@@ -228,13 +239,6 @@ class AppWindowConfig:
         MAINVIEW_FILL: str = "both"
         MAINVIEW_EXPAND: bool = True
 
-    class KeyBindings:
-        """
-        Key bindings.
-        """
-
-        CLOSE_APPLICATION: str = Config.KeyBindings.ESCAPE_KEY
-
 
 class MainConfig:
     """
@@ -247,6 +251,13 @@ class MainConfig:
         """
 
         CORNER_RADIUS: int = Config.General.CORNER_RADIUS
+
+    class KeyBindings:
+        """
+        Key bindings.
+        """
+
+        RESIZE_HEADER_FRAME: str = Config.KeyBindings.CTRL_B_KEY
 
     class Layout:
         """
@@ -264,13 +275,6 @@ class MainConfig:
         PLOTVIEW_SIDE: str = "right"
         PLOTVIEW_FILL: str = "both"
         PLOTVIEW_EXPAND: bool = True
-
-    class KeyBindings:
-        """
-        Key bindings.
-        """
-
-        RESIZE_HEADER_FRAME: str = Config.KeyBindings.CTRL_B_KEY
 
 
 class StatusbarConfig:
@@ -336,16 +340,7 @@ class SettingsWindowConfig:
         TITLE: str = "Settings"
         ICON: str = Config.ImageFormats.APP_ICON
 
-    class Dimensions:
-        """
-        Dimensions.
-        """
-
-        WIDTH: int = 500
-        HEIGHT: int = 200
-
-        RESIZABLE_WIDTH: bool = False
-        RESIZABLE_HEIGHT: bool = False
+        CORNER_RADIUS: int = 5
 
     class KeyBindings:
         """
@@ -353,3 +348,146 @@ class SettingsWindowConfig:
         """
 
         CLOSE_SETTINGS: str = Config.KeyBindings.ESCAPE_KEY
+
+    class Dimensions:
+        """
+        Dimensions.
+        """
+
+        WIDTH: int = 700
+        HEIGHT: int = 330
+
+        RESIZABLE_WIDTH: bool = False
+        RESIZABLE_HEIGHT: bool = False
+
+        MANAGE_BUTTON_WIDTH: int = 80
+
+    class Layout:
+        """
+        Layout.
+        """
+
+        STANDART_PAD: tuple[int, int] = Config.Layout.STANDART_PAD
+
+        CATEGORY_SEGMENTED_BUTTON_X: int = 20
+        CATEGORY_SEGMENTED_BUTTON_Y: int = 7
+        CATEGORY_SEGMENTED_BUTTON_ANCHOR: str = "nw"
+
+        CATEGORY_FRAME_SIDE: str = "top"
+        CATEGORY_FRAME_FILL: str = "both"
+        CATEGORY_FRAME_EXPAND: bool = True
+        CATEGORY_FRAME_PADY: tuple[int, int] = (20, 3)
+
+        HEADER_STRUCTURE_FRAME_SIDE: str = "top"
+        HEADER_STRUCTURE_FRAME_FILL: str = "x"
+        HEADER_STRUCTURE_FRAME_EXPAND: bool = False
+        HEADER_STRUCTURE_FRAME_PADY: tuple[int, int] = (15, 3)
+
+        MANAGE_SETTINGS_FRAME_SIDE: str = "top"
+        MANAGE_SETTINGS_FRAME_FILL: str = "x"
+        MANAGE_SETTINGS_FRAME_EXPAND: bool = False
+        MANAGE_SETTINGS_FRAME_PADY: tuple[int, int] = (3, 7)
+
+        MANAGE_BUTTON_SIDE: str = "right"
+        MANAGE_BUTTON_FILL: str = None
+        MANAGE_BUTTON_EXPAND: bool = False
+        MANAGE_BUTTON_PADY: tuple[int, int] = (5, 5)
+
+    class Fonts:
+        """
+        Fonts.
+        """
+
+        FONT: str = Config.Fonts.FONT
+        FONT_SIZE: int = Config.Fonts.NORMAL_SIZE
+        FONT_WEIGHT_BOLD: str = Config.Fonts.WEIGHT_BOLD
+
+    class Values:
+        """
+        Values of different widgets.
+        """
+
+        CATEGORIES: list[str] = ["General"]
+
+
+class HeaderStructureConfig:
+    """
+    Contains classes that define the configurations of the header structure.
+    """
+
+    class General:
+        """
+        General configurations.
+        """
+
+        TITLE: str = "Header structure"
+        CORNER_RADIUS: int = SettingsWindowConfig.General.CORNER_RADIUS
+        USER_SETTINGS_YAML: str = Config.Values.USER_SETTINGS_YAML
+
+    class Dimensions:
+        """
+        Dimensions.
+        """
+
+        HEADER_STRUCTURE_ENTRIES_WIDTH: int = 50
+
+    class Colors:
+        """
+        Colors
+        """
+
+        ERROR: str = Config.Colors.ERROR
+        NORMAL: str = Config.Colors.ONYX
+        DISABLED: str = Config.Colors.ONYX_LIGHT
+        TEXT: str = Config.Colors.ALICE_BLUE
+        WARNING: str = Config.Colors.WARNING
+
+    class Layout:
+        """
+        Layout.
+        """
+        TITLE_ROW: int = 0
+        LABEL_ROW: int = 1
+        INPUT_ROW: int = 2
+        INFO_ROW: int = 3
+        ERROR_ROW: int = 4
+
+        FIRST_HEADER_PREFIX_COL: int = 0
+        FIRST_HEADER_OPTION_COL: int = 1
+        FIRST_HEADER_POSTFIX_COL: int = 2
+        SECOND_HEADER_PREFIX_COL: int = 3
+        SECOND_HEADER_OPTION_COL: int = 4
+        SECOND_HEADER_POSTFIX_COL: int = 5
+        COL_WEIGHTS: list[int] = [1, 2]
+
+    class Fonts:
+        """
+        Fonts.
+        """
+
+        FONT: str = Config.Fonts.FONT
+        FONT_SIZE: int = Config.Fonts.NORMAL_SIZE
+        FONT_WEIGHT_BOLD: str = Config.Fonts.WEIGHT_BOLD
+
+    class ImageFormats:
+        """
+        Image formats
+        """
+
+        ERROR: str = Config.ImageFormats.ERROR
+        INFO_PNG: str = Config.ImageFormats.INFO_PNG
+
+    class Values:
+        """
+        Values of different widgets.
+        """
+
+        HEADERSTRUCTURE_LABELS: list[str] = [
+            "Prefix",
+            "Category",
+            "Postfix",
+            "Prefix",
+            "Category",
+            "Postfix",
+        ]
+        HEADERSTRUCTURE_OPTIONS: list[str] = ["Sub-Header", "Header", "N/A"]

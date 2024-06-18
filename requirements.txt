@@ -3,3 +3,4 @@ matplotlib
 pyyaml
 pandas
 xlsxwriter
+pillow
