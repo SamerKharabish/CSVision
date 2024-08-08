@@ -1,4 +1,4 @@
-""" Defines a CustomInputEntry class with a custom layout and functionalities. """
+""" Defines a InputEntryList class with a custom layout and functionalities. """
 
 from typing import Callable
 from functools import partial
