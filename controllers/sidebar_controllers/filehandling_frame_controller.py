@@ -58,7 +58,7 @@ class FileHandlingFrameController:
         exporting_thread: DataExportingThread = DataExportingThread(self.toggle_widgets)
         exporting_thread.start()
 
-    def toggle_widgets(self, state: str = "normal"):
+    def toggle_widgets(self, state: str = "normal") -> None:
         """
         Toggle the state of the widgets.
 

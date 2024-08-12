@@ -3,10 +3,10 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 import customtkinter as ctk
-from views.configurations_view import MainConfig
-from views.statusbar_frame_view import StatusbarFrameView
-from views.sidebar_frame_view import SidebarFrameView
-from views.plot_frame_view import PlotFrameView
+from .configurations_view import MainConfig
+from .statusbar_frame_view import StatusbarFrameView
+from .sidebar_frame_view import SidebarFrameView
+from .plot_frame_view import PlotFrameView
 
 
 if TYPE_CHECKING:

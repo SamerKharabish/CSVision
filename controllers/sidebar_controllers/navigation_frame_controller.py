@@ -5,14 +5,14 @@ import customtkinter as ctk
 from views.configurations_view import Config
 from views.sidebar_views.navigation_frame_view import NavigationFrameView
 from views.sidebar_views.settings_window_view import SettingsWindowView
-from controllers.sidebar_controllers.settings_window_controller import (
-    SettingsWindowController,
-)
 from utils.helper_functions import find_root
 from utils.observer_publisher import (
     SimpleObserver,
     SimplePublisher,
     header_frame_state_publisher,
+)
+from .settings_window_controller import (
+    SettingsWindowController,
 )
 
 
@@ -95,3 +95,6 @@ class NavigationFrameController(SimpleObserver):
     def update(self, simple_publisher: SimplePublisher) -> None:
         if simple_publisher == header_frame_state_publisher:
             self.__toggle_image()
+
+    def __del__(self) -> None:
+        header_frame_state_publisher.detach(self)

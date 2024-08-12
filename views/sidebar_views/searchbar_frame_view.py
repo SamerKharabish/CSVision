@@ -15,6 +15,16 @@ class SearchbarFrameView(ctk.CTkFrame):
     Layout of the file searchbar frame.
     """
 
+    __slots__ = (
+        "title_frame",
+        "title_label",
+        "clear_search_result_button",
+        "entry_frame",
+        "search_entry",
+        "search_mode_segmented_button_var",
+        "search_selection_segmented_button",
+    )
+
     def __init__(self, master: HeaderFrameView) -> None:
         super().__init__(
             master,
@@ -29,13 +39,13 @@ class SearchbarFrameView(ctk.CTkFrame):
         """
         Initialize widgets.
         """
-        self.title_frame = ctk.CTkFrame(
+        self.title_frame: ctk.CTkFrame = ctk.CTkFrame(
             self,
             corner_radius=Config.General.CORNER_RADIUS,
             fg_color=Config.Colors.TRANSPARENT,
         )
 
-        self.title_label = ctk.CTkLabel(
+        self.title_label: ctk.CTkLabel = ctk.CTkLabel(
             self.title_frame,
             text=Config.LabelTexts.SEARCHBAR_TEXT,
             font=ctk.CTkFont(
@@ -46,7 +56,7 @@ class SearchbarFrameView(ctk.CTkFrame):
             anchor=Config.Layout.HEADER_FRAME_LABELS_ANCHOR,
         )
 
-        self.clear_search_result_button = ctk.CTkButton(
+        self.clear_search_result_button: ctk.CTkButton = ctk.CTkButton(
             self.title_frame,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
@@ -63,13 +73,13 @@ class SearchbarFrameView(ctk.CTkFrame):
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
 
-        self.entry_frame = ctk.CTkFrame(
+        self.entry_frame: ctk.CTkFrame = ctk.CTkFrame(
             self,
             corner_radius=Config.General.CORNER_RADIUS,
             fg_color=Config.Colors.TRANSPARENT,
         )
 
-        self.search_entry = ctk.CTkEntry(
+        self.search_entry: ctk.CTkEntry = ctk.CTkEntry(
             self.entry_frame,
             width=204,
             border_width=Config.General.INPUT_ENTRY_BORDER_WIDTH,

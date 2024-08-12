@@ -15,6 +15,14 @@ class FileHandlingFrameView(ctk.CTkFrame):
     """
     Layout of the file handling frame.
     """
+    __slots__ = (
+        "title_frame",
+        "title_label",
+        "open_file_button",
+        "export_to_excel",
+        "selected_file_path",
+        "file_entry",
+    )
 
     def __init__(self, master: HeaderFrameView) -> None:
         super().__init__(
@@ -30,13 +38,13 @@ class FileHandlingFrameView(ctk.CTkFrame):
         """
         Initialize widgets.
         """
-        self.title_frame = ctk.CTkFrame(
+        self.title_frame: ctk.CTkFrame = ctk.CTkFrame(
             self,
             corner_radius=Config.General.CORNER_RADIUS,
             fg_color=Config.Colors.TRANSPARENT,
         )
 
-        self.title_label = ctk.CTkLabel(
+        self.title_label: ctk.CTkLabel = ctk.CTkLabel(
             self.title_frame,
             text=Config.LabelTexts.FILEHANDLING_TEXT,
             font=ctk.CTkFont(
@@ -47,7 +55,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
             anchor=Config.Layout.HEADER_FRAME_LABELS_ANCHOR,
         )
 
-        self.open_file_button = ctk.CTkButton(
+        self.open_file_button: ctk.CTkButton = ctk.CTkButton(
             self.title_frame,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
@@ -64,7 +72,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
 
-        self.export_to_excel = ctk.CTkButton(
+        self.export_to_excel: ctk.CTkButton = ctk.CTkButton(
             self.title_frame,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
@@ -81,10 +89,10 @@ class FileHandlingFrameView(ctk.CTkFrame):
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
 
-        self.selected_file_path = ctk.StringVar()
-        self.file_entry = InputEntryList(
+        self.selected_file_path: ctk.StringVar = ctk.StringVar()
+        self.file_entry: InputEntryList = InputEntryList(
             self,
-            width=320,
+            width=354,
             border_width=Config.General.OUTPUT_ENTRY_BORDER_WIDTH,
             fg_color=Config.Colors.ONYX,
             border_color=Config.Colors.DIM_GRAY,
@@ -115,7 +123,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
             column=0,
             sticky=Config.Layout.GENERAL_INNER_FRAME_STICKY,
             padx=Config.Layout.STANDART_PAD,
-            pady=(3, 0),
+            pady=(1, 0),
         )
         self.title_frame.columnconfigure(0, weight=50)
         self.title_frame.columnconfigure((1, 2), weight=1)
@@ -144,7 +152,7 @@ class FileHandlingFrameView(ctk.CTkFrame):
         self.file_entry.grid(
             row=Config.Layout.FILEHANDLING_ENTRY_ROW,
             column=0,
-            sticky=Config.Layout.GENERAL_INNER_FRAME_STICKY,
+            sticky="news",
             padx=Config.Layout.STANDART_PAD,
             pady=(0, 7),
         )

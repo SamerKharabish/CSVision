@@ -75,7 +75,7 @@ class SettingsWindowView(ctk.CTkToplevel):
             corner_radius=SettingsWindowConfig.General.CORNER_RADIUS,
         )
 
-        self.ok_button = ctk.CTkButton(
+        self.ok_button: ctk.CTkButton = ctk.CTkButton(
             self.__manage_settings_frame,
             width=SettingsWindowConfig.Dimensions.MANAGE_BUTTON_WIDTH,
             text="OK",
@@ -85,7 +85,7 @@ class SettingsWindowView(ctk.CTkToplevel):
             ),
         )
 
-        self.cancel_button = ctk.CTkButton(
+        self.cancel_button: ctk.CTkButton = ctk.CTkButton(
             self.__manage_settings_frame,
             width=SettingsWindowConfig.Dimensions.MANAGE_BUTTON_WIDTH,
             text="Cancel",
@@ -94,7 +94,7 @@ class SettingsWindowView(ctk.CTkToplevel):
                 size=SettingsWindowConfig.Fonts.FONT_SIZE,
             ),
         )
-        self.apply_button = ctk.CTkButton(
+        self.apply_button: ctk.CTkButton = ctk.CTkButton(
             self.__manage_settings_frame,
             width=SettingsWindowConfig.Dimensions.MANAGE_BUTTON_WIDTH,
             text="Apply",

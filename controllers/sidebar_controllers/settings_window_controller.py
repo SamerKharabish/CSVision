@@ -88,7 +88,7 @@ class SettingsWindowController:
 
     def __on_cancel(self) -> None:
         """
-        Discard any changes and withdraws the settings window.
+        Discard any changes and withdraw the settings window.
         """
         self.__set_settings()
         self.__view.withdraw()

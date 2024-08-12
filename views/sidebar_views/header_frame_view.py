@@ -4,11 +4,11 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 import customtkinter as ctk
 from views.configurations_view import Config
-from views.sidebar_views.filehandling_frame_view import FileHandlingFrameView
-from views.sidebar_views.searchbar_frame_view import SearchbarFrameView
-from views.sidebar_views.header_list_frame_view import HeaderListFrameView
-from views.sidebar_views.config_header_list_frame_view import ConfigHeaderListFrameView
-from views.sidebar_views.preset_frame_view import PresetFrameView
+from .filehandling_frame_view import FileHandlingFrameView
+from .searchbar_frame_view import SearchbarFrameView
+from .header_list_frame_view import HeaderListFrameView
+from .config_header_list_frame_view import ConfigHeaderListFrameView
+from .preset_frame_view import PresetFrameView
 
 if TYPE_CHECKING:
     from views.sidebar_frame_view import SidebarFrameView
