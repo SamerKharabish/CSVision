@@ -3,9 +3,9 @@
 import sys
 from tkinter import messagebox
 import customtkinter as ctk
-from views.configurations_view import AppWindowConfig
-from views.main_view import MainView
+from configurations.app_config import AppConfig
 from controllers.main_controller import MainController
+from views.main_view import MainView
 
 
 class AppView(ctk.CTk):
@@ -18,14 +18,14 @@ class AppView(ctk.CTk):
     def __init__(self) -> None:
         super().__init__()
 
-        self.title(AppWindowConfig.General.TITLE)
-        self.iconbitmap(AppWindowConfig.General.ICON)
+        self.title(AppConfig.General.TITLE)
+        self.iconbitmap(AppConfig.General.ICON)
         self.geometry(
-            f"{AppWindowConfig.Dimensions.WIDTH}x{AppWindowConfig.Dimensions.HEIGHT}+{int(self.winfo_screenwidth() / 2 - AppWindowConfig.Dimensions.WIDTH / 2)}+{int(self.winfo_screenheight() / 2 - AppWindowConfig.Dimensions.HEIGHT / 2)}"
+            f"{AppConfig.Dimensions.WIDTH}x{AppConfig.Dimensions.HEIGHT}+{int(self.winfo_screenwidth() / 2 - AppConfig.Dimensions.WIDTH / 2)}+{int(self.winfo_screenheight() / 2 - AppConfig.Dimensions.HEIGHT / 2)}"
         )
         self.minsize(
-            AppWindowConfig.Dimensions.MIN_WIDTH,
-            AppWindowConfig.Dimensions.MIN_HEIGHT,
+            AppConfig.Dimensions.MIN_WIDTH,
+            AppConfig.Dimensions.MIN_HEIGHT,
         )
 
         self.__initialize_widgets()
@@ -42,9 +42,9 @@ class AppView(ctk.CTk):
         Create layout.
         """
         self.main_view.pack(
-            side=AppWindowConfig.Layout.MAINVIEW_SIDE,
-            fill=AppWindowConfig.Layout.MAINVIEW_FILL,
-            expand=AppWindowConfig.Layout.MAINVIEW_EXPAND,
+            side=AppConfig.Layout.MAIN_VIEW["side"],
+            fill=AppConfig.Layout.MAIN_VIEW["fill"],
+            expand=AppConfig.Layout.MAIN_VIEW["expand"],
         )
 
 
@@ -58,23 +58,14 @@ class AppController:
     def __init__(self, view: AppView) -> None:
         self.__view: AppView = view
 
+        self.__view.protocol("WM_DELETE_WINDOW", self.__close_application)
         self.__initialize_controller()
-        self.__setup_bindings()
 
     def __initialize_controller(self) -> None:
         """
         Initialize controller.
         """
         MainController(self.__view.main_view)
-
-    def __setup_bindings(self) -> None:
-        """
-        Binding the application to accessibility callback functions.
-        """
-        self.__view.bind(
-            AppWindowConfig.KeyBindings.CLOSE_APPLICATION, self.__close_application
-        )
-        self.__view.protocol("WM_DELETE_WINDOW", self.__close_application)
 
     def __close_application(self, _=None) -> None:
         """

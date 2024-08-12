@@ -199,47 +199,6 @@ class Config:
         FILE_TYPE_TO_READ: list[tuple[str, str]] = [("CSV", "*.csv*")]
 
 
-class AppWindowConfig:
-    """
-    Contains classes that define the configurations of the app window.
-    """
-
-    class General:
-        """
-        General configurations.
-        """
-
-        TITLE: str = "CSVision"
-        ICON: str = Config.ImageFormats.APP_ICON
-
-    class KeyBindings:
-        """
-        Key bindings.
-        """
-
-        CLOSE_APPLICATION: str = Config.KeyBindings.ESCAPE_KEY
-
-    class Dimensions:
-        """
-        Dimensions.
-        """
-
-        WIDTH: int = 1150
-        HEIGHT: int = 666
-
-        MIN_WIDTH: int = WIDTH - 200
-        MIN_HEIGHT: int = HEIGHT - 200
-
-    class Layout:
-        """
-        Layout.
-        """
-
-        MAINVIEW_SIDE: str = "top"
-        MAINVIEW_FILL: str = "both"
-        MAINVIEW_EXPAND: bool = True
-
-
 class MainConfig:
     """
     Contains classes that define the configurations of the settings window.
