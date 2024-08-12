@@ -3,6 +3,7 @@ to reading and parsing CSV files. This includes loading data from a file, managi
 access to the data for visualization purposes. """
 
 from pathlib import Path
+from collections import defaultdict
 import pandas as pd
 from utils.helper_functions import search_substring
 
@@ -62,28 +63,6 @@ class CSVDataManager:
         """
         return self.__raw_data_frame
 
-    def get_header_list(self, prefix: str = None, postfix: str = None) -> list[str]:
-        """
-        Get the list of headers from the CSV file without prefix or postfix.
-
-        Args:
-            prefix (str, optional): The prefix of the header. Defaults to None.
-            postfix (str, optional): The postfix of the header. Defaults to None.
-
-        Returns:
-            list[str]: The reduced header list.
-        """
-        headers = self.raw_data.columns.tolist()
-        header_list = []
-
-        if prefix or postfix:
-            for header in headers:
-                header_list.append(search_substring(header, prefix, postfix))
-        else:
-            header_list = headers
-
-        return header_list
-
     def read_file(self, file_path: str) -> None:
         """
         Open a CSV file and read the data.
@@ -109,6 +88,89 @@ class CSVDataManager:
             raise pd.errors.EmptyDataError(
                 f"No columns to parse from file: {self.file_path}"
             ) from exc
+
+    def get_raw_data_columns_count(self) -> int:
+        """
+        Get the number of columns from the CSV file.
+
+        Returns:
+            int: The number of columns from the CSV file.
+        """
+        return len(self.__raw_data_frame.columns)
+
+    def get_classified_headers(
+        self,
+        exclude_index: int,
+        prefix: str = None,
+        postfix: str = None,
+        seperator: str = "",
+        order: bool = True,
+    ) -> defaultdict[str, list[int] | list[tuple[str, int]]]:
+        """
+        Classify the headers from the CSV file based on their values, excluding one specified column by index.
+
+        Classification codes:
+            0 - 'not constant'
+            1 - 'constant at exactly zero'
+            2 - 'constant at a value different from zero'
+
+        Args:
+            exclude_index (int): Index of the column to exclude from classification.
+            prefix (str, optional): The prefix of the header of the column. Defaults to None.
+            postfix (str, optional): The postfix of the header of the column. Defaults to None.
+            seperator (str, optional): Seperator to divide the header of the column into two substrings.
+                                        Defaults to "".
+            order (bool, optional): Indicator of which of the substrings will be the key and which part of the value.
+                                                If True, then the first half will be the key else the second half. Defaults to True.
+
+        Returns:
+            defaultdict[str, list[str] | list[str, int]]: A dictionary with the header of the column or a substring of it as
+                                                            keys and a list of their classification or a tuple of the other
+                                                            substring and its classification as values.
+        """
+        # Determine the columns to process, excluding the specified index
+        columns_to_process = self.raw_data.columns.tolist()
+        columns_to_process = (
+            columns_to_process[:exclude_index] + columns_to_process[exclude_index + 1 :]
+        )
+
+        # Vectorized classification using efficient operations
+        column_classification: defaultdict[str, list[int] | list[tuple[str, int]]] = (
+            defaultdict(list)
+        )
+
+        for column in columns_to_process:
+            unique_values = self.raw_data[column].unique()
+
+            column_modified = search_substring(column, prefix, postfix)
+
+            if seperator != "":
+                if order:
+                    column_first_half, column_second_half = column_modified.split(
+                        seperator
+                    )
+                else:
+                    column_second_half, column_first_half = column_modified.split(
+                        seperator
+                    )
+
+                column_first_half = column_first_half.strip()
+                column_second_half = column_second_half.strip()
+            else:
+                column_first_half = column_modified
+
+            classification = (
+                0 if len(unique_values) > 1 else 1 if unique_values[0] == 0 else 2
+            )
+
+            if seperator != "":
+                column_classification[column_first_half.strip()].append(
+                    (column_second_half.strip(), classification)
+                )
+            else:
+                column_classification[column_modified].append(classification)
+
+        return column_classification
 
     def export_to_excel(self, file_path: str) -> None:
         """
