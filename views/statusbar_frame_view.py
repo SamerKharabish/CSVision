@@ -3,10 +3,10 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 import customtkinter as ctk
-from views.configurations_view import StatusbarConfig
+from .configurations_view import StatusbarConfig
 
 if TYPE_CHECKING:
-    from views.main_view import MainView
+    from .main_view import MainView
 
 
 class StatusbarFrameView(ctk.CTkFrame):

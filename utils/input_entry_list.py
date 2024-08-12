@@ -31,7 +31,7 @@ class InputEntryList(ctk.CTkEntry):
         font: tuple | ctk.CTkFont | None = None,
         state: str = "readonly",
         max_elements: int = 4,
-    ):
+    ) -> None:
         super().__init__(
             master=master,
             width=width,
@@ -149,7 +149,7 @@ class FileOptionWindow(ctk.CTkToplevel):
         fg_color: str | tuple[str, str] | None = None,
         border_color: str | tuple[str, str] | None = None,
         font: tuple | ctk.CTkFont | None = None,
-    ):
+    ) -> None:
         super().__init__(fg_color=fg_color)
 
         self.corner_radius: int | None = corner_radius
@@ -253,7 +253,7 @@ class FileOptionWindow(ctk.CTkToplevel):
         """
         button.configure(text_color=self.button_color)
 
-    def file_entered(self, file: str):
+    def file_entered(self, file: str) -> None:
         """
         Call a callback function and destroy the window.
 

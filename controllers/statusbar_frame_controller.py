@@ -37,7 +37,7 @@ class StatusbarFrameController(SimpleObserver):
         )
         self.__view.progressbar.start()
 
-    def __stop_progress(self):
+    def __stop_progress(self) -> None:
         """
         Stop the progressbar.
         """
@@ -54,6 +54,6 @@ class StatusbarFrameController(SimpleObserver):
             elif simple_publisher.progress == "stop":
                 self.__stop_progress()
 
-    def __del__(self):
+    def __del__(self) -> None:
         file_size_publisher.detach(self)
         progress_publisher.detach(self)

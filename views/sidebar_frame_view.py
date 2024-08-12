@@ -3,12 +3,12 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 import customtkinter as ctk
-from views.configurations_view import Config
-from views.sidebar_views.navigation_frame_view import NavigationFrameView
-from views.sidebar_views.header_frame_view import HeaderFrameView
+from .configurations_view import Config
+from .sidebar_views.navigation_frame_view import NavigationFrameView
+from .sidebar_views.header_frame_view import HeaderFrameView
 
 if TYPE_CHECKING:
-    from views.main_view import MainView
+    from .main_view import MainView
 
 
 class SidebarFrameView(ctk.CTkFrame):

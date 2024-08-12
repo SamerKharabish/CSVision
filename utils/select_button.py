@@ -35,7 +35,7 @@ class SelectButton(ctk.CTkButton):
         compound: str = "left",
         anchor: str = "center",
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             master,
             width,

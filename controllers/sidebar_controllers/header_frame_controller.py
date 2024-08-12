@@ -1,7 +1,10 @@
 """ Defines the HeaderFrameController class with the header frame functionality. """
 
 from views.sidebar_views.header_frame_view import HeaderFrameView
-from controllers.sidebar_controllers.filehandling_frame_controller import FileHandlingFrameController
+from .filehandling_frame_controller import (
+    FileHandlingFrameController,
+)
+
 
 class HeaderFrameController:
     """

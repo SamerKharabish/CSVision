@@ -4,9 +4,9 @@ from views.configurations_view import MainConfig
 from views.main_view import MainView
 from utils.helper_functions import find_root
 from utils.observer_publisher import header_frame_state_publisher
-from controllers.statusbar_frame_controller import StatusbarFrameController
-from controllers.sidebar_frame_controller import SidebarFrameController
-from controllers.plot_frame_controller import PlotFrameController
+from .statusbar_frame_controller import StatusbarFrameController
+from .sidebar_frame_controller import SidebarFrameController
+from .plot_frame_controller import PlotFrameController
 
 
 class MainController:

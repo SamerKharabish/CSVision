@@ -87,6 +87,8 @@ class FileSizePublisher(SimplePublisher):
     Monitor the file size.
     """
 
+    __slots__ = ("__file_size",)
+
     def __init__(self) -> None:
         SimplePublisher.__init__(self)
 
@@ -123,6 +125,8 @@ class HeaderFrameStatePublisher(SimplePublisher):
     """
     Monitor the state of the header frame.
     """
+
+    __slots__ = ("__hide_frame",)
 
     def __init__(self) -> None:
         SimplePublisher.__init__(self)

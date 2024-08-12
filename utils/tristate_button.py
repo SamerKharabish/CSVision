@@ -35,7 +35,7 @@ class TriStateButton(ctk.CTkButton):
         user_command: Callable[[], any] | None = None,
         compound: str = "left",
         anchor: str = "center",
-    ):
+    ) -> None:
         super().__init__(
             master=master,
             width=width,
@@ -76,12 +76,12 @@ class TriStateButton(ctk.CTkButton):
         self.user_command: Callable[[], any] | None = user_command
         self.configure(command=self.command)
 
-    def advance_state(self):
+    def advance_state(self) -> None:
         """Advance to the next state."""
         self.current_state = (self.current_state + 1) % len(self.states)
         self.configure(text=self.states[self.current_state])
 
-    def command(self):
+    def command(self) -> None:
         """
         Call the advance_state method and the user's command.
         """

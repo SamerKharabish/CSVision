@@ -8,10 +8,10 @@ import customtkinter as ctk
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.backends._backend_tk import NavigationToolbar2Tk
-from views.configurations_view import Config
+from .configurations_view import Config
 
 if TYPE_CHECKING:
-    from views.main_view import MainView
+    from .main_view import MainView
 
 
 class PlotFrameView(ctk.CTkFrame):

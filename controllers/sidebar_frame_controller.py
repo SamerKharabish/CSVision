@@ -7,10 +7,10 @@ from utils.observer_publisher import (
     SimplePublisher,
     header_frame_state_publisher,
 )
-from controllers.sidebar_controllers.navigation_frame_controller import (
+from .sidebar_controllers.navigation_frame_controller import (
     NavigationFrameController,
 )
-from controllers.sidebar_controllers.header_frame_controller import (
+from .sidebar_controllers.header_frame_controller import (
     HeaderFrameController,
 )
 
@@ -50,3 +50,6 @@ class SidebarFrameController(SimpleObserver):
                         side="right", fill="y", expand=True
                     ),
                 )
+
+    def __del__(self) -> None:
+        header_frame_state_publisher.detach(self)
