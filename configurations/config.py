@@ -47,8 +47,13 @@ class Config:
         """
         Font sizes, font families, weights, etc.
         """
+        DEFAULT_FAMILIY: str = "Kento"
+        NORMAL_SIZE: int = 12
 
     class Widgets:
         """
         Arguments with values of each single widget.
         """
+
+        CORNER_RADIUS: int = 0
+        BORDER_WIDTH: int = 1

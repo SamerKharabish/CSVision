@@ -1,11 +1,11 @@
-"""Application configuration file."""
+"""Main configuration file."""
 
 from .config import Config
 
 
-class AppConfig:
+class MainConfig:
     """
-    Contains classes that define the specific configurations of the application.
+    Contains classes that define the specific configurations of the main window.
     """
 
     class General:
@@ -13,13 +13,12 @@ class AppConfig:
         General configurations.
         """
 
-        TITLE: str = "CSVision"
-        ICON: str = Config.General.ICON
-
     class OwnArgs:
         """
         Arguments with values of self.
         """
+
+        CORNER_RADIUS: int = Config.Widgets.CORNER_RADIUS
 
     class Colors:
         """
@@ -31,12 +30,6 @@ class AppConfig:
         Dimensions.
         """
 
-        WIDTH: int = 1150
-        HEIGHT: int = 666
-
-        MIN_WIDTH: int = WIDTH - 200
-        MIN_HEIGHT: int = HEIGHT - 200
-
     class Images:
         """
         Images.
@@ -47,13 +40,27 @@ class AppConfig:
         Key bindings.
         """
 
+        RESIZE_SIDEBAR: str = "<Control-b>"
+
     class Layout:
         """
         Layout.
         """
 
-        MAIN_VIEW: dict[str:str, str:str, str:bool] = {
-            "side": "top",
+        STATUSBAR_VIEW: dict[str:str, str:str, str:bool] = {
+            "side": "bottom",
+            "fill": "x",
+            "expand": False,
+        }
+
+        SIDEBAR_VIEW: dict[str:str, str:str, str:bool] = {
+            "side": "left",
+            "fill": "y",
+            "expand": False,
+        }
+
+        PLOT_VIEW: dict[str:str, str:str, str:bool] = {
+            "side": "right",
             "fill": "both",
             "expand": True,
         }
