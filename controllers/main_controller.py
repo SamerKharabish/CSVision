@@ -1,12 +1,12 @@
 """ Defines the MainController class with the main functionality. """
 
-from views.configurations_view import MainConfig
-from views.main_view import MainView
+from configurations.main_config import MainConfig
 from utils.helper_functions import find_root
-from utils.observer_publisher import header_frame_state_publisher
-from .statusbar_frame_controller import StatusbarFrameController
-from .sidebar_frame_controller import SidebarFrameController
-from .plot_frame_controller import PlotFrameController
+from utils.observer_publisher import processor_panel_state_publisher
+from views.main_view import MainView
+from .statusbar_controller import StatusbarController
+from .sidebar_controller import SidebarController
+from .plot_frame_controller import PlotController
 
 
 class MainController:
@@ -27,24 +27,24 @@ class MainController:
         """
         Initialize controller.
         """
-        StatusbarFrameController(self.__view.statusbar_frame_view)
-        SidebarFrameController(self.__view.sidebar_frame_view)
-        PlotFrameController(self.__view.plot_frame_view)
+        StatusbarController(self.__view.statusbar_view)
+        SidebarController(self.__view.sidebar_view)
+        PlotController(self.__view.plot_view)
 
     def __setup_bindings(self) -> None:
         """
         Binding the MainView widgets to callback functions.
         """
         self.__view.root.bind(
-            MainConfig.KeyBindings.RESIZE_HEADER_FRAME,
-            self.__toggle_header_frame,
+            MainConfig.KeyBindings.RESIZE_SIDEBAR,
+            self.__toggle_processor_panel,
         )
 
-    def __toggle_header_frame(self, _=None) -> None:
+    def __toggle_processor_panel(self, _=None) -> None:
         """
-        Toggle the visibility of the header frame.
+        Toggle the visibility of the processor panel.
         Bound to the Ctrl + B press event.
         """
-        header_frame_state_publisher.hide_frame = (
-            not header_frame_state_publisher.hide_frame
+        processor_panel_state_publisher.hide_panel = (
+            not processor_panel_state_publisher.hide_panel
         )
