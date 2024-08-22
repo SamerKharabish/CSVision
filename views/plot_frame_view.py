@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from .main_view import MainView
 
 
-class PlotFrameView(ctk.CTkFrame):
+class PlotView(ctk.CTkFrame):
     """
     Layout of the plot frame.
     """

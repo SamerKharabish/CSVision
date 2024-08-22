@@ -3,7 +3,7 @@
 import customtkinter as ctk
 
 
-class PlotFrameController:
+class PlotController:
     """
     Functionality of the plot frame.
     """

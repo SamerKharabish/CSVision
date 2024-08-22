@@ -3,10 +3,10 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 import customtkinter as ctk
-from .configurations_view import MainConfig
-from .statusbar_frame_view import StatusbarFrameView
-from .sidebar_frame_view import SidebarFrameView
-from .plot_frame_view import PlotFrameView
+from configurations.main_config import MainConfig
+from .statusbar_view import StatusbarView
+from .sidebar_view import SidebarView
+from .plot_frame_view import PlotView
 
 
 if TYPE_CHECKING:
@@ -18,10 +18,10 @@ class MainView(ctk.CTkFrame):
     Layout of the main application.
     """
 
-    __slots__ = "root", "statusbar_frame_view", "sidebar_frame_view", "plot_frame_view"
+    __slots__ = "root", "statusbar_view", "sidebar_view", "plot_view"
 
     def __init__(self, master: AppView) -> None:
-        super().__init__(master, corner_radius=MainConfig.General.CORNER_RADIUS)
+        super().__init__(master, corner_radius=MainConfig.OwnArgs.CORNER_RADIUS)
         self.root: ctk.CTk
 
         self.__initialize_widgets()
@@ -31,28 +31,28 @@ class MainView(ctk.CTkFrame):
         """
         Initialize widgets.
         """
-        self.statusbar_frame_view: StatusbarFrameView = StatusbarFrameView(self)
-        self.sidebar_frame_view: SidebarFrameView = SidebarFrameView(self)
-        self.plot_frame_view: PlotFrameView = PlotFrameView(self)
+        self.statusbar_view: StatusbarView = StatusbarView(self)
+        self.sidebar_view: SidebarView = SidebarView(self)
+        self.plot_view: PlotView = PlotView(self)
 
     def __create_layout(self) -> None:
         """
         Create layout.
         """
-        self.statusbar_frame_view.pack(
-            side=MainConfig.Layout.STATUSBARVIEW_SIDE,
-            fill=MainConfig.Layout.STATUSBARVIEW_FILL,
-            expand=MainConfig.Layout.STATUSBARVIEW_EXPAND,
+        self.statusbar_view.pack(
+            side=MainConfig.Layout.STATUSBAR_VIEW["side"],
+            fill=MainConfig.Layout.STATUSBAR_VIEW["fill"],
+            expand=MainConfig.Layout.STATUSBAR_VIEW["expand"],
         )
 
-        self.sidebar_frame_view.pack(
-            side=MainConfig.Layout.SIDEBARVIEW_SIDE,
-            fill=MainConfig.Layout.SIDEBARVIEW_FILL,
-            expand=MainConfig.Layout.SIDEBARVIEW_EXPAND,
+        self.sidebar_view.pack(
+            side=MainConfig.Layout.SIDEBAR_VIEW["side"],
+            fill=MainConfig.Layout.SIDEBAR_VIEW["fill"],
+            expand=MainConfig.Layout.SIDEBAR_VIEW["expand"],
         )
 
-        self.plot_frame_view.pack(
-            side=MainConfig.Layout.PLOTVIEW_SIDE,
-            fill=MainConfig.Layout.PLOTVIEW_FILL,
-            expand=MainConfig.Layout.PLOTVIEW_EXPAND,
+        self.plot_view.pack(
+            side=MainConfig.Layout.PLOT_VIEW["side"],
+            fill=MainConfig.Layout.PLOT_VIEW["fill"],
+            expand=MainConfig.Layout.PLOT_VIEW["expand"],
         )
