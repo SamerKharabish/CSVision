@@ -1,11 +1,11 @@
-"""Application configuration file."""
+"""Sidebar configuration file."""
 
 from .config import Config
 
 
-class AppConfig:
+class SidebarConfig:
     """
-    Contains classes that define the specific configurations of the application.
+    Contains classes that define the specific configurations of the sidebar.
     """
 
     class General:
@@ -13,13 +13,14 @@ class AppConfig:
         General configurations.
         """
 
-        TITLE: str = "CSVision"
-        ICON: str = Config.General.ICON
-
     class OwnArgs:
         """
         Arguments with values of self.
         """
+
+        CORNER_RADIUS: int = Config.Widgets.CORNER_RADIUS
+        BORDER_WIDTH: int = Config.Widgets.BORDER_WIDTH
+        TRANSPARENT: str = Config.Colors.TRANSPARENT
 
     class Colors:
         """
@@ -30,12 +31,6 @@ class AppConfig:
         """
         Dimensions.
         """
-
-        WIDTH: int = 1150
-        HEIGHT: int = 666
-
-        MIN_WIDTH: int = WIDTH - 200
-        MIN_HEIGHT: int = HEIGHT - 200
 
     class Images:
         """
@@ -52,12 +47,6 @@ class AppConfig:
         Layout.
         """
 
-        MAIN_VIEW: dict[str:str, str:str, str:bool] = {
-            "side": "top",
-            "fill": "both",
-            "expand": True,
-        }
-
     class Texts:
         """
         Any static text like label text, button text, etc.
@@ -72,3 +61,14 @@ class AppConfig:
         """
         Arguments with values of each single widget.
         """
+        NAVIGATION_PANEL_VIEW: dict[str:str, str:str, str:bool] = {
+            "side": "left",
+            "fill": "y",
+            "expand": False,
+        }
+
+        PROCESSOR_PANEL_VIEW: dict[str:str, str:str, str:bool] = {
+            "side": "right",
+            "fill": "both",
+            "expand": True,
+        }
