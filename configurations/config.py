@@ -18,10 +18,15 @@ class Config:
         Background color, text color, etc.
         """
 
+        TRANSPARENT: str = "transparent"
+        ONYX_LIGHT: str = "#3D3E40"
+
     class Dimensions:
         """
         Dimensions.
         """
+
+        SQUARE_BUTTON_WIDTH_HEIGHT: int = 10
 
     class Images:
         """
@@ -47,6 +52,7 @@ class Config:
         """
         Font sizes, font families, weights, etc.
         """
+
         DEFAULT_FAMILIY: str = "Kento"
         NORMAL_SIZE: int = 12
 

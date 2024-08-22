@@ -20,6 +20,8 @@ class StatusbarConfig:
 
         CORNER_RADIUS: int = Config.Widgets.CORNER_RADIUS
         BORDER_WIDTH: int = Config.Widgets.BORDER_WIDTH
+        TRANSPARENT: str = Config.Colors.TRANSPARENT
+
         HEIGHT: int = 20
 
     class Colors:
@@ -64,6 +66,7 @@ class StatusbarConfig:
             "padx": (0, 0),
             "pady": (1, 1),
         }
+
     class Texts:
         """
         Any static text like label text, button text, etc.
