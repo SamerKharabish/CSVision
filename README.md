@@ -1,19 +1,25 @@
 # CSVision
 
-Data visualization tool designed to render data from CSV files into interactive line charts
+ CSVision is a specialized user-friendly tool developed for individuals and professionals who need to analyze and visualize data stored in CSV files. It provides a straightforward solution for turning raw data into clear, interactive visual representations, making it easier to identify trends, patterns, and insights.
 
-This module contains the GUI implementation for a CSV plotter application. It provides a graphical user interface built with customtkinter that allows users to load data from CSV files, visualize the data in a plot, and interact with the data using various controls.
+ With CSVision, users can load CSV files, export the data to XLSX format and manage and visualize large datasets by selecting specific data columns and displaying them in various chart formats, including line, scatter, bar, and stem charts. The tool is equipped with features that allow for flexible chart configurations and filtering data, making it useful for anyone who works with large amounts of CSV data.
+
+ In addition to its visualization capabilities, CSVision features a search bar for quickly finding specific data columns and offers users a preset function to save  their configurations for future use or load old configurations into the GUI, streamlining the process of data analysis.
 
 ![Files](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=files)
 ![Code](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=code)
 ![Lines](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=lines)
 
+## Design
+
+![Parameter Input](documentation/design.png)
+
 ## Features
 
-- ```Accessibility```: Application is closable by pressing the "exit/close" button or the "Alt-F4" key combination.
-- ```Accessibility```: The header frame can be toggled by pressing "Ctrl + B" or the "Toggle-Header-Button" on the top of the navigation.
-- ```Functionality```: CSV files can be selected and loaded with the "Open-File-Button" in the File Explorer section.
-- ```Functionality```: CSV files can be exported to xslx files with the "Export-To-Excel-Button" in the File Explorer section.
+- ```Accessibility```: The header frame can be toggled by pressing "Ctrl + B" or the "processor_panel_toggle_button" on the top of the navigation.
+- ```Functionality```: CSV files can be selected and loaded with the "open_file_button" in the File Explorer section.
+- ```Accessibility```: Once selected CSV files can be reselected and loaded in the "file_entry" in the File Explorer section.
+- ```Functionality```: CSV files can be exported to xslx files with the "export_to_excel_button" in the File Explorer section.
 - ```Feedback```: Processes are being displayed by a progressbar in the statusbar.
 - ```Feedback```: File sizes are being displayed in the statusbar.
 
