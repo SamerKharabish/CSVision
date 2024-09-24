@@ -15,7 +15,7 @@ class AppConfig:
 
         TITLE: str = "CSVision"
         ICON: str = Config.General.ICON
-
+ 
     class Dimensions:
         """
         Dimensions.

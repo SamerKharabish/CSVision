@@ -54,7 +54,6 @@ class Config:
         """
 
         DEFAULT_FAMILY: str = "Kento"
-        NORMAL_SIZE: int = 12
 
     class Widgets:
         """

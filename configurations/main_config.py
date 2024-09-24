@@ -50,14 +50,3 @@ class MainConfig:
             "fill": "x",
             "expand": False,
         }
-
-    class Widgets:
-        """
-        Arguments with values of each single widget.
-        """
-
-        OVERLAY: dict[str, str | int] = {
-            "corner_radius": Config.Widgets.CORNER_RADIUS,
-            "border_width": Config.Widgets.BORDER_WIDTH,
-            "fg_color": Config.Colors.TRANSPARENT,
-        }
