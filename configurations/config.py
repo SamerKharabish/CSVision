@@ -53,7 +53,7 @@ class Config:
         Font sizes, font families, weights, etc.
         """
 
-        DEFAULT_FAMILIY: str = "Kento"
+        DEFAULT_FAMILY: str = "Kento"
         NORMAL_SIZE: int = 12
 
     class Widgets:

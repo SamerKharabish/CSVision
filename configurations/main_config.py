@@ -8,32 +8,12 @@ class MainConfig:
     Contains classes that define the specific configurations of the main window.
     """
 
-    class General:
-        """
-        General configurations.
-        """
-
     class OwnArgs:
         """
         Arguments with values of self.
         """
 
         CORNER_RADIUS: int = Config.Widgets.CORNER_RADIUS
-
-    class Colors:
-        """
-        Background color, text color, etc.
-        """
-
-    class Dimensions:
-        """
-        Dimensions.
-        """
-
-    class Images:
-        """
-        Images.
-        """
 
     class KeyBindings:
         """
@@ -47,35 +27,37 @@ class MainConfig:
         Layout.
         """
 
-        STATUSBAR_VIEW: dict[str:str, str:str, str:bool] = {
-            "side": "bottom",
-            "fill": "x",
-            "expand": False,
-        }
-
-        SIDEBAR_VIEW: dict[str:str, str:str, str:bool] = {
+        NAV_BAR_VIEW: dict[str, str | bool] = {
             "side": "left",
             "fill": "y",
             "expand": False,
         }
 
-        PLOT_VIEW: dict[str:str, str:str, str:bool] = {
+        PLOT_VIEW: dict[str, str | bool] = {
             "side": "right",
             "fill": "both",
             "expand": True,
         }
 
-    class Texts:
-        """
-        Any static text like label text, button text, etc.
-        """
+        SIDEBAR_VIEW: dict[str, str | bool] = {
+            "side": "left",
+            "fill": "y",
+            "expand": False,
+        }
 
-    class Typography:
-        """
-        Font sizes, font families, weights, etc.
-        """
+        STATUSBAR_VIEW: dict[str, str | bool] = {
+            "side": "bottom",
+            "fill": "x",
+            "expand": False,
+        }
 
     class Widgets:
         """
         Arguments with values of each single widget.
         """
+
+        OVERLAY: dict[str, str | int] = {
+            "corner_radius": Config.Widgets.CORNER_RADIUS,
+            "border_width": Config.Widgets.BORDER_WIDTH,
+            "fg_color": Config.Colors.TRANSPARENT,
+        }
