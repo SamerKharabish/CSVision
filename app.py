@@ -6,6 +6,7 @@ import customtkinter as ctk
 from configurations.app_config import AppConfig
 from controllers.main_controller import MainController
 from views.main_view import MainView
+from utils.threads import safe_thread_queue
 
 
 class AppView(ctk.CTk):
@@ -28,16 +29,16 @@ class AppView(ctk.CTk):
             AppConfig.Dimensions.MIN_HEIGHT,
         )
 
-        self.__initialize_widgets()
-        self.__create_layout()
+        self.initialize_widgets()
+        self.create_layout()
 
-    def __initialize_widgets(self) -> None:
+    def initialize_widgets(self) -> None:
         """
         Initialize widgets.
         """
         self.main_view: MainView = MainView(self)
 
-    def __create_layout(self) -> None:
+    def create_layout(self) -> None:
         """
         Create layout.
         """
@@ -53,27 +54,34 @@ class AppController:
     Functionality of the main window.
     """
 
-    __slots__ = ("__view",)
+    __slots__ = ("view",)
 
-    def __init__(self, view: AppView) -> None:
-        self.__view: AppView = view
+    def __init__(self) -> None:
+        self.view: AppView = AppView()
 
-        self.__view.protocol("WM_DELETE_WINDOW", self.__close_application)
-        self.__initialize_controller()
+        self.view.protocol("WM_DELETE_WINDOW", self.close_application)
+        self.initialize_controller()
 
-    def __initialize_controller(self) -> None:
+    def initialize_controller(self) -> None:
         """
         Initialize controller.
         """
-        MainController(self.__view.main_view)
+        MainController(self.view.main_view)
 
-    def __close_application(self, _=None) -> None:
+    def close_application(self, _=None) -> None:
         """
         Close the application.
         """
         # TODO: if messagebox.askokcancel(title="Warning", message="Close application?"):
-        self.__view.destroy()
+        safe_thread_queue.stop_worker()
+        self.view.destroy()
         sys.exit(0)
+
+    def run(self) -> None:
+        """
+        Start the mainloop.
+        """
+        self.view.mainloop()
 
 
 def main() -> None:
@@ -82,10 +90,8 @@ def main() -> None:
     """
     ctk.set_appearance_mode("Dark")
 
-    app_view = AppView()
-    AppController(app_view)
-
-    app_view.mainloop()
+    app_controller = AppController()
+    app_controller.run()
 
 
 if __name__ == "__main__":

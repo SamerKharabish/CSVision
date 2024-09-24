@@ -1,50 +1,78 @@
-""" Defines the MainController class with the main functionality. """
+"""Defines the MainController class with the main functionality."""
 
 from configurations.main_config import MainConfig
-from utils.helper_functions import find_root
-from utils.observer_publisher import processor_panel_state_publisher
+from utils.observer_publisher import (
+    SimpleObserver,
+    SimplePublisher,
+    sidebar_state_publisher,
+    ProgressPublisher,
+    progress_state_publisher,
+)
 from views.main_view import MainView
-from .statusbar_controller import StatusbarController
-from .sidebar_controller import SidebarController
+from .navbar_controller import NavigationBarController
 from .plot_frame_controller import PlotController
+from .sidebar_controller import (
+    SidebarController,
+)
+from .statusbar_controller import StatusbarController
 
 
-class MainController:
+class MainController(SimpleObserver):
     """
     Functionality of the main application.
     """
 
-    __slots__ = ("__view",)
+    __slots__ = ("view",)
 
     def __init__(self, view: MainView) -> None:
-        self.__view: MainView = view
-        self.__view.root = find_root(self.__view)
+        SimpleObserver.__init__(self)
+        self.view: MainView = view
 
-        self.__initialize_controller()
-        self.__setup_bindings()
+        sidebar_state_publisher.attach(self)
+        progress_state_publisher.attach(self)
 
-    def __initialize_controller(self) -> None:
+        self.initialize_controller()
+        self.setup_bindings()
+
+    def initialize_controller(self) -> None:
         """
         Initialize controller.
         """
-        StatusbarController(self.__view.statusbar_view)
-        SidebarController(self.__view.sidebar_view)
-        PlotController(self.__view.plot_view)
+        NavigationBarController(self.view.nav_bar_view)
+        PlotController(self.view.plot_view)
+        SidebarController(self.view.sidebar_view)
+        StatusbarController(self.view.statusbar_view)
 
-    def __setup_bindings(self) -> None:
+    def setup_bindings(self) -> None:
         """
         Binding the MainView widgets to callback functions.
         """
-        self.__view.root.bind(
+        self.view.root.bind(
             MainConfig.KeyBindings.RESIZE_SIDEBAR,
-            self.__toggle_processor_panel,
+            self.toggle_sidebar_event,
         )
 
-    def __toggle_processor_panel(self, _=None) -> None:
+    def toggle_sidebar_event(self, _=None) -> None:
         """
-        Toggle the visibility of the processor panel.
-        Bound to the Ctrl + B press event.
+        Trigger the event of toggling the sidebar.
         """
-        processor_panel_state_publisher.hide_panel = (
-            not processor_panel_state_publisher.hide_panel
-        )
+        self.view.toggle_sidebar()
+        sidebar_state_publisher.toggle_sidebar_visibility(self)
+
+    def update(self, simple_publisher: SimplePublisher) -> None:
+        if simple_publisher == sidebar_state_publisher:
+            if sidebar_state_publisher.get_visibility():
+                self.view.show_sidebar()
+            else:
+                self.view.hide_sidebar()
+        if simple_publisher == progress_state_publisher:
+            if progress_state_publisher.value == ProgressPublisher.START_PROGRESSBAR:
+                # TODO: Disable / hide / overlay / ... user input widgets
+                pass
+            elif progress_state_publisher.value == ProgressPublisher.STOP_PROGRESSBAR:
+                # TODO: Enable / show / remove overlay / ... user input widgets
+                pass
+
+    def __del__(self) -> None:
+        sidebar_state_publisher.detach(self)
+        progress_state_publisher.detach(self)
