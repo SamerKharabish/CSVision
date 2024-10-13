@@ -102,6 +102,9 @@ class ProgressStatePublisher(SimplePublisher):
     Monitor the progress of the data loading thread.
     """
 
+    START_PROGRESSBAR: float = 0.0
+    STOP_PROGRESSBAR: float = 100.0
+
     __slots__ = "_mode", "_value"
 
     def __init__(self) -> None:
@@ -191,67 +194,6 @@ class FileSizePublisher(SimplePublisher):
 
 
 file_size_publisher = FileSizePublisher()
-
-
-class ProgressPublisher(SimplePublisher):
-    """
-    Monitor the progress of the data loading thread.
-    """
-
-    START_PROGRESSBAR: float = 0.0
-    STOP_PROGRESSBAR: float = 100.0
-
-    __slots__ = "__progress_mode", "__progress"
-
-    def __init__(self) -> None:
-        SimplePublisher.__init__(self)
-
-        self.__progress_mode: str
-        self.__progress: int = 0
-
-    @property
-    def progress_mode(self) -> str:
-        """
-        Get the progress mode.
-
-        Returns:
-            str: The set progress mode.
-        """
-        return self.__progress_mode
-
-    @progress_mode.setter
-    def progress_mode(self, progress_mode: str) -> None:
-        """
-        Set the progress mode.
-
-        Args:
-            progress_mode (str): The progress mode to set.
-        """
-        self.__progress_mode = progress_mode
-        self.notify()
-
-    @property
-    def progress(self) -> float:
-        """
-        Get the progress.
-
-        Returns:
-            float: The set progress.
-        """
-        return self.__progress
-
-    @progress.setter
-    def progress(self, progress: float) -> None:
-        """
-        Set the progress.
-
-        Args:
-            progress (float): The progress to set.
-        """
-        self.__progress = progress
-
-
-progress_publisher = ProgressPublisher()
 
 
 class NewSettingsPublisher(SimplePublisher):

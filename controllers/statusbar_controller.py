@@ -6,7 +6,7 @@ from utils.observer_publisher import (
     SimplePublisher,
     SimpleObserver,
     file_size_publisher,
-    ProgressPublisher,
+    ProgressStatePublisher,
     progress_state_publisher,
 )
 
@@ -55,9 +55,15 @@ class StatusbarController(SimpleObserver):
 
     def update(self, simple_publisher: SimplePublisher) -> None:
         if simple_publisher == progress_state_publisher:
-            if progress_state_publisher.value == ProgressPublisher.START_PROGRESSBAR:
+            if (
+                progress_state_publisher.value
+                == ProgressStatePublisher.START_PROGRESSBAR
+            ):
                 self.start_progressbar(progress_state_publisher.mode)
-            elif progress_state_publisher.value == ProgressPublisher.STOP_PROGRESSBAR:
+            elif (
+                progress_state_publisher.value
+                == ProgressStatePublisher.STOP_PROGRESSBAR
+            ):
                 self.stop_progressbar()
             else:
                 self.view.root.after(
