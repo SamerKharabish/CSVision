@@ -10,7 +10,7 @@ from views.sidebar_views.filehandler_view import FileHandlerView
 from utils.threads import safe_thread_queue
 from utils.observer_publisher import (
     file_size_publisher,
-    ProgressPublisher,
+    ProgressStatePublisher,
     progress_state_publisher,
 )
 
@@ -81,13 +81,13 @@ class FileHandlerController:
         """
         Before doing an operation to the csv file start the progressbar.
         """
-        progress_state_publisher.value = ProgressPublisher.START_PROGRESSBAR
+        progress_state_publisher.value = ProgressStatePublisher.START_PROGRESSBAR
 
     def post_operation_file(self) -> None:
         """
         After doing an operation to the csv file stop the progressbar.
         """
-        progress_state_publisher.value = ProgressPublisher.STOP_PROGRESSBAR
+        progress_state_publisher.value = ProgressStatePublisher.STOP_PROGRESSBAR
 
     def open_file(self, file_name: str) -> None:
         """
