@@ -159,30 +159,31 @@ class ProgressStatePublisher(SimplePublisher):
 progress_state_publisher = ProgressStatePublisher()
 
 
-class FileSizePublisher(SimplePublisher):
+class FileStatePublisher(SimplePublisher):
     """
     Monitor the file size.
     """
 
-    __slots__ = ("_file_size",)
+    __slots__ = ("_file_size", "_is_open")
 
     def __init__(self) -> None:
         SimplePublisher.__init__(self)
 
-        self._file_size: str | None = None
+        self._file_size: str
+        self._is_open: bool = False
 
     @property
-    def file_size(self) -> str | None:
+    def file_size(self) -> str:
         """
         Get the file size.
 
         Returns:
-            str: The set file size.
+            str: The file size.
         """
         return self._file_size
 
     @file_size.setter
-    def file_size(self, file_size: str | None) -> None:
+    def file_size(self, file_size: str) -> None:
         """
         Set the file size.
 
@@ -190,10 +191,30 @@ class FileSizePublisher(SimplePublisher):
             file_size (str): The file size to set.
         """
         self._file_size = file_size
-        self.notify()
+
+    @property
+    def is_open(self) -> bool:
+        """
+        Get the file status.
+
+        Returns:
+            bool: The file status.
+        """
+        return self._is_open
+
+    def set_is_open(self, is_open: bool, modifier: SimpleObserver | None = None) -> None:
+        """
+        Set the file status.
+
+        Args:
+            is_open (bool): The file status to set.
+            modifier (SimpleObserver | None, optional): Observer that triggered the update. Defaults to None.
+        """
+        self._is_open = is_open
+        self.notify(modifier)
 
 
-file_size_publisher = FileSizePublisher()
+file_state_publisher = FileStatePublisher()
 
 
 class NewSettingsPublisher(SimplePublisher):
