@@ -1,4 +1,4 @@
-""" Defines the PlotFrameController class with the plot frame functionality. """
+"""Defines the PlotFrameController class with the plot frame functionality."""
 
 import customtkinter as ctk
 

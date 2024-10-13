@@ -103,7 +103,7 @@ class CSVDataManager:
         exclude_index: int,
         prefix: str = None,
         postfix: str = None,
-        seperator: str = "",
+        separator: str = "",
         order: bool = True,
     ) -> defaultdict[str, list[int] | list[tuple[str, int]]]:
         """
@@ -118,7 +118,7 @@ class CSVDataManager:
             exclude_index (int): Index of the column to exclude from classification.
             prefix (str, optional): The prefix of the header of the column. Defaults to None.
             postfix (str, optional): The postfix of the header of the column. Defaults to None.
-            seperator (str, optional): Seperator to divide the header of the column into two substrings.
+            separator (str, optional): Separator to divide the header of the column into two substrings.
                                         Defaults to "".
             order (bool, optional): Indicator of which of the substrings will be the key and which part of the value.
                                                 If True, then the first half will be the key else the second half. Defaults to True.
@@ -139,19 +139,21 @@ class CSVDataManager:
             defaultdict(list)
         )
 
+        raw_data_copy = self.raw_data.copy()
+
         for column in columns_to_process:
-            unique_values = self.raw_data[column].unique()
+            unique_values = raw_data_copy[column].unique()
 
             column_modified = search_substring(column, prefix, postfix)
 
-            if seperator != "":
+            if separator != "":
                 if order:
                     column_first_half, column_second_half = column_modified.split(
-                        seperator
+                        separator
                     )
                 else:
                     column_second_half, column_first_half = column_modified.split(
-                        seperator
+                        separator
                     )
 
                 column_first_half = column_first_half.strip()
@@ -163,7 +165,7 @@ class CSVDataManager:
                 0 if len(unique_values) > 1 else 1 if unique_values[0] == 0 else 2
             )
 
-            if seperator != "":
+            if separator != "":
                 column_classification[column_first_half.strip()].append(
                     (column_second_half.strip(), classification)
                 )

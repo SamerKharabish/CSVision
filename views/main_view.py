@@ -83,10 +83,20 @@ class MainView(ctk.CTkFrame):
         """
         Show the sidebar.
         """
+        self.plot_view.pack_forget()
+
         self.sidebar_view.pack(
             side=MainConfig.Layout.SIDEBAR_VIEW["side"],
             fill=MainConfig.Layout.SIDEBAR_VIEW["fill"],
             expand=MainConfig.Layout.SIDEBAR_VIEW["expand"],
+        )
+
+        # This needs to be done, to prevent an overlap of the
+        # sidebar from the plot when the main window is "small".
+        self.plot_view.pack(
+            side=MainConfig.Layout.PLOT_VIEW["side"],
+            fill=MainConfig.Layout.PLOT_VIEW["fill"],
+            expand=MainConfig.Layout.PLOT_VIEW["expand"],
         )
 
     def toggle_sidebar(self) -> None:

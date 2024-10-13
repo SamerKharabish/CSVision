@@ -13,6 +13,11 @@ class Config:
 
         ICON: str = "resources/Images/CSVision.ico"
 
+        FILE_PATHS: str = "resources/yaml-files/file_paths.yaml"
+        NR_OF_FILES_TO_SAVE: int = 10
+        FILE_PATHS_FILE_TYPES: list[tuple[str, str]] = [("CSV", "*.csv*")]
+        FILE_PATHS_INITIAL_DIR: str = "/"
+
     class Colors:
         """
         Background color, text color, etc.
@@ -20,6 +25,8 @@ class Config:
 
         TRANSPARENT: str = "transparent"
         ONYX_LIGHT: str = "#3D3E40"
+        ONYX: str = "#343638"
+        DIM_GRAY: str = "#6C6C6C"
 
     class Dimensions:
         """
@@ -54,6 +61,7 @@ class Config:
         """
 
         DEFAULT_FAMILY: str = "Kento"
+        NORMAL_SIZE: int = 12
 
     class Widgets:
         """

@@ -4,7 +4,7 @@ from sys import platform
 from PIL import Image
 import customtkinter as ctk
 from views.configurations_view import SettingsWindowConfig
-from views.configurations_view import HeaderStructureConfig
+from views.configurations_view import HeaderStructureFrameConfig
 
 
 class SettingsWindowView(ctk.CTkToplevel):
@@ -53,6 +53,7 @@ class SettingsWindowView(ctk.CTkToplevel):
             self,
         )
 
+        print(SettingsWindowConfig.Values.CATEGORIES)
         self.__category_segemented_button: ctk.CTkSegmentedButton = (
             ctk.CTkSegmentedButton(
                 self,
@@ -190,14 +191,14 @@ class HeaderStructureFrameView(ctk.CTkFrame):
         """
         self.__title: ctk.CTkSegmentedButton = ctk.CTkSegmentedButton(
             self,
-            corner_radius=HeaderStructureConfig.General.CORNER_RADIUS,
-            text_color_disabled=HeaderStructureConfig.Colors.TEXT,
+            corner_radius=HeaderStructureFrameConfig.General.CORNER_RADIUS,
+            text_color_disabled=HeaderStructureFrameConfig.Colors.TEXT,
             font=ctk.CTkFont(
-                family=HeaderStructureConfig.Fonts.FONT,
-                size=HeaderStructureConfig.Fonts.FONT_SIZE,
-                weight=HeaderStructureConfig.Fonts.FONT_WEIGHT_BOLD,
+                family=HeaderStructureFrameConfig.Fonts.FONT,
+                size=HeaderStructureFrameConfig.Fonts.FONT_SIZE,
+                weight=HeaderStructureFrameConfig.Fonts.FONT_WEIGHT,
             ),
-            values=[HeaderStructureConfig.General.TITLE.upper()],
+            values=[HeaderStructureFrameConfig.General.TITLE.upper()],
             state="disabled",
         )
 
@@ -205,30 +206,30 @@ class HeaderStructureFrameView(ctk.CTkFrame):
         self.grid_rowconfigure((2, 3), weight=3)
         self.grid_columnconfigure(
             (
-                HeaderStructureConfig.Layout.FIRST_HEADER_PREFIX_COL,
-                HeaderStructureConfig.Layout.FIRST_HEADER_POSTFIX_COL,
-                HeaderStructureConfig.Layout.SECOND_HEADER_PREFIX_COL,
-                HeaderStructureConfig.Layout.SECOND_HEADER_POSTFIX_COL,
+                HeaderStructureFrameConfig.Layout.FIRST_HEADER_PREFIX_COL,
+                HeaderStructureFrameConfig.Layout.FIRST_HEADER_POSTFIX_COL,
+                HeaderStructureFrameConfig.Layout.SECOND_HEADER_PREFIX_COL,
+                HeaderStructureFrameConfig.Layout.SECOND_HEADER_POSTFIX_COL,
             ),
-            weight=HeaderStructureConfig.Layout.COL_WEIGHTS[0],
+            weight=HeaderStructureFrameConfig.Layout.COL_WEIGHTS[0],
         )
         self.grid_columnconfigure(
             (
-                HeaderStructureConfig.Layout.FIRST_HEADER_OPTION_COL,
-                HeaderStructureConfig.Layout.SECOND_HEADER_OPTION_COL,
+                HeaderStructureFrameConfig.Layout.FIRST_HEADER_OPTION_COL,
+                HeaderStructureFrameConfig.Layout.SECOND_HEADER_OPTION_COL,
             ),
-            weight=HeaderStructureConfig.Layout.COL_WEIGHTS[1],
+            weight=HeaderStructureFrameConfig.Layout.COL_WEIGHTS[1],
         )
 
         self.__labels: list[ctk.CTkLabel] = []
-        for labels in HeaderStructureConfig.Values.HEADERSTRUCTURE_LABELS:
+        for labels in HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_LABELS:
             self.__labels.append(
                 ctk.CTkLabel(
                     self,
                     text=labels,
                     font=ctk.CTkFont(
-                        family=HeaderStructureConfig.Fonts.FONT,
-                        size=HeaderStructureConfig.Fonts.FONT_SIZE,
+                        family=HeaderStructureFrameConfig.Fonts.FONT,
+                        size=HeaderStructureFrameConfig.Fonts.FONT_SIZE,
                     ),
                 )
             )
@@ -238,10 +239,10 @@ class HeaderStructureFrameView(ctk.CTkFrame):
             self.header_entries.append(
                 ctk.CTkEntry(
                     self,
-                    width=HeaderStructureConfig.Dimensions.HEADER_STRUCTURE_ENTRIES_WIDTH,
+                    width=HeaderStructureFrameConfig.Dimensions.HEADER_STRUCTURE_ENTRIES_WIDTH,
                     font=ctk.CTkFont(
-                        family=HeaderStructureConfig.Fonts.FONT,
-                        size=HeaderStructureConfig.Fonts.FONT_SIZE,
+                        family=HeaderStructureFrameConfig.Fonts.FONT,
+                        size=HeaderStructureFrameConfig.Fonts.FONT_SIZE,
                     ),
                 )
             )
@@ -249,26 +250,28 @@ class HeaderStructureFrameView(ctk.CTkFrame):
         self.first_header_option: ctk.CTkOptionMenu = ctk.CTkOptionMenu(
             self,
             font=ctk.CTkFont(
-                family=HeaderStructureConfig.Fonts.FONT,
-                size=HeaderStructureConfig.Fonts.FONT_SIZE,
+                family=HeaderStructureFrameConfig.Fonts.FONT,
+                size=HeaderStructureFrameConfig.Fonts.FONT_SIZE,
             ),
-            values=HeaderStructureConfig.Values.HEADERSTRUCTURE_OPTIONS,
+            values=HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS,
         )
 
         self.second_header_option: ctk.CTkOptionMenu = ctk.CTkOptionMenu(
             self,
             font=ctk.CTkFont(
-                family=HeaderStructureConfig.Fonts.FONT,
-                size=HeaderStructureConfig.Fonts.FONT_SIZE,
+                family=HeaderStructureFrameConfig.Fonts.FONT,
+                size=HeaderStructureFrameConfig.Fonts.FONT_SIZE,
             ),
-            values=HeaderStructureConfig.Values.HEADERSTRUCTURE_OPTIONS,
+            values=HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS,
         )
 
         self.__info_label: ctk.CTkLabel = ctk.CTkLabel(
             self,
             text="",
             image=ctk.CTkImage(
-                light_image=Image.open(HeaderStructureConfig.ImageFormats.INFO_PNG),
+                light_image=Image.open(
+                    HeaderStructureFrameConfig.ImageFormats.INFO_PNG
+                ),
                 size=(
                     30,
                     30,
@@ -280,9 +283,9 @@ class HeaderStructureFrameView(ctk.CTkFrame):
             self,
             height=60,
             font=ctk.CTkFont(
-                family=HeaderStructureConfig.Fonts.FONT,
-                size=HeaderStructureConfig.Fonts.FONT_SIZE - 1,
-                weight=HeaderStructureConfig.Fonts.FONT_WEIGHT_BOLD,
+                family=HeaderStructureFrameConfig.Fonts.FONT,
+                size=HeaderStructureFrameConfig.Fonts.FONT_SIZE - 1,
+                weight=HeaderStructureFrameConfig.Fonts.FONT_WEIGHT,
             ),
             activate_scrollbars=False,
         )
@@ -297,7 +300,7 @@ class HeaderStructureFrameView(ctk.CTkFrame):
             self,
             text="",
             image=ctk.CTkImage(
-                light_image=Image.open(HeaderStructureConfig.ImageFormats.ERROR),
+                light_image=Image.open(HeaderStructureFrameConfig.ImageFormats.ERROR),
                 size=(
                     30,
                     30,
@@ -308,11 +311,11 @@ class HeaderStructureFrameView(ctk.CTkFrame):
         self.error_box: ctk.CTkTextbox = ctk.CTkTextbox(
             self,
             height=45,
-            fg_color=HeaderStructureConfig.Colors.ERROR,
+            fg_color=HeaderStructureFrameConfig.Colors.ERROR,
             font=ctk.CTkFont(
-                family=HeaderStructureConfig.Fonts.FONT,
-                size=HeaderStructureConfig.Fonts.FONT_SIZE - 1,
-                weight=HeaderStructureConfig.Fonts.FONT_WEIGHT_BOLD,
+                family=HeaderStructureFrameConfig.Fonts.FONT,
+                size=HeaderStructureFrameConfig.Fonts.FONT_SIZE - 1,
+                weight=HeaderStructureFrameConfig.Fonts.FONT_WEIGHT,
             ),
             activate_scrollbars=False,
             wrap="word",
@@ -323,7 +326,7 @@ class HeaderStructureFrameView(ctk.CTkFrame):
         Create layout.
         """
         self.__title.grid(
-            row=HeaderStructureConfig.Layout.TITLE_ROW,
+            row=HeaderStructureFrameConfig.Layout.TITLE_ROW,
             column=0,
             columnspan=6,
             sticky="news",
@@ -332,17 +335,17 @@ class HeaderStructureFrameView(ctk.CTkFrame):
         )
 
         labels_settings = [
-            (HeaderStructureConfig.Layout.FIRST_HEADER_PREFIX_COL, (7, 2)),
-            (HeaderStructureConfig.Layout.FIRST_HEADER_OPTION_COL, (2, 2)),
-            (HeaderStructureConfig.Layout.FIRST_HEADER_POSTFIX_COL, (2, 2)),
-            (HeaderStructureConfig.Layout.SECOND_HEADER_PREFIX_COL, (2, 2)),
-            (HeaderStructureConfig.Layout.SECOND_HEADER_OPTION_COL, (2, 2)),
-            (HeaderStructureConfig.Layout.SECOND_HEADER_POSTFIX_COL, (2, 7)),
+            (HeaderStructureFrameConfig.Layout.FIRST_HEADER_PREFIX_COL, (7, 2)),
+            (HeaderStructureFrameConfig.Layout.FIRST_HEADER_OPTION_COL, (2, 2)),
+            (HeaderStructureFrameConfig.Layout.FIRST_HEADER_POSTFIX_COL, (2, 2)),
+            (HeaderStructureFrameConfig.Layout.SECOND_HEADER_PREFIX_COL, (2, 2)),
+            (HeaderStructureFrameConfig.Layout.SECOND_HEADER_OPTION_COL, (2, 2)),
+            (HeaderStructureFrameConfig.Layout.SECOND_HEADER_POSTFIX_COL, (2, 7)),
         ]
 
         for i, (column, padx) in enumerate(labels_settings):
             self.__labels[i].grid(
-                row=HeaderStructureConfig.Layout.LABEL_ROW,
+                row=HeaderStructureFrameConfig.Layout.LABEL_ROW,
                 column=column,
                 sticky="news",
                 padx=padx,
@@ -351,32 +354,32 @@ class HeaderStructureFrameView(ctk.CTkFrame):
 
         header_entries_settings = [
             (
-                HeaderStructureConfig.Layout.FIRST_HEADER_PREFIX_COL,
+                HeaderStructureFrameConfig.Layout.FIRST_HEADER_PREFIX_COL,
                 self.header_entries[0],
                 (7, 2),
             ),
             (
-                HeaderStructureConfig.Layout.FIRST_HEADER_OPTION_COL,
+                HeaderStructureFrameConfig.Layout.FIRST_HEADER_OPTION_COL,
                 self.first_header_option,
                 (2, 2),
             ),
             (
-                HeaderStructureConfig.Layout.FIRST_HEADER_POSTFIX_COL,
+                HeaderStructureFrameConfig.Layout.FIRST_HEADER_POSTFIX_COL,
                 self.header_entries[1],
                 (2, 2),
             ),
             (
-                HeaderStructureConfig.Layout.SECOND_HEADER_PREFIX_COL,
+                HeaderStructureFrameConfig.Layout.SECOND_HEADER_PREFIX_COL,
                 self.header_entries[2],
                 (2, 2),
             ),
             (
-                HeaderStructureConfig.Layout.SECOND_HEADER_OPTION_COL,
+                HeaderStructureFrameConfig.Layout.SECOND_HEADER_OPTION_COL,
                 self.second_header_option,
                 (2, 2),
             ),
             (
-                HeaderStructureConfig.Layout.SECOND_HEADER_POSTFIX_COL,
+                HeaderStructureFrameConfig.Layout.SECOND_HEADER_POSTFIX_COL,
                 self.header_entries[3],
                 (2, 7),
             ),
@@ -384,7 +387,7 @@ class HeaderStructureFrameView(ctk.CTkFrame):
 
         for column, widget, padx in header_entries_settings:
             widget.grid(
-                row=HeaderStructureConfig.Layout.INPUT_ROW,
+                row=HeaderStructureFrameConfig.Layout.INPUT_ROW,
                 column=column,
                 sticky="news",
                 padx=padx,
@@ -392,7 +395,7 @@ class HeaderStructureFrameView(ctk.CTkFrame):
             )
 
         self.__info_label.grid(
-            row=HeaderStructureConfig.Layout.INFO_ROW,
+            row=HeaderStructureFrameConfig.Layout.INFO_ROW,
             column=0,
             sticky="news",
             padx=(25, 0),
@@ -400,7 +403,7 @@ class HeaderStructureFrameView(ctk.CTkFrame):
         )
 
         self.__info_box.grid(
-            row=HeaderStructureConfig.Layout.INFO_ROW,
+            row=HeaderStructureFrameConfig.Layout.INFO_ROW,
             column=1,
             columnspan=5,
             sticky="news",

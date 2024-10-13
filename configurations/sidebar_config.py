@@ -8,11 +8,6 @@ class SidebarConfig:
     Contains classes that define the specific configurations of the sidebar.
     """
 
-    class General:
-        """
-        General configurations.
-        """
-
     class OwnArgs:
         """
         Arguments with values of self.
@@ -22,53 +17,24 @@ class SidebarConfig:
         BORDER_WIDTH: int = Config.Widgets.BORDER_WIDTH
         TRANSPARENT: str = Config.Colors.TRANSPARENT
 
-    class Colors:
-        """
-        Background color, text color, etc.
-        """
+        FILEHANDLER_FRAME_ROW: int = 0
+        SEARCHBAR_FRAME_ROW: int = 1
+        HEADER_LIST_FRAME_ROW: int = 2
+        CONFIG_HEADER_LIST_FRAME_ROW: int = 3
+        PRESET_FRAME_ROW: int = 4
 
-    class Dimensions:
-        """
-        Dimensions.
-        """
+        ROWS_RESIZE: tuple[int, int] = (
+            HEADER_LIST_FRAME_ROW,
+            CONFIG_HEADER_LIST_FRAME_ROW,
+        )
+        ROWS_RESIZE_WEIGHT: int = 1
 
-    class Images:
-        """
-        Images.
-        """
+        ROWS_FIXED: tuple[int, int, int] = (
+            FILEHANDLER_FRAME_ROW,
+            SEARCHBAR_FRAME_ROW,
+            PRESET_FRAME_ROW,
+        )
+        ROWS_FIXED_WEIGHT: int = 0
 
-    class KeyBindings:
-        """
-        Key bindings.
-        """
-
-    class Layout:
-        """
-        Layout.
-        """
-
-    class Texts:
-        """
-        Any static text like label text, button text, etc.
-        """
-
-    class Typography:
-        """
-        Font sizes, font families, weights, etc.
-        """
-
-    class Widgets:
-        """
-        Arguments with values of each single widget.
-        """
-        NAVIGATION_PANEL_VIEW: dict[str:str, str:str, str:bool] = {
-            "side": "left",
-            "fill": "y",
-            "expand": False,
-        }
-
-        PROCESSOR_PANEL_VIEW: dict[str:str, str:str, str:bool] = {
-            "side": "right",
-            "fill": "both",
-            "expand": True,
-        }
+        COLUMN: int = 0
+        STICKY: str = "nsew"
