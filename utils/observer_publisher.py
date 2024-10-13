@@ -202,7 +202,9 @@ class FileStatePublisher(SimplePublisher):
         """
         return self._is_open
 
-    def set_is_open(self, is_open: bool, modifier: SimpleObserver | None = None) -> None:
+    def set_is_open(
+        self, is_open: bool, modifier: SimpleObserver | None = None
+    ) -> None:
         """
         Set the file status.
 
@@ -212,6 +214,9 @@ class FileStatePublisher(SimplePublisher):
         """
         self._is_open = is_open
         self.notify(modifier)
+
+        if is_open:
+            self._is_open = False
 
 
 file_state_publisher = FileStatePublisher()
