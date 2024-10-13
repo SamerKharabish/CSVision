@@ -15,17 +15,17 @@ class AppConfig:
 
         TITLE: str = "CSVision"
         ICON: str = Config.General.ICON
- 
+
     class Dimensions:
         """
         Dimensions.
         """
 
         WIDTH: int = 1150
-        HEIGHT: int = 666
+        HEIGHT: int = 680
 
         MIN_WIDTH: int = WIDTH - 200
-        MIN_HEIGHT: int = HEIGHT - 200
+        MIN_HEIGHT: int = HEIGHT
 
     class Layout:
         """

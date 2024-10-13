@@ -63,26 +63,41 @@ def search_substring(header: str, prefix: str = None, postfix: str = None) -> st
         - prefix (str, optional): The string that comes before the target substring. Defaults to None.
         - postfix (str, optional): The string that comes after the target substring. Defaults to None.
     Returns:
-        - str: The matched substring if found, otherwise `None`.
+        - str: The matched substring if found, otherwise the original header`.
     """
     # Build regex pattern based on the presence of 'prefix' and 'postfix'
     if prefix is None and postfix is None:
         return header
 
+    prefix_escaped = None
+    postfix_escaped = None
+
     # Escape inputs for regex safety
-    prefix_escaped = re.escape(prefix) if prefix else ""
-    postfix_escaped = re.escape(postfix) if postfix else ""
+    if prefix:
+        prefix_escaped = re.escape(prefix)
+    if postfix:
+        postfix_escaped = re.escape(postfix)
 
-    # Pattern decision based on provided boundaries
+    # Try to match both prefix and postfix
     if prefix and postfix:
-        pattern = f"{prefix_escaped}(.*){postfix_escaped}"
-    elif prefix:
+        pattern = f"{prefix_escaped}(.*?){postfix_escaped}"
+        match = re.search(pattern, header)
+        if match:
+            return match.group(1)
+
+    # Try to match prefix only
+    if prefix:
         pattern = f"{prefix_escaped}(.*)"
-    elif postfix:
-        pattern = f"(.*){postfix_escaped}"
+        match = re.search(pattern, header)
+        if match:
+            return match.group(1)
 
-    # Search for the pattern in the provided string
-    match = re.search(pattern, header)
+    # Try to match postfix only
+    if postfix:
+        pattern = f"(.*?){postfix_escaped}"
+        match = re.search(pattern, header)
+        if match:
+            return match.group(1)
 
-    # Return the captured group if matched, else None
-    return match.group(1) if match else None
+    # If no matches, return the original header
+    return header

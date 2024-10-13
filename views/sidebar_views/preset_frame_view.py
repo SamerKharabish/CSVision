@@ -7,7 +7,7 @@ import customtkinter as ctk
 from views.configurations_view import Config
 
 if TYPE_CHECKING:
-    from views.sidebar_frame_view import HeaderFrameView
+    from sidebar_view import SidebarView
 
 
 class PresetFrameView(ctk.CTkFrame):
@@ -17,7 +17,7 @@ class PresetFrameView(ctk.CTkFrame):
 
     __slots__ = "preset_entry", "save_preset_button", "load_preset_button"
 
-    def __init__(self, master: HeaderFrameView) -> None:
+    def __init__(self, master: SidebarView) -> None:
         super().__init__(
             master,
             height=40,

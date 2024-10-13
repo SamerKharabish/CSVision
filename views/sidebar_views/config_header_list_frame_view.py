@@ -6,7 +6,7 @@ import customtkinter as ctk
 from views.configurations_view import Config
 
 if TYPE_CHECKING:
-    from views.sidebar_frame_view import HeaderFrameView
+    from sidebar_view import SidebarView
 
 
 class ConfigHeaderListFrameView(ctk.CTkFrame):
@@ -14,7 +14,7 @@ class ConfigHeaderListFrameView(ctk.CTkFrame):
     Layout of the configuration header list frame.
     """
 
-    def __init__(self, master: HeaderFrameView) -> None:
+    def __init__(self, master: SidebarView) -> None:
         super().__init__(
             master,
             corner_radius=Config.General.CORNER_RADIUS,

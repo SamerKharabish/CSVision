@@ -1,8 +1,8 @@
 General:
   Header structure:
-    first_header_prefix: null
-    first_header_option: Sub-Header
-    first_header_postfix: null
+    first_header_prefix: n_
+    first_header_option: Header
+    first_header_postfix: '::'
     second_header_prefix: null
-    second_header_option: N/A
+    second_header_option: Sub-Header
     second_header_postfix: null
