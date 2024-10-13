@@ -7,7 +7,7 @@ import customtkinter as ctk
 from views.configurations_view import Config
 
 if TYPE_CHECKING:
-    from views.sidebar_frame_view import HeaderFrameView
+    from sidebar_view import SidebarView
 
 
 class PresetFrameView(ctk.CTkFrame):
@@ -15,7 +15,9 @@ class PresetFrameView(ctk.CTkFrame):
     Layout of the preset frame.
     """
 
-    def __init__(self, master: HeaderFrameView) -> None:
+    __slots__ = "preset_entry", "save_preset_button", "load_preset_button"
+
+    def __init__(self, master: SidebarView) -> None:
         super().__init__(
             master,
             height=40,
@@ -30,7 +32,7 @@ class PresetFrameView(ctk.CTkFrame):
         """
         Initialize widgets.
         """
-        self.preset_entry = ctk.CTkEntry(
+        self.preset_entry: ctk.CTkEntry = ctk.CTkEntry(
             self,
             border_width=Config.General.OUTPUT_ENTRY_BORDER_WIDTH,
             border_color=Config.Colors.DIM_GRAY,
@@ -41,7 +43,7 @@ class PresetFrameView(ctk.CTkFrame):
             ),
         )
 
-        self.save_preset_button = ctk.CTkButton(
+        self.save_preset_button: ctk.CTkButton = ctk.CTkButton(
             self,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
@@ -58,7 +60,7 @@ class PresetFrameView(ctk.CTkFrame):
             anchor=Config.Layout.ACTION_BUTTON_TEXT_ANCHOR,
         )
 
-        self.load_preset_button = ctk.CTkButton(
+        self.load_preset_button: ctk.CTkButton = ctk.CTkButton(
             self,
             width=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,
             height=Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT,

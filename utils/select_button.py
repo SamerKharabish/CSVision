@@ -19,8 +19,8 @@ class SelectButton(ctk.CTkButton):
         border_width: int | None = None,
         border_spacing: int = 2,
         bg_color: str | tuple[str, str] = "transparent",
-        fg_color: str | tuple[str, str] | None = None,
-        fg_color_off: str | tuple[str, str] | None = None,
+        fg_color: str | tuple[str, str] | None = "#3E3E3E",
+        fg_color_off: str | tuple[str, str] | None = "#1F6AA5",
         hover_color: str | tuple[str, str] | None = None,
         border_color: str | tuple[str, str] | None = None,
         text_color: str | tuple[str, str] | None = None,
@@ -33,9 +33,9 @@ class SelectButton(ctk.CTkButton):
         textvariable: ctk.Variable | None = None,
         hover: bool = True,
         compound: str = "left",
-        anchor: str = "center",
+        anchor: str = "w",
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             master,
             width,

@@ -3,9 +3,10 @@
 import sys
 from tkinter import messagebox
 import customtkinter as ctk
-from views.configurations_view import AppWindowConfig
-from views.main_view import MainView
+from configurations.app_config import AppConfig
 from controllers.main_controller import MainController
+from views.main_view import MainView
+from utils.threads import safe_thread_queue
 
 
 class AppView(ctk.CTk):
@@ -18,33 +19,33 @@ class AppView(ctk.CTk):
     def __init__(self) -> None:
         super().__init__()
 
-        self.title(AppWindowConfig.General.TITLE)
-        self.iconbitmap(AppWindowConfig.General.ICON)
+        self.title(AppConfig.General.TITLE)
+        self.iconbitmap(AppConfig.General.ICON)
         self.geometry(
-            f"{AppWindowConfig.Dimensions.WIDTH}x{AppWindowConfig.Dimensions.HEIGHT}+{int(self.winfo_screenwidth() / 2 - AppWindowConfig.Dimensions.WIDTH / 2)}+{int(self.winfo_screenheight() / 2 - AppWindowConfig.Dimensions.HEIGHT / 2)}"
+            f"{AppConfig.Dimensions.WIDTH}x{AppConfig.Dimensions.HEIGHT}+{int(self.winfo_screenwidth() / 2 - AppConfig.Dimensions.WIDTH / 2)}+{int(self.winfo_screenheight() / 2 - AppConfig.Dimensions.HEIGHT / 2)}"
         )
         self.minsize(
-            AppWindowConfig.Dimensions.MIN_WIDTH,
-            AppWindowConfig.Dimensions.MIN_HEIGHT,
+            AppConfig.Dimensions.MIN_WIDTH,
+            AppConfig.Dimensions.MIN_HEIGHT,
         )
 
-        self.__initialize_widgets()
-        self.__create_layout()
+        self.initialize_widgets()
+        self.create_layout()
 
-    def __initialize_widgets(self) -> None:
+    def initialize_widgets(self) -> None:
         """
         Initialize widgets.
         """
         self.main_view: MainView = MainView(self)
 
-    def __create_layout(self) -> None:
+    def create_layout(self) -> None:
         """
         Create layout.
         """
         self.main_view.pack(
-            side=AppWindowConfig.Layout.MAINVIEW_SIDE,
-            fill=AppWindowConfig.Layout.MAINVIEW_FILL,
-            expand=AppWindowConfig.Layout.MAINVIEW_EXPAND,
+            side=AppConfig.Layout.MAIN_VIEW["side"],
+            fill=AppConfig.Layout.MAIN_VIEW["fill"],
+            expand=AppConfig.Layout.MAIN_VIEW["expand"],
         )
 
 
@@ -53,36 +54,34 @@ class AppController:
     Functionality of the main window.
     """
 
-    __slots__ = ("__view",)
+    __slots__ = ("view",)
 
-    def __init__(self, view: AppView) -> None:
-        self.__view: AppView = view
+    def __init__(self) -> None:
+        self.view: AppView = AppView()
 
-        self.__initialize_controller()
-        self.__setup_bindings()
+        self.view.protocol("WM_DELETE_WINDOW", self.close_application)
+        self.initialize_controller()
 
-    def __initialize_controller(self) -> None:
+    def initialize_controller(self) -> None:
         """
         Initialize controller.
         """
-        MainController(self.__view.main_view)
+        MainController(self.view.main_view)
 
-    def __setup_bindings(self) -> None:
-        """
-        Binding the application to accessibility callback functions.
-        """
-        self.__view.bind(
-            AppWindowConfig.KeyBindings.CLOSE_APPLICATION, self.__close_application
-        )
-        self.__view.protocol("WM_DELETE_WINDOW", self.__close_application)
-
-    def __close_application(self, _=None) -> None:
+    def close_application(self, _=None) -> None:
         """
         Close the application.
         """
         # TODO: if messagebox.askokcancel(title="Warning", message="Close application?"):
-        self.__view.destroy()
+        safe_thread_queue.stop_worker()
+        self.view.destroy()
         sys.exit(0)
+
+    def run(self) -> None:
+        """
+        Start the mainloop.
+        """
+        self.view.mainloop()
 
 
 def main() -> None:
@@ -91,10 +90,8 @@ def main() -> None:
     """
     ctk.set_appearance_mode("Dark")
 
-    app_view = AppView()
-    AppController(app_view)
-
-    app_view.mainloop()
+    app_controller = AppController()
+    app_controller.run()
 
 
 if __name__ == "__main__":

@@ -1,19 +1,25 @@
 # CSVision
 
-Data visualization tool designed to render data from CSV files into interactive line charts
+ CSVision is a specialized user-friendly tool developed for individuals and professionals who need to analyze and visualize data stored in CSV files. It provides a straightforward solution for turning raw data into clear, interactive visual representations, making it easier to identify trends, patterns, and insights.
 
-This module contains the GUI implementation for a CSV plotter application. It provides a graphical user interface built with customtkinter that allows users to load data from CSV files, visualize the data in a plot, and interact with the data using various controls.
+ With CSVision, users can load CSV files, export the data to XLSX format and manage and visualize large datasets by selecting specific data columns and displaying them in various chart formats, including line, scatter, bar, and stem charts. The tool is equipped with features that allow for flexible chart configurations and filtering data, making it useful for anyone who works with large amounts of CSV data.
+
+ In addition to its visualization capabilities, CSVision features a search bar for quickly finding specific data columns and offers users a preset function to save  their configurations for future use or load old configurations into the GUI, streamlining the process of data analysis.
 
 ![Files](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=files)
 ![Code](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=code)
 ![Lines](https://tokei.rs/b1/github/SamerKharabish/CSVision?category=lines)
 
+## Design
+
+![Parameter Input](documentation/design.png)
+
 ## Features
 
-- ```Accessibility```: Application is closable by pressing the "exit/close" button or the ESC-key.
-- ```Accessibility```: The header frame can be toggled by pressing 'Ctrl + B' or the button on the top of the sidebar.
-- ```Functionality```: CSV files can be selected and loaded with the "Open file button" in the File Explorer section.
-- ```Functionality```: CSV files can be exported to xslx files with the "Export to excel button" in the File Explorer section.
+- ```Accessibility```: The header frame can be toggled by pressing "Ctrl + B" or the "processor_panel_toggle_button" on the top of the navigation.
+- ```Functionality```: CSV files can be selected and loaded with the "open_file_button" in the File Explorer section.
+- ```Accessibility```: Once selected CSV files can be reselected and loaded in the "file_entry" in the File Explorer section.
+- ```Functionality```: CSV files can be exported to xslx files with the "export_to_excel_button" in the File Explorer section.
 - ```Feedback```: Processes are being displayed by a progressbar in the statusbar.
 - ```Feedback```: File sizes are being displayed in the statusbar.
 
@@ -23,6 +29,11 @@ To enhance maintainability, scalability, and testability of the application a Mo
 
 ```bash
 CSVision/
+├── configurations/                         # Configuration files.
+│ ├── app_config.py                         # Application configuration file.
+│ ├── config.py                             # Centralized configuration file.
+│ ├── main_config.py                        # Main configuration file.
+│ └── statusbar_controller.py               # Statusbar configuration file.
 ├── controllers/                            # Contains classes that act as intermediaries between
                                             # models and views. They handle user input,
                                             # update models, and reflect changes in views.
@@ -30,11 +41,17 @@ CSVision/
                                             # between models and sidebar views.
 │ ├── ├── filehandling_frame_controller.py  # Handles interactions in the file handling frame.
 │ ├── ├── header_frame_controller.py        # Handles interactions in the header frame.
-│ ├── └── navigation_frame_controller.py    # Handles interactions in the navigation frame.
+│ ├── └── navigation_panel_controller.py    # Handles interactions in the navigation.
 │ ├── main_controller.py                    # Handles interactions in the main window.
 │ ├── plot_frame_controller.py              # Handles interactions in the plot frame.
-│ ├── sidebar_frame_controller.py           # Handles interactions in the sidebar frame.
-│ └── statusbar_frame_controller.py         # Handles interactions in the statusbar frame.
+│ ├── sidebar_controller.py                 # Handles interactions in the sidebar.
+│ └── statusbar_controller.py               # Handles interactions in the statusbar.
+├── documentation/                          # Collection of documentations.
+│ ├── app_ui.drwaio                         # Application component UI mapping.
+│ ├── component_mapping_ui.drwaio           # Project component UI mapping.
+│ ├── main_ui.drwaio                        # Main component UI mapping.
+│ └── statusbar_ui.drwaio                   # Statusbar component UI mapping.
+│ └── UML.drwaio                            # UML class diagram of the project.
 ├── models/                                 # Contains classes that represent the data
                                             # and business logic of the application.
 │ ├── csv_data_manager.py                   # Handles CSV file related operations.
@@ -57,23 +74,24 @@ CSVision/
                                             # representation of the application.
 │ ├── sidebar_views/                        # Contains classes that define the visual
                                             # representation of the sidebar.
-│ ├── ├── config_header_list_frame_view.py  # The visual configuration of the configuration
+│ ├── ├── config_header_list_frame_view.py  # The visual representation of the configuration
                                             # header list frame.
-│ ├── ├── filehandling_frame_view.py        # The visual configuration of the file handling frame.
-│ ├── ├── header_frame_view.py              # The visual configuration of the header frame.
-│ ├── ├── header_list_frame_view.py         # The visual configuration of the header list frame.
-│ ├── ├── navigation_frame_controller.py    # The visual configuration of the navigation frame.
-│ ├── ├── preset_frame_view.py              # The visual configuration of the preset frame.
-│ ├── └── searchbar_frame_view.py           # The visual configuration of the searchbar frame.
-│ ├── configurations_view.py                # The visual configuration of all views.
+│ ├── ├── filehandling_frame_view.py        # The visual representation of the file handling.
+│ ├── ├── header_frame_view.py              # The visual representation of the header.
+│ ├── ├── header_list_frame_view.py         # The visual representation of the header list.
+│ ├── ├── navigation_panel_controller.py    # The visual representation of the navigation.
+│ ├── ├── preset_frame_view.py              # The visual representation of the preset.
+│ ├── └── searchbar_frame_view.py           # The visual representation of the searchbar.
+│ ├── configurations_view.py                # The visual representation of all views.
 │ ├── main_view.py                          # The visual representation of main window.
-│ ├── plot_frame_view.py                    # The visual representation of the plot frame.
-│ ├── sidebar_frame_view.py                 # The visual representation of the sidebar frame.
-│ └── statusbar_frame_view.py               # The visual representation of the statusbar frame.
+│ ├── plot_frame_view.py                    # The visual representation of the plot.
+│ ├── sidebar_view.py                       # The visual representation of the sidebar.
+│ └── statusbar_view.py                     # The visual representation of the statusbar.
+├── .gitignore
 ├── app.py                                  # Entry point of the application.
+├── LICENSE
 ├── README.md                               # README.
-├── requirements.txt                        # Project dependencies.
-└── UML.drwaio                              # UML class diagram of the project.
+└── requirements.txt                        # Project dependencies.
 ```
 
 ## Feedback

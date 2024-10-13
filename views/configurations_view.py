@@ -17,7 +17,6 @@ class Config:
         FRAME_BORDER_WIDTH: int = 1
 
         NAV_TOOLBAR_CORNER_RADIUS: int = 10
-        INPUT_ENTRY_BORDER_WIDTH: int = 0
         OUTPUT_ENTRY_BORDER_WIDTH: int = 1
 
     class Dimensions:
@@ -35,7 +34,6 @@ class Config:
         """
 
         ESCAPE_KEY: str = "<Escape>"
-        CTRL_B_KEY: str = "<Control-b>"
 
     class ImageFormats:
         """
@@ -47,9 +45,7 @@ class Config:
         CLEAR_SEARCH_RESULT_PNG: str = "resources/Images/clear-search-results.png"
         DOWN_ARROW_PNG: str = "resources/Images/down-arrow.png"
         ERROR: str = "resources/Images/error.png"
-        EXCEL_PNG: str = "resources/Images/excel.png"
         FORWARD_PNG: str = "resources/Images/forward.png"
-        HIDE_SIDEPANEL_PNG: str = "resources/Images/hide-sidepanel.png"
         INFO_PNG: str = "resources/Images/info.png"
         LEGEND_PNG: str = "resources/Images/legend.png"
         OPEN_FILE_PNG: str = "resources/Images/open-file.png"
@@ -57,8 +53,6 @@ class Config:
         REFRESH_PNG: str = "resources/Images/refresh.png"
         RESET_PNG: str = "resources/Images/reset.png"
         SAVE_PNG: str = "resources/Images/save.png"
-        SETTINGS_PNG: str = "resources/Images/settings.png"
-        SHOW_SIDEPANEL_PNG: str = "resources/Images/show-sidepanel.png"
         ZOOM_PNG: str = "resources/Images/zoom.png"
 
     class Fonts:
@@ -94,42 +88,7 @@ class Config:
 
         STANDART_PAD: tuple[int, int] = (7, 7)
 
-        NAVIGATION_FRAME_SIDE: str = "left"
-        NAVIGATION_FRAME_FILL: str = "y"
-        NAVIGATION_FRAME_EXPAND: bool = False
-
-        HEADER_PANEL_SIDE: str = "right"
-        HEADER_PANEL_FILL: str = "y"
-        HEADER_PANEL_EXPAND: bool = True
-
-        TOGGLE_HEADER_FRAME_BUTTON_SIDE: str = "top"
-        TOGGLE_HEADER_FRAME_BUTTON_FILL: str = "x"
-        TOGGLE_HEADER_FRAME_BUTTON_EXPAND: bool = False
-        TOGGLE_HEADER_FRAME_BUTTON_PAD: tuple[int, int] = (3, 3)
-
-        SETTINGS_BUTTON_SIDE: str = "bottom"
-        SETTINGS_BUTTON_FILL: str = "x"
-        SETTINGS_BUTTON_EXPAND: bool = False
-        SETTINGS_BUTTON_PAD: tuple[int, int] = (3, 3)
-
-        SETTINGS_BUTTON_SIDE: str = "bottom"
-        SETTINGS_BUTTON_FILL: str = "x"
-        SETTINGS_BUTTON_EXPAND: bool = False
-        SETTINGS_BUTTON_PAD: tuple[int, int] = (3, 3)
-
-        FILEHANDLING_FRAME_ROW: int = 0
-        SEARCHBAR_FRAME_ROW: int = FILEHANDLING_FRAME_ROW + 1
-        HEADER_LIST_FRAME_ROW: int = SEARCHBAR_FRAME_ROW + 1
-        CONFIG_HEADER_LIST_FRAME_ROW: int = HEADER_LIST_FRAME_ROW + 1
-        PRESET_FRAME_ROW: int = CONFIG_HEADER_LIST_FRAME_ROW + 1
-        GENERAL_FRAME_STICKY: str = "nesw"
-
-        SEARCHBAR_TITLE_FARME_ROW: int = 0
-        SEARCHBAR_ENTRY_ROW: int = 1
-        SEARCHBAR_FILTER_FARME_ROW: int = 2
-        FILEHANDLING_TITLE_FARME_ROW: int = 0
         FILEHANDLING_ENTRY_ROW: int = 1
-        FILEHANDLING_FILTER_FARME_ROW: int = 2
         GENERAL_INNER_FRAME_STICKY: str = "ew"
 
         HEADER_FRAME_LABELS_ANCHOR: str = "w"
@@ -172,9 +131,6 @@ class Config:
         Label texts
         """
 
-        FILEHANDLING_TEXT: str = "FILE EXPLORER"
-        SEARCHBAR_TEXT: str = "SEARCH"
-        HEADER_LIST_TEXT: str = f"{'HEADERS':>9}"
         CONFIG_HEADER_LIST_TEXT: str = f"{'CONFIGURATIONS':>16}"
 
     class Values:
@@ -182,26 +138,18 @@ class Config:
         Values of different widgets.
         """
 
-        SEARCH_SELECTION_SEGMENTED_BUTTON: list[str] = ["Sub-H", "Heading"]
-        FILTER_SUBHEADINGS_SEGMENTED_BUTTON: list[str] = [
-            "All",
-            "Non const. zero",
-            "Non const.",
-        ]
         PLOT_TYPES: list[str] = [
             "Plot",
             "Scatter",
             "Bar",
             "Stem",
         ]
-        COLLECTION_FILEPATH_YAML: str = "resources/yaml-files/file_paths.yaml"
         USER_SETTINGS_YAML: str = "resources/yaml-files/user_settings.yaml"
-        FILE_TYPE_TO_READ: list[tuple[str, str]] = [("CSV", "*.csv*")]
 
 
-class AppWindowConfig:
+class SearchbarConfig:
     """
-    Contains classes that define the configurations of the app window.
+    Contains classes that define the configurations of the searchbar.
     """
 
     class General:
@@ -209,77 +157,97 @@ class AppWindowConfig:
         General configurations.
         """
 
-        TITLE: str = "CSVision"
-        ICON: str = Config.ImageFormats.APP_ICON
+        TEXT: str = "SEARCH"
 
-    class KeyBindings:
-        """
-        Key bindings.
-        """
-
-        CLOSE_APPLICATION: str = Config.KeyBindings.ESCAPE_KEY
+        CORNER_RADIUS: int = Config.General.CORNER_RADIUS
+        FRAME_BORDER_WIDTH: int = Config.General.FRAME_BORDER_WIDTH
 
     class Dimensions:
         """
-        Dimensions.
+        Dimensions
         """
 
-        WIDTH: int = 1150
-        HEIGHT: int = 666
+        BUTTON_HEIGHT: int = Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT
+        BUTTON_WIDTH: int = Config.Dimensions.ACTION_BUTTON_WIDTH_HEIGHT
 
-        MIN_WIDTH: int = WIDTH - 200
-        MIN_HEIGHT: int = HEIGHT - 200
+        IMAGE_HEIGHT: int = Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT
+        IMAGE_WIDTH: int = Config.Dimensions.ACTION_IMAGE_WIDTH_HEIGHT
+
+    class Colors:
+        """
+        Colors
+        """
+
+        TRANSPARENT: str = Config.Colors.TRANSPARENT
+        HOVER: str = Config.Colors.ONYX_LIGHT
+
+    class Fonts:
+        """
+        Fonts.
+        """
+
+        FONT: str = Config.Fonts.FONT
+        FONT_SIZE: int = Config.Fonts.NORMAL_SIZE
+        FONT_WEIGHT: str = Config.Fonts.WEIGHT_BOLD
+
+    class ImageFormats:
+        """
+        Image formats
+        """
+
+        CLEAR_SEARCH_RESULT_PNG: str = Config.ImageFormats.CLEAR_SEARCH_RESULT_PNG
+
+    class Values:
+        """
+        Values of different widgets.
+        """
+
+        SEARCH_MODE_SEGMENTED_BUTTON: list[str] = ["Sub-H", "Header"]
 
     class Layout:
         """
         Layout.
         """
 
-        MAINVIEW_SIDE: str = "top"
-        MAINVIEW_FILL: str = "both"
-        MAINVIEW_EXPAND: bool = True
+        TITLE_LABELS_ANCHOR: str = "w"
+        BUTTON_IMAGE_ANCHOR: str = "center"
+
+        INPUT_ENTRY_BORDER_WIDTH: int = 0
+
+        TITLE_FARME_ROW: int = 0
+        ENTRY_ROW: int = 1
+        FILTER_FARME_ROW: int = 2
+
+        GENERAL_INNER_FRAME_STICKY: str = Config.Layout.GENERAL_INNER_FRAME_STICKY
+        ZERO_PAD: tuple[int, int] = Config.Layout.ZERO_PAD
+        STANDART_PAD: tuple[int, int] = Config.Layout.STANDART_PAD
+        LABELS_IN_FRAME_PADX: tuple[int, int] = Config.Layout.LABELS_IN_FRAME_PADX
 
 
-class MainConfig:
+class SettingsConfig:
     """
-    Contains classes that define the configurations of the settings window.
+    Contains classes that define the configurations of the user settings.
     """
 
-    class General:
+    class Values:
         """
-        General configurations.
-        """
-
-        CORNER_RADIUS: int = Config.General.CORNER_RADIUS
-
-    class KeyBindings:
-        """
-        Key bindings.
+        Values of different widgets.
         """
 
-        RESIZE_HEADER_FRAME: str = Config.KeyBindings.CTRL_B_KEY
-
-    class Layout:
-        """
-        Layout.
-        """
-
-        STATUSBARVIEW_SIDE: str = "bottom"
-        STATUSBARVIEW_FILL: str = "x"
-        STATUSBARVIEW_EXPAND: bool = False
-
-        SIDEBARVIEW_SIDE: str = "left"
-        SIDEBARVIEW_FILL: str = "y"
-        SIDEBARVIEW_EXPAND: bool = False
-
-        PLOTVIEW_SIDE: str = "right"
-        PLOTVIEW_FILL: str = "both"
-        PLOTVIEW_EXPAND: bool = True
+        HEADERSTRUCTURE_LABELS: list[str] = [
+            "Prefix",
+            "Category",
+            "Postfix",
+            "Prefix",
+            "Category",
+            "Postfix",
+        ]
+        HEADERSTRUCTURE_OPTIONS: list[str] = ["Sub-Header", "Header", "N/A"]
 
 
-class StatusbarConfig:
+class HeaderListFrameConfig:
     """
-    Contains classes that define the configurations of the statusbar.
+    Contains classes that define the configurations of the header list frame.
     """
 
     class General:
@@ -290,41 +258,17 @@ class StatusbarConfig:
         CORNER_RADIUS: int = Config.General.CORNER_RADIUS
         FRAME_BORDER_WIDTH: int = Config.General.FRAME_BORDER_WIDTH
 
-    class KeyBindings:
-        """
-        Key bindings.
-        """
+        USER_SETTINGS_YAML: str = Config.Values.USER_SETTINGS_YAML
 
-        CLOSE_APPLICATION: str = Config.KeyBindings.ESCAPE_KEY
-
-    class Dimensions:
+    class Values:
         """
-        Dimensions.
+        Values of different widgets.
         """
 
-        HEIGHT: int = 20
-
-    class Layout:
-        """
-        Layout.
-        """
-
-        STANDART_PAD: tuple[int, int] = Config.Layout.STANDART_PAD
-
-        FILSIZE_LABEL_SIDE: str = "left"
-        FILSIZE_LABEL_PADX: tuple[int, int] = (50, 10)
-        FILSIZE_LABEL_PADY: tuple[int, int] = (1, 1)
-
-        PROGRESSBAR_SIDE: str = "left"
-        PROGRESSBAR_PADX: tuple[int, int] = (10, 10)
-
-    class Fonts:
-        """
-        Fonts.
-        """
-
-        FILSIZE_LABEL_FONT: str = Config.Fonts.FONT
-        FILSIZE_LABEL_FONT_SIZE: int = Config.Fonts.NORMAL_SIZE
+        HEADERSTRUCTURE_LABELS: list[str] = SettingsConfig.Values.HEADERSTRUCTURE_LABELS
+        HEADERSTRUCTURE_OPTIONS: list[str] = (
+            SettingsConfig.Values.HEADERSTRUCTURE_OPTIONS
+        )
 
 
 class SettingsWindowConfig:
@@ -400,19 +344,23 @@ class SettingsWindowConfig:
 
         FONT: str = Config.Fonts.FONT
         FONT_SIZE: int = Config.Fonts.NORMAL_SIZE
-        FONT_WEIGHT_BOLD: str = Config.Fonts.WEIGHT_BOLD
+        FONT_WEIGHT: str = Config.Fonts.WEIGHT_BOLD
 
     class Values:
         """
         Values of different widgets.
         """
 
-        CATEGORIES: list[str] = ["General"]
+        CATEGORIES: list[str] = [
+            category
+            for category, obj in SettingsConfig.__dict__.items()
+            if isinstance(obj, type)
+        ]
 
 
-class HeaderStructureConfig:
+class HeaderStructureFrameConfig:
     """
-    Contains classes that define the configurations of the header structure.
+    Contains classes that define the configurations of the header structure frame.
     """
 
     class General:
@@ -446,6 +394,7 @@ class HeaderStructureConfig:
         """
         Layout.
         """
+
         TITLE_ROW: int = 0
         LABEL_ROW: int = 1
         INPUT_ROW: int = 2
@@ -467,7 +416,7 @@ class HeaderStructureConfig:
 
         FONT: str = Config.Fonts.FONT
         FONT_SIZE: int = Config.Fonts.NORMAL_SIZE
-        FONT_WEIGHT_BOLD: str = Config.Fonts.WEIGHT_BOLD
+        FONT_WEIGHT: str = Config.Fonts.WEIGHT_BOLD
 
     class ImageFormats:
         """
@@ -479,15 +428,10 @@ class HeaderStructureConfig:
 
     class Values:
         """
-        Values of different widgets.
+        Layout.
         """
 
-        HEADERSTRUCTURE_LABELS: list[str] = [
-            "Prefix",
-            "Category",
-            "Postfix",
-            "Prefix",
-            "Category",
-            "Postfix",
-        ]
-        HEADERSTRUCTURE_OPTIONS: list[str] = ["Sub-Header", "Header", "N/A"]
+        HEADERSTRUCTURE_LABELS: list[str] = SettingsConfig.Values.HEADERSTRUCTURE_LABELS
+        HEADERSTRUCTURE_OPTIONS: list[str] = (
+            SettingsConfig.Values.HEADERSTRUCTURE_OPTIONS
+        )

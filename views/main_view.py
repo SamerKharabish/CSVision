@@ -1,12 +1,14 @@
-""" Defines the MainView class with the main layout. """
+"""Defines the MainView class with the main layout."""
 
 from __future__ import annotations
 from typing import TYPE_CHECKING
 import customtkinter as ctk
-from views.configurations_view import MainConfig
-from views.statusbar_frame_view import StatusbarFrameView
-from views.sidebar_frame_view import SidebarFrameView
-from views.plot_frame_view import PlotFrameView
+from configurations.main_config import MainConfig
+from utils.helper_functions import find_root
+from .navbar_view import NavigationBarView
+from .plot_frame_view import PlotView
+from .sidebar_view import SidebarView
+from .statusbar_view import StatusbarView
 
 
 if TYPE_CHECKING:
@@ -18,41 +20,90 @@ class MainView(ctk.CTkFrame):
     Layout of the main application.
     """
 
-    __slots__ = "root", "statusbar_frame_view", "sidebar_frame_view", "plot_frame_view"
+    __slots__ = (
+        "root",
+        "nav_bar_view",
+        "plot_view",
+        "sidebar_view",
+        "statusbar_view",
+    )
 
     def __init__(self, master: AppView) -> None:
-        super().__init__(master, corner_radius=MainConfig.General.CORNER_RADIUS)
-        self.root: ctk.CTk
+        super().__init__(master, corner_radius=MainConfig.OwnArgs.CORNER_RADIUS)
 
-        self.__initialize_widgets()
-        self.__create_layout()
+        self.root: ctk.CTk = find_root(self)
 
-    def __initialize_widgets(self) -> None:
+        self.initialize_widgets()
+        self.create_layout()
+
+    def initialize_widgets(self) -> None:
         """
         Initialize widgets.
         """
-        self.statusbar_frame_view: StatusbarFrameView = StatusbarFrameView(self)
-        self.sidebar_frame_view: SidebarFrameView = SidebarFrameView(self)
-        self.plot_frame_view: PlotFrameView = PlotFrameView(self)
+        self.nav_bar_view: NavigationBarView = NavigationBarView(self)
+        self.plot_view: PlotView = PlotView(self)
+        self.sidebar_view: SidebarView = SidebarView(self)
+        self.statusbar_view: StatusbarView = StatusbarView(self)
 
-    def __create_layout(self) -> None:
+    def create_layout(self) -> None:
         """
         Create layout.
         """
-        self.statusbar_frame_view.pack(
-            side=MainConfig.Layout.STATUSBARVIEW_SIDE,
-            fill=MainConfig.Layout.STATUSBARVIEW_FILL,
-            expand=MainConfig.Layout.STATUSBARVIEW_EXPAND,
+        self.statusbar_view.pack(
+            side=MainConfig.Layout.STATUSBAR_VIEW["side"],
+            fill=MainConfig.Layout.STATUSBAR_VIEW["fill"],
+            expand=MainConfig.Layout.STATUSBAR_VIEW["expand"],
         )
 
-        self.sidebar_frame_view.pack(
-            side=MainConfig.Layout.SIDEBARVIEW_SIDE,
-            fill=MainConfig.Layout.SIDEBARVIEW_FILL,
-            expand=MainConfig.Layout.SIDEBARVIEW_EXPAND,
+        self.nav_bar_view.pack(
+            side=MainConfig.Layout.NAV_BAR_VIEW["side"],
+            fill=MainConfig.Layout.NAV_BAR_VIEW["fill"],
+            expand=MainConfig.Layout.NAV_BAR_VIEW["expand"],
         )
 
-        self.plot_frame_view.pack(
-            side=MainConfig.Layout.PLOTVIEW_SIDE,
-            fill=MainConfig.Layout.PLOTVIEW_FILL,
-            expand=MainConfig.Layout.PLOTVIEW_EXPAND,
+        self.sidebar_view.pack(
+            side=MainConfig.Layout.SIDEBAR_VIEW["side"],
+            fill=MainConfig.Layout.SIDEBAR_VIEW["fill"],
+            expand=MainConfig.Layout.SIDEBAR_VIEW["expand"],
         )
+
+        self.plot_view.pack(
+            side=MainConfig.Layout.PLOT_VIEW["side"],
+            fill=MainConfig.Layout.PLOT_VIEW["fill"],
+            expand=MainConfig.Layout.PLOT_VIEW["expand"],
+        )
+
+    def hide_sidebar(self) -> None:
+        """
+        Hide the sidebar.
+        """
+        self.sidebar_view.pack_forget()
+
+    def show_sidebar(self) -> None:
+        """
+        Show the sidebar.
+        """
+        self.plot_view.pack_forget()
+
+        self.sidebar_view.pack(
+            side=MainConfig.Layout.SIDEBAR_VIEW["side"],
+            fill=MainConfig.Layout.SIDEBAR_VIEW["fill"],
+            expand=MainConfig.Layout.SIDEBAR_VIEW["expand"],
+        )
+
+        # This needs to be done, to prevent an overlap of the
+        # sidebar from the plot when the main window is "small".
+        self.plot_view.pack(
+            side=MainConfig.Layout.PLOT_VIEW["side"],
+            fill=MainConfig.Layout.PLOT_VIEW["fill"],
+            expand=MainConfig.Layout.PLOT_VIEW["expand"],
+        )
+
+    def toggle_sidebar(self) -> None:
+        """
+        Toggle the sidebar.
+        """
+        if self.sidebar_view.winfo_manager():
+            self.hide_sidebar()
+        else:
+            self.show_sidebar()

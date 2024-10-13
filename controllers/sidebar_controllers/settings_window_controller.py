@@ -1,13 +1,13 @@
-""" Defines the NavigationFrameController class with the navigation frame functionality. """
+""" Defines the SettingsWindowController class with the settings window functionality. """
 
 import customtkinter as ctk
 from views.configurations_view import SettingsWindowConfig
-from views.configurations_view import HeaderStructureConfig
+from views.configurations_view import HeaderStructureFrameConfig
 from views.sidebar_views.settings_window_view import (
     SettingsWindowView,
     HeaderStructureFrameView,
 )
-from utils.helper_functions import find_root
+from utils.observer_publisher import new_settings_publisher
 from models.yaml_manager import YAMLManager
 
 
@@ -18,13 +18,13 @@ class SettingsWindowController:
 
     __slots__ = "__view", "__settings_manager", "__header_structure_frame_controller"
 
-    def __init__(self, view: SettingsWindowView) -> None:
-        self.__view: SettingsWindowView = view
+    def __init__(self, root: ctk.CTk) -> None:
+        self.__view: SettingsWindowView = SettingsWindowView(root)
 
-        self.__view.root = find_root(self.__view)
+        self.__view.root = root
 
         self.__settings_manager = YAMLManager(
-            HeaderStructureConfig.General.USER_SETTINGS_YAML
+            HeaderStructureFrameConfig.General.USER_SETTINGS_YAML
         )
 
         self.__setup_bindings()
@@ -69,26 +69,27 @@ class SettingsWindowController:
         """
         Apply changes.
         """
-        header_structure = {
-            "Header structure": self.__header_structure_frame_controller.get_header_structure()
-        }
-        settings = {"General": header_structure}
-        self.__settings_manager.dump_yaml_file(settings)
+        header_structure = (
+            self.__header_structure_frame_controller.get_header_structure()
+        )
+        if header_structure:
+            header_structure = {
+                "Header structure": self.__header_structure_frame_controller.get_header_structure()
+            }
+            settings = {"General": header_structure}
+            self.__settings_manager.dump_yaml_file(settings)
+            new_settings_publisher.new_settings_saved = True
 
     def __on_ok(self) -> None:
         """
-        Confirm and apply changes, and then withdraws the settings window.
+        Apply changes and then withdraw the settings window.
         """
-        header_structure = {
-            "Header structure": self.__header_structure_frame_controller.get_header_structure()
-        }
-        settings = {"General": header_structure}
-        self.__settings_manager.dump_yaml_file(settings)
+        self.__on_apply()
         self.__view.withdraw()
 
     def __on_cancel(self) -> None:
         """
-        Discard any changes and withdraws the settings window.
+        Discard any changes and withdraw the settings window.
         """
         self.__set_settings()
         self.__view.withdraw()
@@ -128,6 +129,7 @@ class HeaderStructureFrameController:
         "__second_header_prefix_var",
         "__second_header_option_var",
         "__second_header_postfix_var",
+        "__error_flag",
     )
 
     def __init__(self, view: HeaderStructureFrameView) -> None:
@@ -140,6 +142,8 @@ class HeaderStructureFrameController:
         self.__second_header_prefix_var: ctk.StringVar = ctk.StringVar()
         self.__second_header_option_var: ctk.StringVar = ctk.StringVar()
         self.__second_header_postfix_var: ctk.StringVar = ctk.StringVar()
+
+        self.__error_flag: bool = False
 
     def set_header_structure(self, header_structure_settings: dict) -> None:
         """
@@ -231,19 +235,19 @@ class HeaderStructureFrameController:
                 option (str): The option of the enties.
             """
             # If the user option is N/A, disable the entries
-            if option == HeaderStructureConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]:
+            if option == HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]:
                 for i in indexes:
                     self.__view.header_entries[i].configure(
-                        text_color=HeaderStructureConfig.Colors.DISABLED,
-                        fg_color=HeaderStructureConfig.Colors.DISABLED,
+                        text_color=HeaderStructureFrameConfig.Colors.DISABLED,
+                        fg_color=HeaderStructureFrameConfig.Colors.DISABLED,
                         state="disabled",
                     )
             # If the user option is not N/A, enable the entries
             else:
                 for i in indexes:
                     self.__view.header_entries[i].configure(
-                        text_color=HeaderStructureConfig.Colors.TEXT,
-                        fg_color=HeaderStructureConfig.Colors.NORMAL,
+                        text_color=HeaderStructureFrameConfig.Colors.TEXT,
+                        fg_color=HeaderStructureFrameConfig.Colors.NORMAL,
                         state="normal",
                     )
 
@@ -265,18 +269,18 @@ class HeaderStructureFrameController:
 
         if (
             first_header_option
-            != HeaderStructureConfig.Values.HEADERSTRUCTURE_OPTIONS[0]
+            != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[0]
             and second_header_option
-            != HeaderStructureConfig.Values.HEADERSTRUCTURE_OPTIONS[0]
+            != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[0]
         ):
-            error_message = f"One category must be {HeaderStructureConfig.Values.HEADERSTRUCTURE_OPTIONS[0]}!"
+            error_message = f"One category must be {HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[0]}!"
         elif first_header_option == second_header_option:
             error_message = "The categories cannot be the same!"
         elif (
             first_header_option
-            != HeaderStructureConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
+            != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
             and second_header_option
-            != HeaderStructureConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
+            != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
             and first_header_postfix == ""
             and second_header_prefix == ""
         ):
@@ -293,9 +297,13 @@ class HeaderStructureFrameController:
         """
         error_text_len = len(error_message)
         if error_text_len == 0:
+            self.__error_flag = False
+
             self.__view.error_label.grid_forget()
             self.__view.error_box.grid_forget()
         else:
+            self.__error_flag = True
+
             self.__view.error_box.configure(
                 height=30 + ((error_text_len - 1) // 100) * 15
             )
@@ -306,14 +314,14 @@ class HeaderStructureFrameController:
             self.__view.error_box.configure(state="disabled")
 
             self.__view.error_label.grid(
-                row=HeaderStructureConfig.Layout.ERROR_ROW,
+                row=HeaderStructureFrameConfig.Layout.ERROR_ROW,
                 column=0,
                 sticky="news",
                 padx=(25, 0),
                 pady=(0, 7),
             )
             self.__view.error_box.grid(
-                row=HeaderStructureConfig.Layout.ERROR_ROW,
+                row=HeaderStructureFrameConfig.Layout.ERROR_ROW,
                 column=1,
                 columnspan=5,
                 sticky="news",
@@ -321,7 +329,7 @@ class HeaderStructureFrameController:
                 pady=(0, 7),
             )
 
-    def get_header_structure(self) -> dict[str, str | None]:
+    def get_header_structure(self) -> dict[str, str | None] | None:
         """
         Retrieve the header structure settings from the user input.
 
@@ -340,7 +348,7 @@ class HeaderStructureFrameController:
                 first_header_prefix
                 if first_header_prefix != ""
                 and first_header_option
-                != HeaderStructureConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
+                != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
                 else None
             ),
             "first_header_option": first_header_option,
@@ -348,14 +356,14 @@ class HeaderStructureFrameController:
                 first_header_postfix
                 if first_header_postfix != ""
                 and first_header_option
-                != HeaderStructureConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
+                != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
                 else None
             ),
             "second_header_prefix": (
                 second_header_prefix
                 if second_header_prefix != ""
                 and second_header_option
-                != HeaderStructureConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
+                != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
                 else None
             ),
             "second_header_option": second_header_option,
@@ -363,9 +371,9 @@ class HeaderStructureFrameController:
                 second_header_postfix
                 if second_header_postfix != ""
                 and second_header_option
-                != HeaderStructureConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
+                != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
                 else None
             ),
         }
 
-        return header_structure_settings
+        return header_structure_settings if not self.__error_flag else None
