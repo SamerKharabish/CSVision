@@ -8,7 +8,7 @@ from models.csv_data_manager import csv_data_manager
 from utils.observer_publisher import (
     SimpleObserver,
     SimplePublisher,
-    file_size_publisher,
+    file_state_publisher,
     new_settings_publisher,
 )
 from utils.scrollable_frame_manager import ScrollableFrameManager
@@ -36,7 +36,7 @@ class HeaderListController(SimpleObserver):
             HeaderListFrameConfig.General.USER_SETTINGS_YAML
         )
 
-        file_size_publisher.attach(self)
+        file_state_publisher.attach(self)
         new_settings_publisher.attach(self)
 
         self.scrollable_frame_filled: bool = False
@@ -155,5 +155,5 @@ class HeaderListController(SimpleObserver):
         return header_list
 
     def __del__(self) -> None:
-        file_size_publisher.detach(self)
+        file_state_publisher.detach(self)
         new_settings_publisher.detach(self)
