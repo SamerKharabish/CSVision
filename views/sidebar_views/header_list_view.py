@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 import customtkinter as ctk
 from configurations.header_list_config import HeaderListConfig
+from utils.select_button import SelectButton
 
 if TYPE_CHECKING:
     from sidebar_view import SidebarView
@@ -65,7 +66,10 @@ class HeaderListView(ctk.CTkFrame):
         )
 
         # Needed so widgets inside use whole width of the scrollable frame
-        self.header_scrollableframe.columnconfigure(0, weight=1)
+        self.header_scrollableframe.columnconfigure(
+            HeaderListConfig.Layout.HEADER_SCROLLABLEFRAME["column"],
+            weight=HeaderListConfig.Layout.HEADER_SCROLLABLEFRAME["column_weight"],  # type: ignore
+        )
 
     def create_layout(self) -> None:
         """
@@ -85,4 +89,78 @@ class HeaderListView(ctk.CTkFrame):
             expand=HeaderListConfig.Layout.FILTER_MODE_SEG_BUTTON["expand"],
             padx=HeaderListConfig.Layout.FILTER_MODE_SEG_BUTTON["padx"],
             pady=HeaderListConfig.Layout.FILTER_MODE_SEG_BUTTON["pady"],
+        )
+
+    def add_label_to_header_scrollableframe(self) -> ctk.CTkLabel:
+        """
+        Add a group label to the header_scrollableframe.
+
+        Returns:
+            ctk.CTkLabel: A group label.
+        """
+        label = ctk.CTkLabel(
+            self.header_scrollableframe,
+            anchor=HeaderListConfig.Widgets.HEADER_SCROLLABLEFRAME_WIDGETS["label_anchor"],  # type: ignore
+            font=ctk.CTkFont(
+                family=HeaderListConfig.Widgets.HEADER_SCROLLABLEFRAME_WIDGETS["family"],  # type: ignore
+                size=HeaderListConfig.Widgets.HEADER_SCROLLABLEFRAME_WIDGETS["size"],  # type: ignore
+                weight=HeaderListConfig.Widgets.HEADER_SCROLLABLEFRAME_WIDGETS["weight"],  # type: ignore
+            ),
+        )
+
+        return label
+
+    def manage_label(self, label: ctk.CTkLabel, text: str, index: int) -> None:
+        """
+        Updates the text and position of a label.
+
+        Args:
+            label (ctk.CTkLabel): The label to update and grid.
+            text (str): The text that needs to be updated.
+            index (int): The index of the label in the grid.
+        """
+        label.configure(text=text)
+        label.grid(
+            row=index,
+            column=HeaderListConfig.Layout.HEADER_SCROLLABLEFRAME["column"],
+            sticky=HeaderListConfig.Layout.HEADER_SCROLLABLEFRAME_WIDGETS["sticky"],
+            padx=HeaderListConfig.Layout.HEADER_SCROLLABLEFRAME_WIDGETS["label_padx"],
+            pady=HeaderListConfig.Layout.HEADER_SCROLLABLEFRAME_WIDGETS["label_pady"],
+        )
+
+    def add_button_to_header_scrollableframe(self) -> SelectButton:
+        """
+        Add a button to the header_scrollableframe.
+
+        Returns:
+            SelectButton: A group label.
+        """
+        button = SelectButton(
+            self.header_scrollableframe,
+            height=HeaderListConfig.Widgets.HEADER_SCROLLABLEFRAME_WIDGETS["button_height"],  # type: ignore
+            corner_radius=HeaderListConfig.Widgets.HEADER_SCROLLABLEFRAME_WIDGETS["button_corner_radius"],  # type: ignore
+            font=ctk.CTkFont(
+                family=HeaderListConfig.Widgets.HEADER_SCROLLABLEFRAME_WIDGETS["family"],  # type: ignore
+                size=HeaderListConfig.Widgets.HEADER_SCROLLABLEFRAME_WIDGETS["size"],  # type: ignore
+            ),
+        )
+
+        return button
+
+    def manage_button(self, button: SelectButton, text: str, index: int) -> None:
+        """
+        Updates the text and position of a button.
+
+        Args:
+            button (SelectButton): The button to update and grid.
+            text (str): The text that needs to be updated.
+            index (int): The index of the button in the grid.
+        """
+        button.configure(text=text)
+        button.grid(
+            row=index,
+            column=HeaderListConfig.Layout.HEADER_SCROLLABLEFRAME["column"],
+            sticky=HeaderListConfig.Layout.HEADER_SCROLLABLEFRAME_WIDGETS["sticky"],
+            padx=HeaderListConfig.Layout.HEADER_SCROLLABLEFRAME_WIDGETS["button_padx"],
+            pady=HeaderListConfig.Layout.HEADER_SCROLLABLEFRAME_WIDGETS["button_pady"],
         )

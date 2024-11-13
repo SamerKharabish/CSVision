@@ -5,8 +5,8 @@ from views.statusbar_view import StatusbarView
 from utils.observer_publisher import (
     SimplePublisher,
     SimpleObserver,
-    file_size_publisher,
-    ProgressPublisher,
+    file_state_publisher,
+    ProgressStatePublisher,
     progress_state_publisher,
 )
 
@@ -22,7 +22,7 @@ class StatusbarController(SimpleObserver):
         SimpleObserver.__init__(self)
         self.view: StatusbarView = view
 
-        file_size_publisher.attach(self)
+        file_state_publisher.attach(self)
         progress_state_publisher.attach(self)
 
     def start_progressbar(self, mode: str) -> None:
@@ -55,23 +55,30 @@ class StatusbarController(SimpleObserver):
 
     def update(self, simple_publisher: SimplePublisher) -> None:
         if simple_publisher == progress_state_publisher:
-            if progress_state_publisher.value == ProgressPublisher.START_PROGRESSBAR:
+            if (
+                progress_state_publisher.value
+                == ProgressStatePublisher.START_PROGRESSBAR
+            ):
                 self.start_progressbar(progress_state_publisher.mode)
-            elif progress_state_publisher.value == ProgressPublisher.STOP_PROGRESSBAR:
+            elif (
+                progress_state_publisher.value
+                == ProgressStatePublisher.STOP_PROGRESSBAR
+            ):
                 self.stop_progressbar()
             else:
                 self.view.root.after(
                     0, self.view.progressbar.set(progress_state_publisher.value)
                 )
-        elif simple_publisher == file_size_publisher:
-            self.view.filesize_label.configure(
-                text=(
-                    f"{float(file_size_publisher.file_size):,.0f} kB".replace(",", ".")
-                    if file_size_publisher.file_size
-                    else "??"
+        elif simple_publisher == file_state_publisher:
+            if file_state_publisher.is_open is True:
+                filesize_label_text: str = (
+                    f"{float(file_state_publisher.file_size):,.0f} kB".replace(",", ".")
                 )
-            )
+                file_state_publisher.set_is_open(False, self)
+            else:
+                filesize_label_text: str = "--"
+            self.view.filesize_label.configure(text=filesize_label_text)
 
     def __del__(self) -> None:
-        file_size_publisher.detach(self)
+        file_state_publisher.detach(self)
         progress_state_publisher.detach(self)

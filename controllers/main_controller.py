@@ -5,7 +5,7 @@ from utils.observer_publisher import (
     SimpleObserver,
     SimplePublisher,
     sidebar_state_publisher,
-    ProgressPublisher,
+    ProgressStatePublisher,
     progress_state_publisher,
 )
 from views.main_view import MainView
@@ -66,10 +66,16 @@ class MainController(SimpleObserver):
             else:
                 self.view.hide_sidebar()
         if simple_publisher == progress_state_publisher:
-            if progress_state_publisher.value == ProgressPublisher.START_PROGRESSBAR:
+            if (
+                progress_state_publisher.value
+                == ProgressStatePublisher.START_PROGRESSBAR
+            ):
                 # TODO: Disable / hide / overlay / ... user input widgets
                 pass
-            elif progress_state_publisher.value == ProgressPublisher.STOP_PROGRESSBAR:
+            elif (
+                progress_state_publisher.value
+                == ProgressStatePublisher.STOP_PROGRESSBAR
+            ):
                 # TODO: Enable / show / remove overlay / ... user input widgets
                 pass
 

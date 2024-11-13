@@ -9,8 +9,8 @@ from configurations.filehandler_config import FileHandlerConfig
 from views.sidebar_views.filehandler_view import FileHandlerView
 from utils.threads import safe_thread_queue
 from utils.observer_publisher import (
-    file_size_publisher,
-    ProgressPublisher,
+    file_state_publisher,
+    ProgressStatePublisher,
     progress_state_publisher,
 )
 
@@ -81,13 +81,13 @@ class FileHandlerController:
         """
         Before doing an operation to the csv file start the progressbar.
         """
-        progress_state_publisher.value = ProgressPublisher.START_PROGRESSBAR
+        progress_state_publisher.value = ProgressStatePublisher.START_PROGRESSBAR
 
     def post_operation_file(self) -> None:
         """
         After doing an operation to the csv file stop the progressbar.
         """
-        progress_state_publisher.value = ProgressPublisher.STOP_PROGRESSBAR
+        progress_state_publisher.value = ProgressStatePublisher.STOP_PROGRESSBAR
 
     def open_file(self, file_name: str) -> None:
         """
@@ -99,16 +99,17 @@ class FileHandlerController:
         try:
             csv_data_manager.read_file(file_name)
         except FileNotFoundError as exc:
-            file_size_publisher.file_size = None
+            file_state_publisher.set_is_open(False)
             messagebox.showerror("Error", str(exc))
         except pd.errors.EmptyDataError as exc:
-            file_size_publisher.file_size = None
+            file_state_publisher.set_is_open(False)
             messagebox.showerror("Error", str(exc))
         else:
             self.file_manager.dump_yaml_file(file_name)
-            file_size_publisher.file_size = str(
+            file_state_publisher.file_size = str(
                 round(os.path.getsize(file_name) / 1024)
             )
+            file_state_publisher.set_is_open(True)
 
     def export_file(self, file_name: str) -> None:
         """

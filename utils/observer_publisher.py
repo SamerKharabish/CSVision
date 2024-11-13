@@ -102,6 +102,9 @@ class ProgressStatePublisher(SimplePublisher):
     Monitor the progress of the data loading thread.
     """
 
+    START_PROGRESSBAR: float = 0.0
+    STOP_PROGRESSBAR: float = 100.0
+
     __slots__ = "_mode", "_value"
 
     def __init__(self) -> None:
@@ -156,30 +159,31 @@ class ProgressStatePublisher(SimplePublisher):
 progress_state_publisher = ProgressStatePublisher()
 
 
-class FileSizePublisher(SimplePublisher):
+class FileStatePublisher(SimplePublisher):
     """
     Monitor the file size.
     """
 
-    __slots__ = ("_file_size",)
+    __slots__ = ("_file_size", "_is_open")
 
     def __init__(self) -> None:
         SimplePublisher.__init__(self)
 
-        self._file_size: str | None = None
+        self._file_size: str
+        self._is_open: bool = False
 
     @property
-    def file_size(self) -> str | None:
+    def file_size(self) -> str:
         """
         Get the file size.
 
         Returns:
-            str: The set file size.
+            str: The file size.
         """
         return self._file_size
 
     @file_size.setter
-    def file_size(self, file_size: str | None) -> None:
+    def file_size(self, file_size: str) -> None:
         """
         Set the file size.
 
@@ -187,71 +191,35 @@ class FileSizePublisher(SimplePublisher):
             file_size (str): The file size to set.
         """
         self._file_size = file_size
-        self.notify()
-
-
-file_size_publisher = FileSizePublisher()
-
-
-class ProgressPublisher(SimplePublisher):
-    """
-    Monitor the progress of the data loading thread.
-    """
-
-    START_PROGRESSBAR: float = 0.0
-    STOP_PROGRESSBAR: float = 100.0
-
-    __slots__ = "__progress_mode", "__progress"
-
-    def __init__(self) -> None:
-        SimplePublisher.__init__(self)
-
-        self.__progress_mode: str
-        self.__progress: int = 0
 
     @property
-    def progress_mode(self) -> str:
+    def is_open(self) -> bool:
         """
-        Get the progress mode.
+        Get the file status.
 
         Returns:
-            str: The set progress mode.
+            bool: The file status.
         """
-        return self.__progress_mode
+        return self._is_open
 
-    @progress_mode.setter
-    def progress_mode(self, progress_mode: str) -> None:
+    def set_is_open(
+        self, is_open: bool, modifier: SimpleObserver | None = None
+    ) -> None:
         """
-        Set the progress mode.
+        Set the file status.
 
         Args:
-            progress_mode (str): The progress mode to set.
+            is_open (bool): The file status to set.
+            modifier (SimpleObserver | None, optional): Observer that triggered the update. Defaults to None.
         """
-        self.__progress_mode = progress_mode
-        self.notify()
+        self._is_open = is_open
+        self.notify(modifier)
 
-    @property
-    def progress(self) -> float:
-        """
-        Get the progress.
-
-        Returns:
-            float: The set progress.
-        """
-        return self.__progress
-
-    @progress.setter
-    def progress(self, progress: float) -> None:
-        """
-        Set the progress.
-
-        Args:
-            progress (float): The progress to set.
-        """
-        self.__progress = progress
+        if is_open:
+            self._is_open = False
 
 
-progress_publisher = ProgressPublisher()
+file_state_publisher = FileStatePublisher()
 
 
 class NewSettingsPublisher(SimplePublisher):
