@@ -1,54 +1,8 @@
 """ Defines all thread classes. """
 
-from collections import defaultdict
 from collections.abc import Callable
-from threading import Thread, Event
+from threading import Thread
 import queue
-import customtkinter as ctk
-from utils.observer_publisher import progress_publisher
-from utils.scrollable_frame_manager import ScrollableFrameManager
-from models.csv_data_manager import csv_data_manager
-
-
-class UpdateWidgetThread(Thread):
-    """
-    Handle the updating of the scrollable frame.
-    """
-
-    __slots__ = (
-        "daemon",
-        "event",
-        "__scrollable_frame_manager",
-        "__header_list",
-        "__header_seperator",
-    )
-
-    def __init__(
-        self,
-        header_scrollableframe: ctk.CTkScrollableFrame,
-        header_list: defaultdict[str, list[int] | list[tuple[str, int]]],
-        header_seperator: str,
-    ) -> None:
-        super().__init__()
-
-        self.daemon = True
-        self.event = Event()
-
-        self.__scrollable_frame_manager: ScrollableFrameManager = header_scrollableframe
-
-        self.__header_list: defaultdict[str, list[int] | list[tuple[str, int]]] = (
-            header_list
-        )
-        self.__header_seperator: str = header_seperator
-
-    def run(self) -> None:
-        self.__scrollable_frame_manager.update_scrollable_frame(
-            self.__header_list,
-            self.__header_seperator,
-            csv_data_manager.get_raw_data_columns_count(),
-        )
-        progress_publisher.progress_mode = "stop"
-        self.event.set()
 
 
 class SafeThread(Thread):

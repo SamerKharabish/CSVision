@@ -18,6 +18,8 @@ class Config:
         FILE_PATHS_FILE_TYPES: list[tuple[str, str]] = [("CSV", "*.csv*")]
         FILE_PATHS_INITIAL_DIR: str = "/"
 
+        USER_SETTINGS: str = "resources/yaml-files/user_settings.yaml"
+
     class Colors:
         """
         Background color, text color, etc.
