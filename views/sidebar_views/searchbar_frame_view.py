@@ -113,18 +113,18 @@ class SearchbarFrameView(ctk.CTkFrame):
         """
         self.rowconfigure(
             (
-                SearchbarConfig.Layout.TITLE_FARME_ROW,
+                SearchbarConfig.Layout.TITLE_FRAME_ROW,
                 SearchbarConfig.Layout.ENTRY_ROW,
-                SearchbarConfig.Layout.FILTER_FARME_ROW,
+                SearchbarConfig.Layout.FILTER_FRAME_ROW,
             ),
             weight=1,
         )
 
         self.title_frame.grid(
-            row=SearchbarConfig.Layout.TITLE_FARME_ROW,
+            row=SearchbarConfig.Layout.TITLE_FRAME_ROW,
             column=0,
             sticky=SearchbarConfig.Layout.GENERAL_INNER_FRAME_STICKY,
-            padx=SearchbarConfig.Layout.STANDART_PAD,
+            padx=SearchbarConfig.Layout.STANDARD_PAD,
             pady=(1, 0),
         )
         self.title_frame.columnconfigure((0, 1), weight=1)
@@ -147,7 +147,7 @@ class SearchbarFrameView(ctk.CTkFrame):
             row=SearchbarConfig.Layout.ENTRY_ROW,
             column=0,
             sticky=SearchbarConfig.Layout.GENERAL_INNER_FRAME_STICKY,
-            padx=SearchbarConfig.Layout.STANDART_PAD,
+            padx=SearchbarConfig.Layout.STANDARD_PAD,
             pady=(0, 7),
         )
         self.search_entry.grid(

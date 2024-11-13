@@ -2,6 +2,7 @@
 
 from collections.abc import Callable
 from threading import Thread
+from typing import Any
 import queue
 
 
@@ -14,19 +15,19 @@ class SafeThread(Thread):
 
     def __init__(
         self,
-        *thread_args: any,
-        target: Callable[..., any] | None = None,
-        args: tuple[any, ...] = (),
+        *thread_args: Any,
+        target: Callable[..., Any] | None = None,
+        args: tuple[Any, ...] = (),
         before_thread: Callable[[], None] | None = None,
         after_thread: Callable[[], None] | None = None,
-        **thread_kwargs: any
+        **thread_kwargs: Any
     ) -> None:
         """
         Initializes the SafeThread object.
 
         Args:
-            target (Callable[..., any] | None, optional): The function to run in the thread. Defaults to None.
-            args (tuple[any, ...], optional): The arguments to pass to the target function. Defaults to ().
+            target (Callable[..., Any] | None, optional): The function to run in the thread. Defaults to None.
+            args (tuple[Any, ...], optional): The arguments to pass to the target function. Defaults to ().
             before_thread (Callable[[], None] | None, optional):  A function to execute before the thread starts. Defaults to None.
             after_thread (Callable[[], None] | None, optional): A function to execute after the thread finishes. Defaults to None.
         """
@@ -35,15 +36,15 @@ class SafeThread(Thread):
         self.daemon = True  # To automatically terminate thread when program exits
 
         # The function to be run in the thread
-        self.target: Callable[..., any] | None = target
+        self.target: Callable[..., Any] | None = target
         # Arguments for the target function
-        self.args: tuple[any, ...] = args
+        self.args: tuple[Any, ...] = args
 
         # Function to execute before the thread starts
-        self.before_thread = before_thread
+        self.before_thread: Callable[[], None] | None = before_thread
 
         # Function to execute after the thread finishes
-        self.after_thread = after_thread
+        self.after_thread: Callable[[], None] | None = after_thread
 
         # Flag to indicate if the thread is currently running
         self._is_running: bool = False
@@ -91,7 +92,7 @@ class SafeThreadQueue:
         """
         Initializes the SafeThreadQueue with a task queue and starts a worker thread.
         """
-        self.task_queue = queue.Queue()  # Queue to hold SafeThread objects
+        self.task_queue: queue.Queue = queue.Queue()  # Queue to hold SafeThread objects
         self.worker_thread = Thread(target=self.worker, daemon=True)  # Worker thread
         self.worker_thread.start()  # Start the worker thread
 
@@ -112,8 +113,8 @@ class SafeThreadQueue:
 
     def add_task(
         self,
-        target: Callable[..., any],
-        args: tuple[any, ...] = (),
+        target: Callable[..., Any],
+        args: tuple[Any, ...] = (),
         before_thread: Callable[[], None] | None = None,
         after_thread: Callable[[], None] | None = None,
     ) -> None:
@@ -121,8 +122,8 @@ class SafeThreadQueue:
         Adds a new SafeThread task to the queue.
 
         Args:
-            target (Callable[..., any]): The function to be executed by the SafeThread
-            args (tuple[any, ...], optional): The arguments to pass to the target function. Defaults to ().
+            target (Callable[..., Any]): The function to be executed by the SafeThread
+            args (tuple[Any, ...], optional): The arguments to pass to the target function. Defaults to ().
             before_thread (Callable[[], None] | None, optional):  A function to execute before the thread starts. Defaults to None.
             after_thread (Callable[[], None] | None, optional): A function to execute after the thread finishes. Defaults to None.
         """
