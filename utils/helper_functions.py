@@ -1,11 +1,11 @@
-""" Defines helper funtions. """
+""" Defines helper functions. """
 
 import re
 import tkinter as tk
 import customtkinter as ctk
 
 
-def find_root(widget: tk.Widget) -> ctk.CTk:
+def find_root(widget: tk.Widget) -> ctk.CTk | tk.Widget:
     """
     Recursively traverse the widget hierarchy to find the root widget.
 
@@ -15,7 +15,7 @@ def find_root(widget: tk.Widget) -> ctk.CTk:
     Returns:
         ctk.CTk: The root widget of the widget hierarchy.
     """
-    parent_id = widget.winfo_parent()
+    parent_id: str = widget.winfo_parent()
 
     # If there is no parent, this widget is the root
     if not parent_id:
@@ -52,7 +52,9 @@ def calculate_absolute_position(widget: tk.Widget) -> tuple[int, int]:
     return x + parent_x, y + parent_y
 
 
-def search_substring(header: str, prefix: str = None, postfix: str = None) -> str:
+def search_substring(
+    header: str, prefix: str | None = None, postfix: str | None = None
+) -> str:
     """
     Searches for a substring within a header based on what comes before or after the target
     substring. If `prefix` is not specified, the match will start from the beginning. If `postfix`
@@ -69,8 +71,8 @@ def search_substring(header: str, prefix: str = None, postfix: str = None) -> st
     if prefix is None and postfix is None:
         return header
 
-    prefix_escaped = None
-    postfix_escaped = None
+    prefix_escaped: str | None = None
+    postfix_escaped: str | None = None
 
     # Escape inputs for regex safety
     if prefix:
@@ -80,8 +82,8 @@ def search_substring(header: str, prefix: str = None, postfix: str = None) -> st
 
     # Try to match both prefix and postfix
     if prefix and postfix:
-        pattern = f"{prefix_escaped}(.*?){postfix_escaped}"
-        match = re.search(pattern, header)
+        pattern: str = f"{prefix_escaped}(.*?){postfix_escaped}"
+        match: re.Match[str] | None = re.search(pattern, header)
         if match:
             return match.group(1)
 

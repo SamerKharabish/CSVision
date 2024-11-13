@@ -235,7 +235,7 @@ class HeaderStructureFrameController:
                 option (str): The option of the enties.
             """
             # If the user option is N/A, disable the entries
-            if option == HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]:
+            if option == HeaderStructureFrameConfig.Values.HEADER_STRUCTURE_OPTIONS[-1]:
                 for i in indexes:
                     self.__view.header_entries[i].configure(
                         text_color=HeaderStructureFrameConfig.Colors.DISABLED,
@@ -269,18 +269,18 @@ class HeaderStructureFrameController:
 
         if (
             first_header_option
-            != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[0]
+            != HeaderStructureFrameConfig.Values.HEADER_STRUCTURE_OPTIONS[0]
             and second_header_option
-            != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[0]
+            != HeaderStructureFrameConfig.Values.HEADER_STRUCTURE_OPTIONS[0]
         ):
-            error_message = f"One category must be {HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[0]}!"
+            error_message = f"One category must be {HeaderStructureFrameConfig.Values.HEADER_STRUCTURE_OPTIONS[0]}!"
         elif first_header_option == second_header_option:
             error_message = "The categories cannot be the same!"
         elif (
             first_header_option
-            != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
+            != HeaderStructureFrameConfig.Values.HEADER_STRUCTURE_OPTIONS[-1]
             and second_header_option
-            != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
+            != HeaderStructureFrameConfig.Values.HEADER_STRUCTURE_OPTIONS[-1]
             and first_header_postfix == ""
             and second_header_prefix == ""
         ):
@@ -348,7 +348,7 @@ class HeaderStructureFrameController:
                 first_header_prefix
                 if first_header_prefix != ""
                 and first_header_option
-                != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
+                != HeaderStructureFrameConfig.Values.HEADER_STRUCTURE_OPTIONS[-1]
                 else None
             ),
             "first_header_option": first_header_option,
@@ -356,14 +356,14 @@ class HeaderStructureFrameController:
                 first_header_postfix
                 if first_header_postfix != ""
                 and first_header_option
-                != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
+                != HeaderStructureFrameConfig.Values.HEADER_STRUCTURE_OPTIONS[-1]
                 else None
             ),
             "second_header_prefix": (
                 second_header_prefix
                 if second_header_prefix != ""
                 and second_header_option
-                != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
+                != HeaderStructureFrameConfig.Values.HEADER_STRUCTURE_OPTIONS[-1]
                 else None
             ),
             "second_header_option": second_header_option,
@@ -371,7 +371,7 @@ class HeaderStructureFrameController:
                 second_header_postfix
                 if second_header_postfix != ""
                 and second_header_option
-                != HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS[-1]
+                != HeaderStructureFrameConfig.Values.HEADER_STRUCTURE_OPTIONS[-1]
                 else None
             ),
         }

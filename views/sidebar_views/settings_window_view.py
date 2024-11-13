@@ -119,7 +119,7 @@ class SettingsWindowView(ctk.CTkToplevel):
             side=SettingsWindowConfig.Layout.CATEGORY_FRAME_SIDE,
             fill=SettingsWindowConfig.Layout.CATEGORY_FRAME_FILL,
             expand=SettingsWindowConfig.Layout.CATEGORY_FRAME_EXPAND,
-            padx=SettingsWindowConfig.Layout.STANDART_PAD,
+            padx=SettingsWindowConfig.Layout.STANDARD_PAD,
             pady=SettingsWindowConfig.Layout.CATEGORY_FRAME_PADY,
         )
 
@@ -127,7 +127,7 @@ class SettingsWindowView(ctk.CTkToplevel):
             side=SettingsWindowConfig.Layout.HEADER_STRUCTURE_FRAME_SIDE,
             fill=SettingsWindowConfig.Layout.HEADER_STRUCTURE_FRAME_FILL,
             expand=SettingsWindowConfig.Layout.HEADER_STRUCTURE_FRAME_EXPAND,
-            padx=SettingsWindowConfig.Layout.STANDART_PAD,
+            padx=SettingsWindowConfig.Layout.STANDARD_PAD,
             pady=SettingsWindowConfig.Layout.HEADER_STRUCTURE_FRAME_PADY,
         )
 
@@ -135,7 +135,7 @@ class SettingsWindowView(ctk.CTkToplevel):
             side=SettingsWindowConfig.Layout.MANAGE_SETTINGS_FRAME_SIDE,
             fill=SettingsWindowConfig.Layout.MANAGE_SETTINGS_FRAME_FILL,
             expand=SettingsWindowConfig.Layout.MANAGE_SETTINGS_FRAME_EXPAND,
-            padx=SettingsWindowConfig.Layout.STANDART_PAD,
+            padx=SettingsWindowConfig.Layout.STANDARD_PAD,
             pady=SettingsWindowConfig.Layout.MANAGE_SETTINGS_FRAME_PADY,
         )
 
@@ -143,21 +143,21 @@ class SettingsWindowView(ctk.CTkToplevel):
             side=SettingsWindowConfig.Layout.MANAGE_BUTTON_SIDE,
             fill=SettingsWindowConfig.Layout.MANAGE_BUTTON_FILL,
             expand=SettingsWindowConfig.Layout.MANAGE_BUTTON_EXPAND,
-            padx=SettingsWindowConfig.Layout.STANDART_PAD,
+            padx=SettingsWindowConfig.Layout.STANDARD_PAD,
             pady=SettingsWindowConfig.Layout.MANAGE_BUTTON_PADY,
         )
         self.cancel_button.pack(
             side=SettingsWindowConfig.Layout.MANAGE_BUTTON_SIDE,
             fill=SettingsWindowConfig.Layout.MANAGE_BUTTON_FILL,
             expand=SettingsWindowConfig.Layout.MANAGE_BUTTON_EXPAND,
-            padx=SettingsWindowConfig.Layout.STANDART_PAD,
+            padx=SettingsWindowConfig.Layout.STANDARD_PAD,
             pady=SettingsWindowConfig.Layout.MANAGE_BUTTON_PADY,
         )
         self.ok_button.pack(
             side=SettingsWindowConfig.Layout.MANAGE_BUTTON_SIDE,
             fill=SettingsWindowConfig.Layout.MANAGE_BUTTON_FILL,
             expand=SettingsWindowConfig.Layout.MANAGE_BUTTON_EXPAND,
-            padx=SettingsWindowConfig.Layout.STANDART_PAD,
+            padx=SettingsWindowConfig.Layout.STANDARD_PAD,
             pady=SettingsWindowConfig.Layout.MANAGE_BUTTON_PADY,
         )
 
@@ -222,7 +222,7 @@ class HeaderStructureFrameView(ctk.CTkFrame):
         )
 
         self.__labels: list[ctk.CTkLabel] = []
-        for labels in HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_LABELS:
+        for labels in HeaderStructureFrameConfig.Values.HEADER_STRUCTURE_LABELS:
             self.__labels.append(
                 ctk.CTkLabel(
                     self,
@@ -253,7 +253,7 @@ class HeaderStructureFrameView(ctk.CTkFrame):
                 family=HeaderStructureFrameConfig.Fonts.FONT,
                 size=HeaderStructureFrameConfig.Fonts.FONT_SIZE,
             ),
-            values=HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS,
+            values=HeaderStructureFrameConfig.Values.HEADER_STRUCTURE_OPTIONS,
         )
 
         self.second_header_option: ctk.CTkOptionMenu = ctk.CTkOptionMenu(
@@ -262,7 +262,7 @@ class HeaderStructureFrameView(ctk.CTkFrame):
                 family=HeaderStructureFrameConfig.Fonts.FONT,
                 size=HeaderStructureFrameConfig.Fonts.FONT_SIZE,
             ),
-            values=HeaderStructureFrameConfig.Values.HEADERSTRUCTURE_OPTIONS,
+            values=HeaderStructureFrameConfig.Values.HEADER_STRUCTURE_OPTIONS,
         )
 
         self.__info_label: ctk.CTkLabel = ctk.CTkLabel(

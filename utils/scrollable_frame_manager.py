@@ -7,7 +7,7 @@ from utils.select_button import SelectButton
 # from utils.trie import Trie
 from views.configurations_view import HeaderListFrameConfig
 from views.configurations_view import SearchbarConfig
-from utils.observer_publisher import progress_publisher
+# from utils.observer_publisher import progress_publisher
 
 
 class ScrollableFrameManager:

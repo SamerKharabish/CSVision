@@ -198,7 +198,7 @@ class PlotView(ctk.CTkFrame):
             side=Config.Layout.PLOT_FRAME_PLOT_AREA_FRAME_SIDE,
             fill=Config.Layout.PLOT_FRAME_PLOT_AREA_FRAME_FILL,
             expand=Config.Layout.PLOT_FRAME_PLOT_AREA_FRAME_EXPAND,
-            padx=Config.Layout.STANDART_PAD,
+            padx=Config.Layout.STANDARD_PAD,
             pady=Config.Layout.PLOT_FRAME_PLOT_AREA_FRAME_PADY,
         )
 
@@ -220,43 +220,43 @@ class PlotView(ctk.CTkFrame):
             side=Config.Layout.NAV_TOOLBAR_BUTTONS_SIDE,
             expand=Config.Layout.NAV_TOOLBAR_BUTTONS_EXPAND,
             padx=Config.Layout.NAV_TOOLBAR_LEFT_BUTTONS_PADX,
-            pady=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDARD_PAD,
         )
         self.__back_button.pack(
             side=Config.Layout.NAV_TOOLBAR_BUTTONS_SIDE,
             expand=Config.Layout.NAV_TOOLBAR_BUTTONS_EXPAND,
-            padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
+            padx=Config.Layout.STANDARD_PAD,
+            pady=Config.Layout.STANDARD_PAD,
         )
         self.__forward_button.pack(
             side=Config.Layout.NAV_TOOLBAR_BUTTONS_SIDE,
             expand=Config.Layout.NAV_TOOLBAR_BUTTONS_EXPAND,
-            padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
+            padx=Config.Layout.STANDARD_PAD,
+            pady=Config.Layout.STANDARD_PAD,
         )
         self.__pan_button.pack(
             side=Config.Layout.NAV_TOOLBAR_BUTTONS_SIDE,
             expand=Config.Layout.NAV_TOOLBAR_BUTTONS_EXPAND,
-            padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
+            padx=Config.Layout.STANDARD_PAD,
+            pady=Config.Layout.STANDARD_PAD,
         )
         self.__zoom_button.pack(
             side=Config.Layout.NAV_TOOLBAR_BUTTONS_SIDE,
             expand=Config.Layout.NAV_TOOLBAR_BUTTONS_EXPAND,
-            padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
+            padx=Config.Layout.STANDARD_PAD,
+            pady=Config.Layout.STANDARD_PAD,
         )
         self.__save_button.pack(
             side=Config.Layout.NAV_TOOLBAR_BUTTONS_SIDE,
             expand=Config.Layout.NAV_TOOLBAR_BUTTONS_EXPAND,
-            padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
+            padx=Config.Layout.STANDARD_PAD,
+            pady=Config.Layout.STANDARD_PAD,
         )
         self.__legend_button.pack(
             side=Config.Layout.NAV_TOOLBAR_BUTTONS_SIDE,
             expand=Config.Layout.NAV_TOOLBAR_BUTTONS_EXPAND,
             padx=Config.Layout.NAV_TOOLBAR_RIGHT_BUTTONS_PADX,
-            pady=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDARD_PAD,
         )
 
     def __initialize_figure(self) -> None:
@@ -287,5 +287,5 @@ class PlotView(ctk.CTkFrame):
             fill=Config.Layout.CANVAS_FILL,
             expand=Config.Layout.CANVAS_EXPAND,
             padx=Config.Layout.CANVAS_PADY,
-            pady=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDARD_PAD,
         )
