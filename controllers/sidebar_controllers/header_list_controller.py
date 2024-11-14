@@ -198,15 +198,19 @@ class HeaderListController(SimpleObserver):
         the current button groups can accommodate, additional groups or buttons are added as needed.
         Unused buttons in each group are hidden.
         """
+        # 1. Hide all labels
+        for label in self.label_widgets.values():
+            label.grid_forget()
+
         headers = list(self.header_list.keys())
 
-        # 1. Calculate the required number of groups based on the total number of headers
+        # 2. Calculate the required number of groups based on the total number of headers
         total_nr_header: int = len(headers)
         required_groups: int = (
             total_nr_header + HeaderListConfig.OwnArgs.MAX_BUTTONS_PER_GROUP - 1
         ) // HeaderListConfig.OwnArgs.MAX_BUTTONS_PER_GROUP
 
-        # 2. Dynamically add extra groups if the existing ones are insufficient
+        # 3. Dynamically add extra groups if the existing ones are insufficient
         total_nr_of_groups: int = len(self.button_widgets)
         for extra_group_index in range(total_nr_of_groups, required_groups):
             self.button_widgets[f"group_{extra_group_index}"] = [
@@ -214,14 +218,14 @@ class HeaderListController(SimpleObserver):
                 for _ in range(HeaderListConfig.OwnArgs.INITIAL_NR_OF_BUTTONS_PER_GROUP)
             ]  # Add a group of buttons
 
-        # 3. Calculate buttons per group after adjustments
+        # 4. Calculate buttons per group after adjustments
         button_groups = list(self.button_widgets.values())
         total_nr_of_groups = len(button_groups)
         buttons_per_group: int = (
             total_nr_header + total_nr_of_groups - 1
         ) // total_nr_of_groups
 
-        # 4. Adjust each button group with headers
+        # 5. Adjust each button group with headers
         header_count: int = 0  # Track string index
         for button_group in button_groups:
 
