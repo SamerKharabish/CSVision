@@ -83,7 +83,6 @@ class StatusbarController(SimpleObserver):
                     0,
                     self.determinate_progress,
                 )
-                self.determinate_progress()
         elif simple_publisher == file_state_publisher:
             if file_state_publisher.is_open is True:
                 filesize_label_text: str = (
