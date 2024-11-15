@@ -84,14 +84,13 @@ class StatusbarController(SimpleObserver):
                     self.determinate_progress,
                 )
         elif simple_publisher == file_state_publisher:
+            self.view.filesize_label.configure(text="--")
             if file_state_publisher.is_open is True:
                 filesize_label_text: str = (
                     f"{float(file_state_publisher.file_size):,.0f} kB".replace(",", ".")
                 )
                 file_state_publisher.set_is_open(False, self)
-            else:
-                filesize_label_text: str = "--"
-            self.view.filesize_label.configure(text=filesize_label_text)
+                self.view.filesize_label.configure(text=filesize_label_text)
 
     def __del__(self) -> None:
         file_state_publisher.detach(self)

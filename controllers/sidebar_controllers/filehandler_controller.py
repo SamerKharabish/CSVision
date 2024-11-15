@@ -62,7 +62,7 @@ class FileHandlerController:
         safe_thread_queue.add_task(
             self.open_file,
             args=(self.view.selected_file_path.get(),),
-            before_thread=self.pre_operation_file,
+            before_thread=self.pre_open_file,
             after_thread=self.post_operation_file,
         )
 
@@ -76,6 +76,13 @@ class FileHandlerController:
             before_thread=self.pre_operation_file,
             after_thread=self.post_operation_file,
         )
+
+    def pre_open_file(self) -> None:
+        """
+        Before doing an open file operation.
+        """
+        file_state_publisher.set_is_open(False)
+        self.pre_operation_file()
 
     def pre_operation_file(self) -> None:
         """
