@@ -12,6 +12,8 @@ from utils.observer_publisher import (
     SimplePublisher,
     file_state_publisher,
     new_settings_publisher,
+    ProgressStatePublisher,
+    progress_state_publisher,
 )
 
 # from utils.scrollable_frame_manager import ScrollableFrameManager
@@ -181,7 +183,24 @@ class HeaderListController(SimpleObserver):
         # Reset the parent canvas view to the top
         # pylint: disable=W0212
         self.view.header_scrollableframe._parent_canvas.yview_moveto(0)
-        safe_thread_queue.add_task(self.manage_widgets_in_header_scrollableframe)
+        safe_thread_queue.add_task(
+            self.manage_widgets_in_header_scrollableframe,
+            before_thread=self.pre_update_header_scrollableframe,
+            after_thread=self.post_update_header_scrollableframe,
+        )
+
+    def pre_update_header_scrollableframe(self) -> None:
+        """
+        Before doing an operation to the csv file start the progressbar.
+        """
+        progress_state_publisher.mode = "determinate"
+        progress_state_publisher.value = ProgressStatePublisher.START_PROGRESSBAR
+
+    def post_update_header_scrollableframe(self) -> None:
+        """
+        After doing an operation to the csv file stop the progressbar.
+        """
+        progress_state_publisher.value = ProgressStatePublisher.STOP_PROGRESSBAR
 
     def manage_widgets_in_header_scrollableframe(self) -> None:
         if self.header_separator == "":
@@ -243,6 +262,9 @@ class HeaderListController(SimpleObserver):
                         header_count,
                         header,
                     )
+                    progress_state_publisher.value = (
+                        header_count / total_nr_header
+                    ) * 100
                     header_count += 1
                 else:  # Hide any extra buttons that are not needed
                     try:
