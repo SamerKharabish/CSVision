@@ -82,13 +82,13 @@ class FileHandlerController:
         Before doing an operation to the csv file start the progressbar.
         """
         progress_state_publisher.mode = "indeterminate"
-        progress_state_publisher.value = ProgressStatePublisher.START_PROGRESSBAR
+        progress_state_publisher.set_value(ProgressStatePublisher.START_PROGRESSBAR)
 
     def post_operation_file(self) -> None:
         """
         After doing an operation to the csv file stop the progressbar.
         """
-        progress_state_publisher.value = ProgressStatePublisher.STOP_PROGRESSBAR
+        progress_state_publisher.set_value(ProgressStatePublisher.STOP_PROGRESSBAR)
 
     def open_file(self, file_name: str) -> None:
         """
