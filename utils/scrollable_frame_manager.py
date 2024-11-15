@@ -7,7 +7,7 @@ from utils.select_button import SelectButton
 # from utils.trie import Trie
 from views.configurations_view import HeaderListFrameConfig
 from views.configurations_view import SearchbarConfig
-from utils.observer_publisher import progress_publisher
+# from utils.observer_publisher import progress_publisher
 
 
 class ScrollableFrameManager:
@@ -234,8 +234,8 @@ class ScrollableFrameManager:
 
                     current_row += 1
 
-                    progress_publisher.progress = number_of_buttons * (1 / progress)
-                    progress_publisher.progress_mode = "determinate"
+                    # progress_publisher.progress = number_of_buttons * (1 / progress)
+                    # progress_publisher.progress_mode = "determinate"
 
                     number_of_buttons += 1
 
@@ -262,8 +262,8 @@ class ScrollableFrameManager:
                     group_of_buttons, len_of_buttons, index, index, key
                 )
 
-                progress_publisher.progress = number_of_buttons * (1 / progress)
-                progress_publisher.progress_mode = "determinate"
+                # progress_publisher.progress = number_of_buttons * (1 / progress)
+                # progress_publisher.progress_mode = "determinate"
 
                 number_of_buttons += 1
 

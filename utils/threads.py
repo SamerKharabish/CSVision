@@ -1,54 +1,9 @@
 """ Defines all thread classes. """
 
-from collections import defaultdict
 from collections.abc import Callable
-from threading import Thread, Event
+from threading import Thread
+from typing import Any
 import queue
-import customtkinter as ctk
-from utils.observer_publisher import progress_publisher
-from utils.scrollable_frame_manager import ScrollableFrameManager
-from models.csv_data_manager import csv_data_manager
-
-
-class UpdateWidgetThread(Thread):
-    """
-    Handle the updating of the scrollable frame.
-    """
-
-    __slots__ = (
-        "daemon",
-        "event",
-        "__scrollable_frame_manager",
-        "__header_list",
-        "__header_seperator",
-    )
-
-    def __init__(
-        self,
-        header_scrollableframe: ctk.CTkScrollableFrame,
-        header_list: defaultdict[str, list[int] | list[tuple[str, int]]],
-        header_seperator: str,
-    ) -> None:
-        super().__init__()
-
-        self.daemon = True
-        self.event = Event()
-
-        self.__scrollable_frame_manager: ScrollableFrameManager = header_scrollableframe
-
-        self.__header_list: defaultdict[str, list[int] | list[tuple[str, int]]] = (
-            header_list
-        )
-        self.__header_seperator: str = header_seperator
-
-    def run(self) -> None:
-        self.__scrollable_frame_manager.update_scrollable_frame(
-            self.__header_list,
-            self.__header_seperator,
-            csv_data_manager.get_raw_data_columns_count(),
-        )
-        progress_publisher.progress_mode = "stop"
-        self.event.set()
 
 
 class SafeThread(Thread):
@@ -60,19 +15,19 @@ class SafeThread(Thread):
 
     def __init__(
         self,
-        *thread_args: any,
-        target: Callable[..., any] | None = None,
-        args: tuple[any, ...] = (),
+        *thread_args: Any,
+        target: Callable[..., Any] | None = None,
+        args: tuple[Any, ...] = (),
         before_thread: Callable[[], None] | None = None,
         after_thread: Callable[[], None] | None = None,
-        **thread_kwargs: any
+        **thread_kwargs: Any
     ) -> None:
         """
         Initializes the SafeThread object.
 
         Args:
-            target (Callable[..., any] | None, optional): The function to run in the thread. Defaults to None.
-            args (tuple[any, ...], optional): The arguments to pass to the target function. Defaults to ().
+            target (Callable[..., Any] | None, optional): The function to run in the thread. Defaults to None.
+            args (tuple[Any, ...], optional): The arguments to pass to the target function. Defaults to ().
             before_thread (Callable[[], None] | None, optional):  A function to execute before the thread starts. Defaults to None.
             after_thread (Callable[[], None] | None, optional): A function to execute after the thread finishes. Defaults to None.
         """
@@ -81,15 +36,15 @@ class SafeThread(Thread):
         self.daemon = True  # To automatically terminate thread when program exits
 
         # The function to be run in the thread
-        self.target: Callable[..., any] | None = target
+        self.target: Callable[..., Any] | None = target
         # Arguments for the target function
-        self.args: tuple[any, ...] = args
+        self.args: tuple[Any, ...] = args
 
         # Function to execute before the thread starts
-        self.before_thread = before_thread
+        self.before_thread: Callable[[], None] | None = before_thread
 
         # Function to execute after the thread finishes
-        self.after_thread = after_thread
+        self.after_thread: Callable[[], None] | None = after_thread
 
         # Flag to indicate if the thread is currently running
         self._is_running: bool = False
@@ -137,7 +92,7 @@ class SafeThreadQueue:
         """
         Initializes the SafeThreadQueue with a task queue and starts a worker thread.
         """
-        self.task_queue = queue.Queue()  # Queue to hold SafeThread objects
+        self.task_queue: queue.Queue = queue.Queue()  # Queue to hold SafeThread objects
         self.worker_thread = Thread(target=self.worker, daemon=True)  # Worker thread
         self.worker_thread.start()  # Start the worker thread
 
@@ -158,8 +113,8 @@ class SafeThreadQueue:
 
     def add_task(
         self,
-        target: Callable[..., any],
-        args: tuple[any, ...] = (),
+        target: Callable[..., Any],
+        args: tuple[Any, ...] = (),
         before_thread: Callable[[], None] | None = None,
         after_thread: Callable[[], None] | None = None,
     ) -> None:
@@ -167,8 +122,8 @@ class SafeThreadQueue:
         Adds a new SafeThread task to the queue.
 
         Args:
-            target (Callable[..., any]): The function to be executed by the SafeThread
-            args (tuple[any, ...], optional): The arguments to pass to the target function. Defaults to ().
+            target (Callable[..., Any]): The function to be executed by the SafeThread
+            args (tuple[Any, ...], optional): The arguments to pass to the target function. Defaults to ().
             before_thread (Callable[[], None] | None, optional):  A function to execute before the thread starts. Defaults to None.
             after_thread (Callable[[], None] | None, optional): A function to execute after the thread finishes. Defaults to None.
         """

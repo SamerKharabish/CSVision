@@ -86,20 +86,20 @@ class PresetFrameView(ctk.CTkFrame):
             side="left",
             fill="x",
             expand=True,
-            padx=Config.Layout.STANDART_PAD,
-            pady=Config.Layout.STANDART_PAD,
+            padx=Config.Layout.STANDARD_PAD,
+            pady=Config.Layout.STANDARD_PAD,
         )
         self.load_preset_button.pack(
             side="left",
             fill="y",
             expand=False,
             padx=Config.Layout.ZERO_PAD,
-            pady=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDARD_PAD,
         )
         self.save_preset_button.pack(
             side="left",
             fill="y",
             expand=False,
             padx=(0, 7),
-            pady=Config.Layout.STANDART_PAD,
+            pady=Config.Layout.STANDARD_PAD,
         )

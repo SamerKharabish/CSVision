@@ -4,6 +4,7 @@ access to the data for visualization purposes. """
 
 from pathlib import Path
 from collections import defaultdict
+from typing import Literal
 import pandas as pd
 from utils.helper_functions import search_substring
 
@@ -54,7 +55,7 @@ class CSVDataManager:
                 self.__file_path = file_path
 
     @property
-    def raw_data(self) -> pd.DataFrame | None:
+    def raw_data(self) -> pd.DataFrame:
         """
         Get the raw CSV data.
 
@@ -101,8 +102,8 @@ class CSVDataManager:
     def get_classified_headers(
         self,
         exclude_index: int,
-        prefix: str = None,
-        postfix: str = None,
+        prefix: str | None = None,
+        postfix: str | None = None,
         separator: str = "",
         order: bool = True,
     ) -> defaultdict[str, list[int] | list[tuple[str, int]]]:
@@ -129,22 +130,22 @@ class CSVDataManager:
                                                             substring and its classification as values.
         """
         # Determine the columns to process, excluding the specified index
-        columns_to_process = self.raw_data.columns.tolist()
+        columns_to_process: list[str] = self.raw_data.columns.tolist()
         columns_to_process = (
             columns_to_process[:exclude_index] + columns_to_process[exclude_index + 1 :]
         )
 
         # Vectorized classification using efficient operations
-        column_classification: defaultdict[str, list[int] | list[tuple[str, int]]] = (
-            defaultdict(list)
-        )
+        column_classification: defaultdict[
+            str, list[Literal[0, 1, 2]] | list[tuple[str, Literal[0, 1, 2]]]
+        ] = defaultdict(list)
 
-        raw_data_copy = self.raw_data.copy()
+        raw_data_copy: pd.DataFrame = self.raw_data.copy()
 
         for column in columns_to_process:
             unique_values = raw_data_copy[column].unique()
 
-            column_modified = search_substring(column, prefix, postfix)
+            column_modified: str = search_substring(column, prefix, postfix)
 
             if separator != "":
                 if order:
@@ -161,7 +162,7 @@ class CSVDataManager:
             else:
                 column_first_half = column_modified
 
-            classification = (
+            classification: Literal[0, 1, 2] = (
                 0 if len(unique_values) > 1 else 1 if unique_values[0] == 0 else 2
             )
 
@@ -170,7 +171,7 @@ class CSVDataManager:
                     (column_second_half.strip(), classification)
                 )
             else:
-                column_classification[column_modified].append(classification)
+                column_classification[column_first_half.strip()].append(classification)
 
         return column_classification
 

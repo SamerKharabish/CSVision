@@ -86,9 +86,8 @@ class Config:
         Layout
         """
 
-        STANDART_PAD: tuple[int, int] = (7, 7)
+        STANDARD_PAD: tuple[int, int] = (7, 7)
 
-        FILEHANDLING_ENTRY_ROW: int = 1
         GENERAL_INNER_FRAME_STICKY: str = "ew"
 
         HEADER_FRAME_LABELS_ANCHOR: str = "w"
@@ -214,13 +213,13 @@ class SearchbarConfig:
 
         INPUT_ENTRY_BORDER_WIDTH: int = 0
 
-        TITLE_FARME_ROW: int = 0
+        TITLE_FRAME_ROW: int = 0
         ENTRY_ROW: int = 1
-        FILTER_FARME_ROW: int = 2
+        FILTER_FRAME_ROW: int = 2
 
         GENERAL_INNER_FRAME_STICKY: str = Config.Layout.GENERAL_INNER_FRAME_STICKY
         ZERO_PAD: tuple[int, int] = Config.Layout.ZERO_PAD
-        STANDART_PAD: tuple[int, int] = Config.Layout.STANDART_PAD
+        STANDARD_PAD: tuple[int, int] = Config.Layout.STANDARD_PAD
         LABELS_IN_FRAME_PADX: tuple[int, int] = Config.Layout.LABELS_IN_FRAME_PADX
 
 
@@ -234,7 +233,7 @@ class SettingsConfig:
         Values of different widgets.
         """
 
-        HEADERSTRUCTURE_LABELS: list[str] = [
+        HEADER_STRUCTURE_LABELS: list[str] = [
             "Prefix",
             "Category",
             "Postfix",
@@ -242,7 +241,7 @@ class SettingsConfig:
             "Category",
             "Postfix",
         ]
-        HEADERSTRUCTURE_OPTIONS: list[str] = ["Sub-Header", "Header", "N/A"]
+        HEADER_STRUCTURE_OPTIONS: list[str] = ["Sub-Header", "Header", "N/A"]
 
 
 class HeaderListFrameConfig:
@@ -255,9 +254,6 @@ class HeaderListFrameConfig:
         General configurations.
         """
 
-        CORNER_RADIUS: int = Config.General.CORNER_RADIUS
-        FRAME_BORDER_WIDTH: int = Config.General.FRAME_BORDER_WIDTH
-
         USER_SETTINGS_YAML: str = Config.Values.USER_SETTINGS_YAML
 
     class Values:
@@ -265,9 +261,11 @@ class HeaderListFrameConfig:
         Values of different widgets.
         """
 
-        HEADERSTRUCTURE_LABELS: list[str] = SettingsConfig.Values.HEADERSTRUCTURE_LABELS
-        HEADERSTRUCTURE_OPTIONS: list[str] = (
-            SettingsConfig.Values.HEADERSTRUCTURE_OPTIONS
+        HEADER_STRUCTURE_LABELS: list[str] = (
+            SettingsConfig.Values.HEADER_STRUCTURE_LABELS
+        )
+        HEADER_STRUCTURE_OPTIONS: list[str] = (
+            SettingsConfig.Values.HEADER_STRUCTURE_OPTIONS
         )
 
 
@@ -311,7 +309,7 @@ class SettingsWindowConfig:
         Layout.
         """
 
-        STANDART_PAD: tuple[int, int] = Config.Layout.STANDART_PAD
+        STANDARD_PAD: tuple[int, int] = Config.Layout.STANDARD_PAD
 
         CATEGORY_SEGMENTED_BUTTON_X: int = 20
         CATEGORY_SEGMENTED_BUTTON_Y: int = 7
@@ -333,7 +331,7 @@ class SettingsWindowConfig:
         MANAGE_SETTINGS_FRAME_PADY: tuple[int, int] = (3, 7)
 
         MANAGE_BUTTON_SIDE: str = "right"
-        MANAGE_BUTTON_FILL: str = None
+        MANAGE_BUTTON_FILL: str | None = None
         MANAGE_BUTTON_EXPAND: bool = False
         MANAGE_BUTTON_PADY: tuple[int, int] = (5, 5)
 
@@ -431,7 +429,9 @@ class HeaderStructureFrameConfig:
         Layout.
         """
 
-        HEADERSTRUCTURE_LABELS: list[str] = SettingsConfig.Values.HEADERSTRUCTURE_LABELS
-        HEADERSTRUCTURE_OPTIONS: list[str] = (
-            SettingsConfig.Values.HEADERSTRUCTURE_OPTIONS
+        HEADER_STRUCTURE_LABELS: list[str] = (
+            SettingsConfig.Values.HEADER_STRUCTURE_LABELS
+        )
+        HEADER_STRUCTURE_OPTIONS: list[str] = (
+            SettingsConfig.Values.HEADER_STRUCTURE_OPTIONS
         )
