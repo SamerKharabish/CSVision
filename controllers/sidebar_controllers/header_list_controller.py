@@ -194,13 +194,13 @@ class HeaderListController(SimpleObserver):
         Before doing an operation to the csv file start the progressbar.
         """
         progress_state_publisher.mode = "determinate"
-        progress_state_publisher.value = ProgressStatePublisher.START_PROGRESSBAR
+        progress_state_publisher.set_value(ProgressStatePublisher.START_PROGRESSBAR)
 
     def post_update_header_scrollableframe(self) -> None:
         """
         After doing an operation to the csv file stop the progressbar.
         """
-        progress_state_publisher.value = ProgressStatePublisher.STOP_PROGRESSBAR
+        progress_state_publisher.set_value(ProgressStatePublisher.STOP_PROGRESSBAR)
 
     def manage_widgets_in_header_scrollableframe(self) -> None:
         if self.header_separator == "":
@@ -262,9 +262,9 @@ class HeaderListController(SimpleObserver):
                         header_count,
                         header,
                     )
-                    progress_state_publisher.value = (
-                        header_count / total_nr_header
-                    ) * 100
+                    progress_state_publisher.set_value(
+                        (header_count / total_nr_header) * 100
+                    )
                     header_count += 1
                 else:  # Hide any extra buttons that are not needed
                     try:
