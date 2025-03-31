@@ -241,7 +241,7 @@ class SettingsConfig:
             "Category",
             "Postfix",
         ]
-        HEADER_STRUCTURE_OPTIONS: list[str] = ["Sub-Header", "Header", "N/A"]
+        HEADER_STRUCTURE_OPTIONS: list[str] = ["Header", "Sub-Header", "N/A"]
 
 
 class HeaderListFrameConfig:

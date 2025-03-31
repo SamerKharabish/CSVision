@@ -1,5 +1,6 @@
 """Defines the HeaderListController class with the header list functionality."""
 
+from typing import Literal
 from collections import defaultdict
 import customtkinter as ctk
 from configurations.header_list_config import HeaderListConfig
@@ -31,7 +32,7 @@ class HeaderListController(SimpleObserver):
         "settings_manager",
         # "scrollable_frame_filled",
         # "scrollable_frame_manager",
-        "header_list",
+        "header_map",
         "header_separator",
     )
 
@@ -41,9 +42,9 @@ class HeaderListController(SimpleObserver):
         self.label_widgets: dict[str, ctk.CTkLabel] = {}
         self.button_widgets: defaultdict[str, list[SelectButton]] = defaultdict(list)
 
-        self.header_list: defaultdict[str, list[int] | list[tuple[str, int]]] = (
-            defaultdict(list)
-        )
+        self.header_map: defaultdict[
+            str, list[Literal[0, 1, 2] | tuple[str, Literal[0, 1, 2]]]
+        ] = defaultdict(list)
         self.header_separator: str = ""
 
         self.settings_manager = YAMLManager(HeaderListConfig.OwnArgs.USER_SETTINGS)
@@ -80,12 +81,12 @@ class HeaderListController(SimpleObserver):
             simple_publisher == file_state_publisher
             and file_state_publisher.is_open is True
         ):  # A CSV file got successfully opened
-            header_list: defaultdict[str, list[int] | list[tuple[str, int]]] = (
-                self.get_header_list()
-            )
+            header_list: defaultdict[
+                str, list[Literal[0, 1, 2] | tuple[str, Literal[0, 1, 2]]]
+            ] = self.get_header_list()
 
-            if header_list != self.header_list:  # The file has new values
-                self.header_list = header_list
+            if header_list != self.header_map:  # The file has new values
+                self.header_map = header_list
                 self.start_update_header_scrollableframe_thread()
 
         # if (
@@ -111,12 +112,14 @@ class HeaderListController(SimpleObserver):
         #             self.re_create_header_list()
         #         new_settings_publisher.new_settings_saved = False
 
-    def get_header_list(self) -> defaultdict[str, list[int] | list[tuple[str, int]]]:
+    def get_header_list(
+        self,
+    ) -> defaultdict[str, list[Literal[0, 1, 2] | tuple[str, Literal[0, 1, 2]]]]:
         """
         Get the classified headers from a CSV file based on the user selected header structure from a csv file.
 
         Returns:
-            defaultdict[str, list[int] | list[tuple[str, int]]]: The classified header list.
+            defaultdict[str, list[Literal[0, 1, 2] | tuple[str, Literal[0, 1, 2]]]]: The classified header list.
         """
         header_structure_settings: dict[str, str | None] = (
             self.settings_manager.open_file()["General"]["Header structure"]
@@ -203,6 +206,9 @@ class HeaderListController(SimpleObserver):
         progress_state_publisher.set_value(ProgressStatePublisher.STOP_PROGRESSBAR)
 
     def manage_widgets_in_header_scrollableframe(self) -> None:
+        """
+        Manage labels and buttons depending on the user settings.
+        """
         if self.header_separator == "":
             self.manage_widgets_for_headers_only()
         else:
@@ -221,7 +227,7 @@ class HeaderListController(SimpleObserver):
         for label in self.label_widgets.values():
             label.grid_forget()
 
-        headers = list(self.header_list.keys())
+        headers = list(self.header_map.keys())
 
         # 2. Calculate the required number of groups based on the total number of headers
         total_nr_header: int = len(headers)
@@ -288,7 +294,7 @@ class HeaderListController(SimpleObserver):
 
         Args:
             group_of_buttons (list[SelectButton]): The group of buttons.
-            len_group_of_buttons (int): Number of groups of buttons.
+            len_group_of_buttons (int): Number of buttons in the groups.
             button_index (int): The index of the button in group.
             row_index (int): The index of the button in the scrollable frame.
             text (str): The text of the button.

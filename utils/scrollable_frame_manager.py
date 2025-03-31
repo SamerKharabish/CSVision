@@ -1,4 +1,4 @@
-""" Defines a ScrollableFrameManager class. """
+"""Defines a ScrollableFrameManager class."""
 
 from collections import defaultdict, OrderedDict
 import customtkinter as ctk
@@ -7,6 +7,7 @@ from utils.select_button import SelectButton
 # from utils.trie import Trie
 from views.configurations_view import HeaderListFrameConfig
 from views.configurations_view import SearchbarConfig
+
 # from utils.observer_publisher import progress_publisher
 
 
@@ -165,7 +166,7 @@ class ScrollableFrameManager:
             text (str): The text of the button.
         """
         if button_index_g < len_group_of_buttons:
-            button = group_of_buttons[button_index_g]
+            button: SelectButton = group_of_buttons[button_index_g]
         else:
             button = SelectButton(
                 self.__root,
@@ -182,7 +183,7 @@ class ScrollableFrameManager:
         button.grid(
             row=button_index_sf,
             column=0,
-            sticky="nesw",
+            sticky="nsew",
             padx=(2, 2),
             pady=(0, 3),
         )
@@ -190,7 +191,7 @@ class ScrollableFrameManager:
     def update_scrollable_frame(
         self,
         entries: defaultdict[str, list[int] | list[tuple[str, int]]],
-        seperator: str = "",
+        separator: str = "",
         progress: int = 0,
     ) -> None:
         """
@@ -199,7 +200,7 @@ class ScrollableFrameManager:
 
         Args:
             entries (defaultdict[str, list[int] | list[tuple[str, int]]]): Mapped entries to display.
-            seperator (str, optional): Seperator between the header and sub-header. Defaults to "".
+            separator (str, optional): Separator between the header and sub-header. Defaults to "".
         """
         current_row: int = 0
         len_group_of_buttons: int = 0
@@ -210,16 +211,14 @@ class ScrollableFrameManager:
 
         index: int = 0
         number_of_buttons: int = 0
-        if seperator != "":
+        if separator != "":
             # Iterate over the entries to create or update labels and buttons
             for index, (key, value) in enumerate(entries.items()):
                 self.__update_or_create_label(index, current_row, key)
 
                 current_row += 1
 
-                group_of_buttons: list[SelectButton] = self.__button_widgets[
-                    f"group_{index}"
-                ]
+                group_of_buttons = self.__button_widgets[f"group_{index}"]
                 len_group_of_buttons = len(group_of_buttons)
                 # Iterate over the values to create or update the buttons
                 i: int = 0
