@@ -4,8 +4,9 @@ access to the data for visualization purposes. """
 
 from pathlib import Path
 from collections import defaultdict
-from typing import Literal
+from typing import Literal, Any
 import pandas as pd
+import numpy as np
 from utils.helper_functions import search_substring
 
 
@@ -106,7 +107,7 @@ class CSVDataManager:
         postfix: str | None = None,
         separator: str = "",
         order: bool = True,
-    ) -> defaultdict[str, list[int] | list[tuple[str, int]]]:
+    ) -> defaultdict[str, list[Literal[0, 1, 2] | tuple[str, Literal[0, 1, 2]]]]:
         """
         Classify the headers from the CSV file based on their values, excluding one specified column by index.
 
@@ -125,9 +126,9 @@ class CSVDataManager:
                                                 If True, then the first half will be the key else the second half. Defaults to True.
 
         Returns:
-            defaultdict[str, list[str] | list[str, int]]: A dictionary with the header of the column or a substring of it as
-                                                            keys and a list of their classification or a tuple of the other
-                                                            substring and its classification as values.
+            defaultdict[str, list[Literal[0, 1, 2] | tuple[str, Literal[0, 1, 2]]]]: A dictionary with the header of the column or
+                                                            a substring of it as keys and a list of their classification or a tuple
+                                                            of the other substring and its classification as values.
         """
         # Determine the columns to process, excluding the specified index
         columns_to_process: list[str] = self.raw_data.columns.tolist()
@@ -137,13 +138,15 @@ class CSVDataManager:
 
         # Vectorized classification using efficient operations
         column_classification: defaultdict[
-            str, list[Literal[0, 1, 2]] | list[tuple[str, Literal[0, 1, 2]]]
+            str, list[tuple[str, Literal[0, 1, 2]] | Literal[0, 1, 2]]
         ] = defaultdict(list)
 
         raw_data_copy: pd.DataFrame = self.raw_data.copy()
 
         for column in columns_to_process:
-            unique_values = raw_data_copy[column].unique()
+            unique_values: np.ndarray[Any, Any] = raw_data_copy[column].unique()
+            column_first_half: str = ""
+            column_second_half: str = ""
 
             column_modified: str = search_substring(column, prefix, postfix)
 
