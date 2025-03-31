@@ -21,6 +21,8 @@ from utils.observer_publisher import (
 from utils.select_button import SelectButton
 from utils.threads import safe_thread_queue
 
+import time
+
 
 class HeaderListController(SimpleObserver):
     """
@@ -51,6 +53,10 @@ class HeaderListController(SimpleObserver):
 
         self.create_initial_widget_pool()
 
+        self.max_nr_of_buttons_per_group: int = (
+            HeaderListConfig.OwnArgs.INITIAL_MAX_NR_OF_BUTTONS_PER_GROUP
+        )
+
         file_state_publisher.attach(self)
         new_settings_publisher.attach(self)
 
@@ -60,11 +66,15 @@ class HeaderListController(SimpleObserver):
         #     self.view.header_scrollableframe, 20, 10
         # )
 
-    def create_initial_widget_pool(self) -> None:
+    def create_groups(self, start_index: int, stop_index: int) -> None:
         """
-        Creates an initial pool of labels and buttons to be reused in the header_scrollableframe.
+        Creates a pool of labels and buttons.
+
+        Args:
+            start_index (int): _description_
+            stop_index (int): _description_
         """
-        for group_nr in range(HeaderListConfig.OwnArgs.INITIAL_NR_OF_GROUPS):
+        for group_nr in range(start_index, stop_index):
             group_key: str = f"group_{group_nr}"
 
             self.label_widgets[group_key] = (
@@ -75,6 +85,12 @@ class HeaderListController(SimpleObserver):
                 self.view.add_button_to_header_scrollableframe()
                 for _ in range(HeaderListConfig.OwnArgs.INITIAL_NR_OF_BUTTONS_PER_GROUP)
             ]
+
+    def create_initial_widget_pool(self) -> None:
+        """
+        Creates an initial pool of labels and buttons to be reused in the header_scrollableframe.
+        """
+        self.create_groups(0, HeaderListConfig.OwnArgs.INITIAL_NR_OF_GROUPS)
 
     def update(self, simple_publisher: SimplePublisher) -> None:
         if (
@@ -231,17 +247,17 @@ class HeaderListController(SimpleObserver):
 
         # 2. Calculate the required number of groups based on the total number of headers
         total_nr_header: int = len(headers)
+        max_nr_of_buttons_per_group: int = max(
+            self.max_nr_of_buttons_per_group,
+            HeaderListConfig.OwnArgs.INITIAL_MAX_NR_OF_BUTTONS_PER_GROUP,
+        )
         required_groups: int = (
-            total_nr_header + HeaderListConfig.OwnArgs.MAX_BUTTONS_PER_GROUP - 1
-        ) // HeaderListConfig.OwnArgs.MAX_BUTTONS_PER_GROUP
+            total_nr_header + max_nr_of_buttons_per_group - 1
+        ) // max_nr_of_buttons_per_group
 
         # 3. Dynamically add extra groups if the existing ones are insufficient
         total_nr_of_groups: int = len(self.button_widgets)
-        for extra_group_index in range(total_nr_of_groups, required_groups):
-            self.button_widgets[f"group_{extra_group_index}"] = [
-                self.view.add_button_to_header_scrollableframe()
-                for _ in range(HeaderListConfig.OwnArgs.INITIAL_NR_OF_BUTTONS_PER_GROUP)
-            ]  # Add a group of buttons
+        self.create_groups(total_nr_of_groups, required_groups)
 
         # 4. Calculate buttons per group after adjustments
         button_groups = list(self.button_widgets.values())
@@ -253,9 +269,9 @@ class HeaderListController(SimpleObserver):
         # 5. Adjust each button group with headers
         header_count: int = 0  # Track string index
         for button_group in button_groups:
-
+            len_group_of_buttons: int = len(button_group)
             # Determine the number of buttons needed or already are in this group
-            nr_of_buttons: int = max(buttons_per_group, len(button_group))
+            nr_of_buttons: int = max(buttons_per_group, len_group_of_buttons)
 
             for button_index in range(nr_of_buttons):
                 # Only set the button if there are still buttons in the group and headers left
@@ -263,15 +279,15 @@ class HeaderListController(SimpleObserver):
                     header: str = headers[header_count]
                     self.manage_buttons_in_header_scrollableframe(
                         button_group,
-                        len(button_group),
+                        len_group_of_buttons,
                         button_index,
                         header_count,
                         header,
                     )
+                    header_count += 1
                     progress_state_publisher.set_value(
                         (header_count / total_nr_header) * 100
                     )
-                    header_count += 1
                 else:  # Hide any extra buttons that are not needed
                     try:
                         button_group[button_index].grid_forget()
@@ -307,8 +323,73 @@ class HeaderListController(SimpleObserver):
 
         self.view.manage_button(button, text, row_index)
 
-    def manage_widgets_for_headers_and_sub_headers(self):
-        pass
+    def manage_widgets_for_headers_and_sub_headers(self) -> None:
+        total_nr_of_groups: int = len(self.label_widgets)
+        required_buttons: int = sum(
+            len(sub_headers) for sub_headers in self.header_map.values()
+        )
+        required_groups: int = len(self.header_map)
+        total_nr_header_and_sub_header: int = required_buttons + required_groups
+
+        self.create_groups(total_nr_of_groups, required_groups)
+
+        current_row: int = 0
+        group_index: int = 0
+        for group_index, (header, subheader_list) in enumerate(self.header_map.items()):
+            self.manage_label_in_header_scrollableframe(
+                group_index, current_row, header
+            )
+
+            current_row += 1
+            progress_state_publisher.set_value(
+                (current_row / total_nr_header_and_sub_header) * 100
+            )
+
+            group_of_buttons: list[SelectButton] = self.button_widgets[
+                f"group_{group_index}"
+            ]
+            nr_of_btns_in_group: int = len(group_of_buttons)
+
+            button_index: int = 0
+
+            t1: tuple[float, float] = time.perf_counter(), time.process_time()
+            print(len(subheader_list), nr_of_btns_in_group, current_row)
+            for button_index, subheader_mapping in enumerate(subheader_list):
+                self.manage_buttons_in_header_scrollableframe(
+                    group_of_buttons,
+                    nr_of_btns_in_group,
+                    button_index,
+                    current_row,
+                    subheader_mapping[0],  # type: ignore
+                )
+
+                current_row += 1
+                progress_state_publisher.set_value(
+                    (current_row / total_nr_header_and_sub_header) * 100
+                )
+
+            # Iterate over the rest of unused buttons to hide them
+            nr_of_btns_in_group = len(group_of_buttons)
+
+            t2: tuple[float, float] = time.perf_counter(), time.process_time()
+            print(f" Real time: {t2[0] - t1[0]:.2f} seconds")
+            print(f" CPU time: {t2[1] - t1[1]:.2f} seconds")
+            print(nr_of_btns_in_group)
+            print()
+            if button_index <= nr_of_btns_in_group:
+                for extra_button_index in range(button_index + 1, nr_of_btns_in_group):
+                    group_of_buttons[extra_button_index].grid_forget()
+
+        print("--------------------------------------")
+        total_nr_of_groups = len(self.label_widgets)
+        if group_index <= total_nr_of_groups:
+            for extra_group_index in range(group_index + 1, total_nr_of_groups):
+                group_name: str = f"group_{extra_group_index}"
+                self.label_widgets[group_name].grid_forget()
+
+                group_of_buttons = self.button_widgets[group_name]
+                for button in group_of_buttons:
+                    button.grid_forget()
 
     def manage_label_in_header_scrollableframe(
         self, group_index: int, label_index: int, text: str
