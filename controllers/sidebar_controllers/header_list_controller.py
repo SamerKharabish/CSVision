@@ -12,6 +12,8 @@ from utils.observer_publisher import (
     SimplePublisher,
     file_state_publisher,
     new_settings_publisher,
+    ProgressStatePublisher,
+    progress_state_publisher,
 )
 
 # from utils.scrollable_frame_manager import ScrollableFrameManager
@@ -181,7 +183,24 @@ class HeaderListController(SimpleObserver):
         # Reset the parent canvas view to the top
         # pylint: disable=W0212
         self.view.header_scrollableframe._parent_canvas.yview_moveto(0)
-        safe_thread_queue.add_task(self.manage_widgets_in_header_scrollableframe)
+        safe_thread_queue.add_task(
+            self.manage_widgets_in_header_scrollableframe,
+            before_thread=self.pre_update_header_scrollableframe,
+            after_thread=self.post_update_header_scrollableframe,
+        )
+
+    def pre_update_header_scrollableframe(self) -> None:
+        """
+        Before doing an operation to the csv file start the progressbar.
+        """
+        progress_state_publisher.mode = "determinate"
+        progress_state_publisher.set_value(ProgressStatePublisher.START_PROGRESSBAR)
+
+    def post_update_header_scrollableframe(self) -> None:
+        """
+        After doing an operation to the csv file stop the progressbar.
+        """
+        progress_state_publisher.set_value(ProgressStatePublisher.STOP_PROGRESSBAR)
 
     def manage_widgets_in_header_scrollableframe(self) -> None:
         if self.header_separator == "":
@@ -198,15 +217,19 @@ class HeaderListController(SimpleObserver):
         the current button groups can accommodate, additional groups or buttons are added as needed.
         Unused buttons in each group are hidden.
         """
+        # 1. Hide all labels
+        for label in self.label_widgets.values():
+            label.grid_forget()
+
         headers = list(self.header_list.keys())
 
-        # 1. Calculate the required number of groups based on the total number of headers
+        # 2. Calculate the required number of groups based on the total number of headers
         total_nr_header: int = len(headers)
         required_groups: int = (
             total_nr_header + HeaderListConfig.OwnArgs.MAX_BUTTONS_PER_GROUP - 1
         ) // HeaderListConfig.OwnArgs.MAX_BUTTONS_PER_GROUP
 
-        # 2. Dynamically add extra groups if the existing ones are insufficient
+        # 3. Dynamically add extra groups if the existing ones are insufficient
         total_nr_of_groups: int = len(self.button_widgets)
         for extra_group_index in range(total_nr_of_groups, required_groups):
             self.button_widgets[f"group_{extra_group_index}"] = [
@@ -214,14 +237,14 @@ class HeaderListController(SimpleObserver):
                 for _ in range(HeaderListConfig.OwnArgs.INITIAL_NR_OF_BUTTONS_PER_GROUP)
             ]  # Add a group of buttons
 
-        # 3. Calculate buttons per group after adjustments
+        # 4. Calculate buttons per group after adjustments
         button_groups = list(self.button_widgets.values())
         total_nr_of_groups = len(button_groups)
         buttons_per_group: int = (
             total_nr_header + total_nr_of_groups - 1
         ) // total_nr_of_groups
 
-        # 4. Adjust each button group with headers
+        # 5. Adjust each button group with headers
         header_count: int = 0  # Track string index
         for button_group in button_groups:
 
@@ -238,6 +261,9 @@ class HeaderListController(SimpleObserver):
                         button_index,
                         header_count,
                         header,
+                    )
+                    progress_state_publisher.set_value(
+                        (header_count / total_nr_header) * 100
                     )
                     header_count += 1
                 else:  # Hide any extra buttons that are not needed

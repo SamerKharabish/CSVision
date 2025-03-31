@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from abc import ABC, abstractmethod
+from typing import Literal
 
 
 class SimplePublisher:
@@ -110,26 +111,26 @@ class ProgressStatePublisher(SimplePublisher):
     def __init__(self) -> None:
         SimplePublisher.__init__(self)
 
-        self._mode: str = "indeterminate"
+        self._mode: Literal["determinate", "indeterminate"]
         self._value: float = 0.0
 
     @property
-    def mode(self) -> str:
+    def mode(self) -> Literal["determinate", "indeterminate"]:
         """
         Get the mode of the progressbar.
 
         Returns:
-            str: The mode of the progressbar.
+            Literal["determinate", "indeterminate"]: The mode of the progressbar.
         """
         return self._mode
 
     @mode.setter
-    def mode(self, mode: str = "determinate") -> None:
+    def mode(self, mode: Literal["determinate", "indeterminate"]) -> None:
         """
         Set the mode of the progressbar.
 
         Args:
-            mode (str, optional): The mode of the progressbar to set. Defaults to determinate.
+            mode (Literal["determinate", "indeterminate"]): The mode of the progressbar to set.
         """
         self._mode = mode
 
@@ -143,8 +144,9 @@ class ProgressStatePublisher(SimplePublisher):
         """
         return self._value
 
-    @value.setter
-    def value(self, value: float = 0.0, modifier: SimpleObserver | None = None) -> None:
+    def set_value(
+        self, value: float = 0.0, modifier: SimpleObserver | None = None
+    ) -> None:
         """
         Set the value of the progressbar.
 
