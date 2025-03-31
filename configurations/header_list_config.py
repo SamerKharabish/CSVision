@@ -23,7 +23,7 @@ class HeaderListConfig:
         # TODO: Add this to the settings
         INITIAL_NR_OF_GROUPS: int = 20
         INITIAL_NR_OF_BUTTONS_PER_GROUP: int = 10
-        MAX_BUTTONS_PER_GROUP: int = 20
+        INITIAL_MAX_NR_OF_BUTTONS_PER_GROUP: int = 20
 
     class Layout:
         """
